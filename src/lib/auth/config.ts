@@ -47,6 +47,7 @@ export const authConfig = {
   pages: {
     signIn: '/admin/login',
   },
+  trustHost: true,
   session: { strategy: 'jwt' },
   callbacks: {
     jwt({ token, user }) {
