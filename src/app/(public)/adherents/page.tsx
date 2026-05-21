@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { getDb } from '@/lib/db'
-import { members } from '@/lib/db/schema'
-import { eq, asc } from 'drizzle-orm'
+import { activityDomains, memberActivities, members } from '@/lib/db/schema'
+import { asc, eq } from 'drizzle-orm'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
+import { MemberLogo } from '@/components/public/member-logo'
 
 export const revalidate = 3600
 
@@ -21,17 +21,34 @@ export const metadata: Metadata = {
 
 export default async function AdherentsPage() {
   const db = getDb()
-  const list = await db
-    .select({
-      id: members.id,
-      slug: members.slug,
-      name: members.name,
-      logoUrl: members.logoUrl,
-      description: members.description,
-    })
-    .from(members)
-    .where(eq(members.status, 'active'))
-    .orderBy(asc(members.name))
+  const [list, activities] = await Promise.all([
+    db
+      .select({
+        id: members.id,
+        slug: members.slug,
+        name: members.name,
+        logoUrl: members.logoUrl,
+        description: members.description,
+      })
+      .from(members)
+      .where(eq(members.status, 'active'))
+      .orderBy(asc(members.name)),
+    db
+      .select({
+        memberId: memberActivities.memberId,
+        domainLabel: activityDomains.label,
+      })
+      .from(memberActivities)
+      .innerJoin(activityDomains, eq(memberActivities.domainId, activityDomains.id)),
+  ])
+
+  // First domain per member (deterministic after orderBy on activityDomains.sortOrder)
+  const domainByMember = new Map<string, string>()
+  for (const a of activities) {
+    if (!domainByMember.has(a.memberId)) {
+      domainByMember.set(a.memberId, a.domainLabel)
+    }
+  }
 
   return (
     <>
@@ -85,39 +102,23 @@ export default async function AdherentsPage() {
               adhérentes
             </h2>
           </div>
-          <div className="grid-3">
+          <div className="members-grid">
             {list.map((member) => (
-              <article key={member.slug} className="card member-card">
-                <div className="logo-card">
-                  {member.logoUrl ? (
-                    <Image
-                      src={member.logoUrl}
-                      alt={`Logo ${member.name}`}
-                      width={100}
-                      height={60}
-                      style={{ objectFit: 'contain', maxHeight: '60px' }}
-                      unoptimized
-                    />
-                  ) : (
-                    <span
-                      style={{
-                        fontSize: '13px',
-                        fontWeight: 900,
-                        color: 'var(--navy)',
-                        textAlign: 'center',
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      {member.name}
-                    </span>
+              <article key={member.slug} className="card member-card-v">
+                <MemberLogo
+                  name={member.name}
+                  logoUrl={member.logoUrl}
+                  sizes="(max-width: 580px) 100vw, (max-width: 980px) 50vw, 33vw"
+                />
+                <div className="member-card-v-body">
+                  {domainByMember.get(member.id) && (
+                    <span className="member-domain-tag">{domainByMember.get(member.id)}</span>
                   )}
-                </div>
-                <div>
                   <h3>{member.name}</h3>
                   {member.description && (
-                    <p style={{ marginTop: '8px', fontSize: '14px' }}>
-                      {member.description.length > 100
-                        ? `${member.description.slice(0, 100)}…`
+                    <p>
+                      {member.description.length > 110
+                        ? `${member.description.slice(0, 110)}…`
                         : member.description}
                     </p>
                   )}

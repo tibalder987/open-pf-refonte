@@ -3,7 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
-import { FEATURED_MEMBERS } from '@/lib/data/members'
+import { MemberLogo } from '@/components/public/member-logo'
+import { getDb } from '@/lib/db'
+import { members } from '@/lib/db/schema'
+import { and, asc, eq, isNotNull } from 'drizzle-orm'
 
 export const metadata: Metadata = {
   title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique",
@@ -91,7 +94,15 @@ const NEWS_PREVIEW = [
   },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const db = getDb()
+  const featuredMembers = await db
+    .select({ id: members.id, slug: members.slug, name: members.name, logoUrl: members.logoUrl })
+    .from(members)
+    .where(and(eq(members.status, 'active'), isNotNull(members.logoUrl)))
+    .orderBy(asc(members.name))
+    .limit(12)
+
   return (
     <>
       <section className="hero">
@@ -212,22 +223,22 @@ export default function HomePage() {
               Voir tous les adhérents <ArrowIcon />
             </Link>
           </div>
-          <div className="logo-strip">
-            {FEATURED_MEMBERS.map((member) => (
+          <div className="members-showcase" aria-label="Vitrine des adhérents">
+            {featuredMembers.map((member) => (
               <Link
                 key={member.slug}
                 href={`/adherents/${member.slug}`}
-                className="logo-card"
-                aria-label={member.name}
+                className="showcase-link"
+                aria-label={`Voir la fiche de ${member.name}`}
               >
-                <Image
-                  src={member.logoUrl ?? ''}
-                  alt={member.name}
-                  width={100}
-                  height={60}
-                  style={{ objectFit: 'contain', maxHeight: '60px' }}
-                  unoptimized
+                <MemberLogo
+                  name={member.name}
+                  logoUrl={member.logoUrl}
+                  sizes="(max-width: 640px) 75vw, (max-width: 980px) 45vw, 14vw"
                 />
+                <span className="showcase-name" aria-hidden="true">
+                  {member.name}
+                </span>
               </Link>
             ))}
           </div>

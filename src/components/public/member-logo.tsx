@@ -1,0 +1,66 @@
+import Image from 'next/image'
+
+const PALETTE = [
+  { bg: '#fff1f8', fg: '#c0006a' },
+  { bg: '#eff3ff', fg: '#0057d8' },
+  { bg: '#f0f9ff', fg: '#0369a1' },
+  { bg: '#f0fdf4', fg: '#15803d' },
+  { bg: '#fdf4ff', fg: '#7c3aed' },
+  { bg: '#fff8f0', fg: '#b45309' },
+]
+
+function colorFor(name: string): { bg: string; fg: string } {
+  let h = 0
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0
+  const idx = h % PALETTE.length
+  // PALETTE is non-empty, idx is always in-range — fallback is unreachable
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return PALETTE[idx] ?? PALETTE[0]!
+}
+
+function getInitials(name: string): string {
+  const words = name.trim().split(/\s+/).filter(Boolean)
+  if (words.length === 1) return (words[0] ?? '').slice(0, 3).toUpperCase()
+  return words
+    .slice(0, 2)
+    .map((w) => w[0] ?? '')
+    .join('')
+    .toUpperCase()
+}
+
+interface MemberLogoProps {
+  name: string
+  logoUrl?: string | null
+  sizes?: string
+  priority?: boolean
+}
+
+export function MemberLogo({ name, logoUrl, sizes, priority = false }: MemberLogoProps) {
+  if (logoUrl) {
+    return (
+      <div className="member-logo-wrap" aria-hidden="true">
+        <Image
+          src={logoUrl}
+          alt={`Logo ${name}`}
+          fill
+          sizes={sizes ?? '(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px'}
+          style={{ objectFit: 'contain', padding: '12px' }}
+          priority={priority}
+          unoptimized
+        />
+      </div>
+    )
+  }
+
+  const { bg, fg } = colorFor(name)
+  return (
+    <div
+      className="member-logo-wrap member-logo-fallback"
+      style={{ background: bg }}
+      role="img"
+      aria-label={`${name} (initiales)`}
+    >
+      <span style={{ color: fg }}>{getInitials(name)}</span>
+    </div>
+  )
+}

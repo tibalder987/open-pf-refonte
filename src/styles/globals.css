@@ -711,7 +711,7 @@ p {
   align-items: center;
 }
 
-/* ─── Logo strip ──────────────────────────────────────────────────────────── */
+/* ─── Logo strip (legacy — kept for fiche page) ────────────────────────── */
 .logo-strip {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -737,6 +737,113 @@ p {
   color: #667085;
   margin-top: 2px;
   font-size: 10px;
+}
+
+/* ─── MemberLogo component ────────────────────────────────────────────────── */
+.member-logo-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 130px;
+  flex-shrink: 0;
+}
+.member-logo-fallback span {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+/* ─── Homepage members showcase ──────────────────────────────────────────── */
+.members-showcase {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+.showcase-link {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: opacity 0.15s;
+}
+.showcase-link:hover {
+  opacity: 0.78;
+}
+.showcase-link:focus-visible {
+  outline: 3px solid rgba(0, 87, 216, 0.35);
+  outline-offset: 3px;
+  border-radius: 18px;
+}
+.showcase-link .member-logo-wrap {
+  height: 110px;
+  border-radius: 16px;
+}
+.showcase-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+/* ─── Members directory grid ──────────────────────────────────────────────── */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.member-card-v {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+.member-card-v .member-logo-wrap {
+  height: 150px;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--line);
+}
+.member-card-v-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+}
+.member-card-v-body h3 {
+  font-size: 18px;
+  margin: 0;
+}
+.member-card-v-body p {
+  font-size: 14px;
+  flex: 1;
+}
+.member-card-v-body .card-link {
+  margin-top: 10px;
+}
+.member-domain-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #eff3ff;
+  color: #34408a;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  width: fit-content;
 }
 
 /* ─── News cards ──────────────────────────────────────────────────────────── */
@@ -995,6 +1102,42 @@ textarea {
     grid-template-columns: repeat(2, 1fr);
   }
   .member-card {
+    grid-template-columns: 1fr;
+  }
+
+  /* Members showcase → horizontal carousel */
+  .members-showcase {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Negative margin to let cards bleed to container edge */
+    margin-inline: -4px;
+    padding-inline: 4px;
+  }
+  .members-showcase::-webkit-scrollbar {
+    display: none;
+  }
+  .showcase-link {
+    flex: 0 0 min(260px, 72vw);
+    scroll-snap-align: start;
+  }
+  .showcase-link .member-logo-wrap {
+    height: 130px;
+  }
+
+  /* Members directory → 2 cols on tablet */
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  /* Members directory → 1 col on phone */
+  .members-grid {
     grid-template-columns: 1fr;
   }
 }
