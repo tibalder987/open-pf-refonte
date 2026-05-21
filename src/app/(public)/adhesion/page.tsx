@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowIcon } from '@/components/public/arrow-icon'
+import { AdhesionForm } from '@/components/adhesion/adhesion-form'
 
 export const metadata: Metadata = {
   title: 'Adhérer à OPEN PF',
@@ -83,56 +84,14 @@ export default function AdhesionPage() {
       </section>
 
       <section className="section" id="formulaire">
-        <div className="container" style={{ maxWidth: '760px' }}>
+        <div className="container" style={{ maxWidth: '800px' }}>
           <div className="section-head">
             <div>
               <span className="eyebrow">Formulaire d&apos;adhésion</span>
               <h2 style={{ marginTop: '12px' }}>Votre demande d&apos;adhésion</h2>
             </div>
           </div>
-
-          <div className="card" style={{ textAlign: 'center', padding: '52px 36px' }}>
-            <div
-              style={{
-                width: '72px',
-                height: '72px',
-                borderRadius: '50%',
-                background: 'var(--soft-pink)',
-                display: 'grid',
-                placeItems: 'center',
-                margin: '0 auto 24px',
-                color: 'var(--open-magenta)',
-              }}
-            >
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="32" height="32">
-                <path
-                  fill="currentColor"
-                  d="M12 1a9 9 0 1 1 0 18A9 9 0 0 1 12 1zm0 2a7 7 0 1 0 0 14A7 7 0 0 0 12 3zm1 3v5h3l-4 5-4-5h3V6h2z"
-                />
-              </svg>
-            </div>
-            <h3>Formulaire en cours de déploiement</h3>
-            <p style={{ marginTop: '12px', maxWidth: '480px', margin: '12px auto 0' }}>
-              Le formulaire d&apos;adhésion en ligne sera disponible très prochainement. En
-              attendant, contactez-nous par email pour initier votre démarche.
-            </p>
-            <div
-              style={{
-                marginTop: '28px',
-                display: 'flex',
-                gap: '12px',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-              }}
-            >
-              <a href="mailto:contact@open.pf" className="btn">
-                Écrire à contact@open.pf <ArrowIcon />
-              </a>
-              <Link href="/contact" className="btn btn-secondary">
-                Page contact <ArrowIcon />
-              </Link>
-            </div>
-          </div>
+          <AdhesionForm />
         </div>
       </section>
     </>

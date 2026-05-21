@@ -12,3 +12,12 @@ export function formatDate(date: Date | string, locale = 'fr-FR'): string {
     year: 'numeric',
   }).format(new Date(date))
 }
+
+export function toSlug(input: string): string {
+  return input
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}

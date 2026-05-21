@@ -65,6 +65,8 @@ export const members = pgTable('members', {
   yearFounded: integer('year_founded'),
   employeeCount: integer('employee_count'),
   linkedinUrl: text('linkedin_url'),
+  tahitiNumber: varchar('tahiti_number', { length: 50 }),
+  isMedefMember: boolean('is_medef_member').notNull().default(false),
   // Status lifecycle: draft → submitted → active ↔ inactive
   status: memberStatusEnum('status').notNull().default('draft'),
   submittedAt: timestamp('submitted_at', { withTimezone: true }),
