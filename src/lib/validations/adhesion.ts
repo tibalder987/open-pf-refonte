@@ -8,7 +8,7 @@ export const stepEntrepriseSchema = z.object({
     .regex(/^[0-9]{6}[A-Z]?$/, 'Format n° TAHITI invalide (ex : 123456 ou 123456B)')
     .optional()
     .or(z.literal('')),
-  websiteUrl: z.string().url('URL invalide').optional().or(z.literal('')),
+  websiteUrl: z.string().url('URL invalide (ex : www.monsite.pf ou https://monsite.pf)').optional().or(z.literal('')),
   description: z.string().max(500, '500 caractères max.').optional().or(z.literal('')),
   yearFounded: z.number().int().min(1900, 'Année invalide').max(new Date().getFullYear(), 'Année invalide').optional(),
   employeeCount: z.number().int().min(0, 'Nombre invalide').optional(),

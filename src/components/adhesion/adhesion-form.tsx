@@ -240,13 +240,22 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
                 <label htmlFor="websiteUrl">Site web</label>
                 <input
                   id="websiteUrl"
-                  type="url"
-                  placeholder="https://example.com"
+                  type="text"
+                  placeholder="www.monsite.pf"
                   aria-describedby={
-                    form.formState.errors.websiteUrl ? 'websiteUrl-error' : undefined
+                    form.formState.errors.websiteUrl ? 'websiteUrl-error' : 'websiteUrl-hint'
                   }
-                  {...form.register('websiteUrl')}
+                  {...form.register('websiteUrl', {
+                    setValueAs: (v: string) => {
+                      if (!v) return v
+                      if (/^www\./i.test(v)) return `https://${v}`
+                      return v
+                    },
+                  })}
                 />
+                <p id="websiteUrl-hint" className="help-text">
+                  Ex : www.monsite.pf ou https://monsite.pf
+                </p>
                 {form.formState.errors.websiteUrl && (
                   <p id="websiteUrl-error" className="field-error" role="alert">
                     {form.formState.errors.websiteUrl.message}
