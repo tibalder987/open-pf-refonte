@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // P6: admin action schemas
 export const adminLoginSchema = z.object({
-  email: z.string().min(1),
+  email: z.string().email('Adresse email invalide'),
   password: z.string().min(1),
 })
 

@@ -107,21 +107,26 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
     setIsSubmitting(true)
     setServerError(null)
 
-    const result = await submitAdhesion(data)
+    try {
+      const result = await submitAdhesion(data)
 
-    setIsSubmitting(false)
+      setIsSubmitting(false)
 
-    if (!result.success) {
-      const firstError = Object.values(result.errors)[0]?.[0]
-      setServerError(firstError ?? 'Une erreur est survenue. Réessayez.')
-      return
-    }
+      if (!result.success) {
+        const firstError = Object.values(result.errors)[0]?.[0]
+        setServerError(firstError ?? 'Une erreur est survenue. Réessayez.')
+        return
+      }
 
-    localStorage.removeItem(DRAFT_KEY)
-    setSubmitted(true)
+      localStorage.removeItem(DRAFT_KEY)
+      setSubmitted(true)
 
-    if (onSuccess) {
-      onSuccess(result.slug)
+      if (onSuccess) {
+        onSuccess(result.slug)
+      }
+    } catch {
+      setIsSubmitting(false)
+      setServerError('Une erreur est survenue. Veuillez réessayer dans quelques instants.')
     }
   }
 

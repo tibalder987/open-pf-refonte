@@ -115,11 +115,15 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <div
-            className="hero-visual"
-            role="img"
-            aria-label="Illustration abstraite d'un réseau numérique polynésien"
-          />
+          <div className="hero-visual" style={{ position: 'relative', overflow: 'hidden' }}>
+            <Image
+              src="/hero-illustration.png"
+              alt="Professionnelle polynésienne du numérique"
+              fill
+              style={{ objectFit: 'cover', objectPosition: 'center top' }}
+              priority
+            />
+          </div>
         </div>
       </section>
 
