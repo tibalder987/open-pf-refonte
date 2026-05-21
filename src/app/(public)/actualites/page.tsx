@@ -1,7 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getDb } from '@/lib/db'
+import { news, newsCategories } from '@/lib/db/schema'
+import { eq, desc } from 'drizzle-orm'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
+import { formatDate } from '@/lib/utils'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Actualités OPEN PF',
@@ -13,63 +19,24 @@ export const metadata: Metadata = {
   },
 }
 
-const ARTICLES = [
-  {
-    slug: 'ag-juillet-2025',
-    type: 'event',
-    tag: "Vie de l'association",
-    title: 'Assemblée Générale Ordinaire du 04 juillet 2025 – Nouveau CA',
-    excerpt:
-      "Retour sur l'Assemblée Générale Ordinaire du 4 juillet 2025 et présentation du nouveau Conseil d'Administration.",
-    date: '4 juillet 2025',
-    featured: true,
-  },
-  {
-    slug: 'info-cyber-2025',
-    type: 'cyber',
-    tag: 'Cybersécurité',
-    title: "« L'INFO-CYBER des partenaires » n°1 2025",
-    excerpt:
-      'Une publication du Commandement de la Gendarmerie pour la Polynésie française dédiée aux bonnes pratiques en cybersécurité.',
-    date: 'Janvier 2025',
-    featured: false,
-  },
-  {
-    slug: 'horizons-numerique-2025',
-    type: 'lagoon',
-    tag: 'Événement',
-    title: "Retour sur l'implication de l'OPEN PF au premier forum Les Horizons du Numérique 2025",
-    excerpt:
-      'OPEN PF était présent au premier forum Les Horizons du Numérique 2025. Retour sur cette édition inaugurale.',
-    date: 'Juin 2025',
-    featured: false,
-  },
-  {
-    slug: 'dematerialisation-marches-publics',
-    type: 'lagoon',
-    tag: 'Filière numérique',
-    title:
-      'Dématérialisation des marchés publics en Polynésie : un réel avantage pour les entreprises locales ?',
-    excerpt:
-      'Analyse des enjeux et opportunités de la dématérialisation des marchés publics pour les entreprises polynésiennes.',
-    date: 'Mars 2025',
-    featured: false,
-  },
-  {
-    slug: 'meta-fenua-tntv',
-    type: 'event',
-    tag: "Vie de l'association",
-    title: "OPEN Polynésie à l'honneur dans Meta Fenua sur TNTV",
-    excerpt:
-      "OPEN Polynésie française était à l'honneur dans l'émission Meta Fenua diffusée sur TNTV.",
-    date: 'Novembre 2024',
-    featured: false,
-  },
-]
+export default async function ActualitesPage() {
+  const db = getDb()
+  const articles = await db
+    .select({
+      id: news.id,
+      slug: news.slug,
+      title: news.title,
+      excerpt: news.excerpt,
+      publishedAt: news.publishedAt,
+      imageUrl: news.imageUrl,
+      categoryLabel: newsCategories.label,
+    })
+    .from(news)
+    .leftJoin(newsCategories, eq(news.categoryId, newsCategories.id))
+    .where(eq(news.status, 'published'))
+    .orderBy(desc(news.publishedAt))
 
-export default function ActualitesPage() {
-  const featured = ARTICLES.find((a) => a.featured)
-  const rest = ARTICLES.filter((a) => !a.featured)
+  const [featured, ...rest] = articles
 
   return (
     <>
@@ -89,16 +56,6 @@ export default function ActualitesPage() {
 
       <section className="section">
         <div className="container">
-          <div className="section-head">
-            <div className="filters">
-              <span className="filter-chip light active">Tous les articles</span>
-              <span className="filter-chip light">Vie de l&apos;association</span>
-              <span className="filter-chip light">Cybersécurité</span>
-              <span className="filter-chip light">Filière numérique</span>
-              <span className="filter-chip light">Événement</span>
-            </div>
-          </div>
-
           {featured && (
             <article
               className="card"
@@ -110,14 +67,20 @@ export default function ActualitesPage() {
                 marginBottom: '36px',
               }}
             >
-              <div
-                className={`news-image ${featured.type}`}
-                style={{ height: '260px', borderRadius: '18px' }}
-              />
+              <div className="news-image event" style={{ height: '260px', borderRadius: '18px' }} />
               <div>
-                <p className="meta">{featured.date}</p>
-                <h2>{featured.title}</h2>
-                <p style={{ marginTop: '14px' }}>{featured.excerpt}</p>
+                {featured.categoryLabel && (
+                  <span className="tag">{featured.categoryLabel}</span>
+                )}
+                {featured.publishedAt && (
+                  <p className="meta" style={{ marginTop: '8px' }}>
+                    {formatDate(featured.publishedAt)}
+                  </p>
+                )}
+                <h2 style={{ marginTop: '8px' }}>{featured.title}</h2>
+                {featured.excerpt && (
+                  <p style={{ marginTop: '14px' }}>{featured.excerpt}</p>
+                )}
                 <Link
                   href={`/actualites/${featured.slug}`}
                   className="card-link"
@@ -129,23 +92,35 @@ export default function ActualitesPage() {
             </article>
           )}
 
-          <div className="grid-3">
-            {rest.map((article) => (
-              <article key={article.slug} className="card news-card">
-                <div className={`news-image ${article.type}`} />
-                <div className="news-body">
-                  <span className="tag">{article.tag}</span>
-                  <h3>{article.title}</h3>
-                  <p className="meta" style={{ marginTop: '8px' }}>
-                    {article.date}
-                  </p>
-                  <Link href={`/actualites/${article.slug}`} className="card-link">
-                    Lire l&apos;article <ArrowIcon />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+          {rest.length > 0 && (
+            <div className="grid-3">
+              {rest.map((article) => (
+                <article key={article.slug} className="card news-card">
+                  <div className="news-image lagoon" />
+                  <div className="news-body">
+                    {article.categoryLabel && (
+                      <span className="tag">{article.categoryLabel}</span>
+                    )}
+                    <h3 style={{ marginTop: '8px' }}>{article.title}</h3>
+                    {article.publishedAt && (
+                      <p className="meta" style={{ marginTop: '8px' }}>
+                        {formatDate(article.publishedAt)}
+                      </p>
+                    )}
+                    <Link href={`/actualites/${article.slug}`} className="card-link">
+                      Lire l&apos;article <ArrowIcon />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {articles.length === 0 && (
+            <p style={{ color: 'var(--muted)', textAlign: 'center', padding: '48px 0' }}>
+              Aucune actualité pour le moment.
+            </p>
+          )}
         </div>
       </section>
 

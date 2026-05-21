@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getDb } from '@/lib/db'
+import { members } from '@/lib/db/schema'
+import { eq, asc } from 'drizzle-orm'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
-import { MEMBERS } from '@/lib/data/members'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Annuaire des adhérents OPEN – OPEN PF',
@@ -15,7 +19,20 @@ export const metadata: Metadata = {
   },
 }
 
-export default function AdherentsPage() {
+export default async function AdherentsPage() {
+  const db = getDb()
+  const list = await db
+    .select({
+      id: members.id,
+      slug: members.slug,
+      name: members.name,
+      logoUrl: members.logoUrl,
+      description: members.description,
+    })
+    .from(members)
+    .where(eq(members.status, 'active'))
+    .orderBy(asc(members.name))
+
   return (
     <>
       <section className="hero hero-simple">
@@ -64,12 +81,12 @@ export default function AdherentsPage() {
         <div className="container">
           <div className="section-head">
             <h2>
-              <span style={{ color: 'var(--open-magenta)' }}>{MEMBERS.length}</span> entreprises
+              <span style={{ color: 'var(--open-magenta)' }}>{list.length}</span> entreprises
               adhérentes
             </h2>
           </div>
           <div className="grid-3">
-            {MEMBERS.map((member) => (
+            {list.map((member) => (
               <article key={member.slug} className="card member-card">
                 <div className="logo-card">
                   {member.logoUrl ? (
