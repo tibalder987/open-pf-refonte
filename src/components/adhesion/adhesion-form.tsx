@@ -262,7 +262,9 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
                   min="1900"
                   max={new Date().getFullYear()}
                   placeholder="2010"
-                  {...form.register('yearFounded', { valueAsNumber: true })}
+                  {...form.register('yearFounded', {
+                    setValueAs: (v: string) => v === '' ? undefined : parseInt(v, 10),
+                  })}
                 />
               </div>
 
@@ -273,7 +275,9 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
                   type="number"
                   min="0"
                   placeholder="10"
-                  {...form.register('employeeCount', { valueAsNumber: true })}
+                  {...form.register('employeeCount', {
+                    setValueAs: (v: string) => v === '' ? undefined : parseInt(v, 10),
+                  })}
                 />
               </div>
 
