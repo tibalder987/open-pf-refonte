@@ -1,5 +1,6 @@
 import { render } from '@react-email/components'
 import { MagicLinkEmail } from './templates/magic-link'
+import { ReminderEmail } from './templates/reminder'
 import { env } from '@/lib/env'
 
 interface SendMagicLinkParams {
@@ -27,6 +28,46 @@ export async function sendMagicLinkEmail({
       to: [{ email: to }],
       replyTo: { email: 'contact@open.pf' },
       subject: `Complétez la fiche adhérent de ${memberName} — OPEN PF`,
+      htmlContent: html,
+      textContent: text,
+    }),
+  })
+
+  if (!res.ok) {
+    const body = await res.text()
+    throw new Error(`Brevo error ${res.status}: ${body}`)
+  }
+}
+
+interface SendReminderParams {
+  to: string
+  memberName: string
+  submittedAt: Date
+  adminUrl: string
+}
+
+export async function sendReminderEmail({
+  to,
+  memberName,
+  submittedAt,
+  adminUrl,
+}: SendReminderParams): Promise<void> {
+  const html = await render(
+    <ReminderEmail memberName={memberName} submittedAt={submittedAt} adminUrl={adminUrl} />,
+  )
+  const submittedFormatted = submittedAt.toLocaleDateString('fr-FR')
+  const text = `Demande d'adhésion en attente : ${memberName} (déposée le ${submittedFormatted}).\n\nTraiter : ${adminUrl}`
+
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': env.BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: { name: env.BREVO_SENDER_NAME, email: env.BREVO_SENDER_EMAIL },
+      to: [{ email: to }],
+      subject: `[OPEN PF] Demande en attente — ${memberName}`,
       htmlContent: html,
       textContent: text,
     }),
