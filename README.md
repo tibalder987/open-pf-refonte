@@ -29,9 +29,27 @@ pnpm e2e          # tests end-to-end (Playwright)
 ## Base de données
 
 ```bash
-pnpm exec drizzle-kit generate   # générer une migration
-pnpm exec drizzle-kit migrate    # appliquer les migrations
-pnpm exec drizzle-kit studio     # Drizzle Studio (UI)
+pnpm exec drizzle-kit generate   # générer une migration après modification du schema
+pnpm exec drizzle-kit migrate    # appliquer les migrations (prod : via CI uniquement)
+pnpm exec drizzle-kit studio     # Drizzle Studio (UI locale)
+```
+
+## Déploiement (Vercel)
+
+1. Connecter le repo GitHub à Vercel
+2. Renseigner toutes les variables d'environnement (voir `.env.example`)
+3. `pnpm exec drizzle-kit migrate` — appliquer les migrations avant la mise en prod
+4. Le cron `/api/cron/reminders` se déclenche automatiquement via `vercel.json` (08h00 UTC quotidien)
+
+## Premier admin
+
+```bash
+# Générer un hash bcrypt (node REPL ou script one-shot)
+node -e "const b = require('bcryptjs'); b.hash('MOT_DE_PASSE', 10).then(h => console.log(h))"
+
+# Insérer dans la table admin_users (Drizzle Studio ou psql)
+INSERT INTO admin_users (email, password_hash, name)
+VALUES ('admin@open.pf', '<hash>', 'Admin OPEN PF');
 ```
 
 ## Spécifications
