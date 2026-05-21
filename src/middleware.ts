@@ -1,35 +1,25 @@
-import { getToken } from 'next-auth/jwt'
+import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
 
-export async function middleware(request: NextRequest) {
-  const secret = process.env['AUTH_SECRET']
-  let token = null
-  if (secret) {
-    try {
-      token = await getToken({ req: request, secret })
-    } catch {
-      // Invalid token — treat as unauthenticated
-    }
-  }
+export default auth((req) => {
+  const { pathname } = req.nextUrl
+  const isAdminPath = pathname.startsWith('/admin')
+  const isLoginPath = pathname === '/admin/login'
 
-  const isAdminPath = request.nextUrl.pathname.startsWith('/admin')
-  const isLoginPath = request.nextUrl.pathname === '/admin/login'
-
-  if (isAdminPath && !isLoginPath && !token) {
-    const loginUrl = new URL('/admin/login', request.url)
-    loginUrl.searchParams.set('callbackUrl', request.nextUrl.pathname)
+  if (isAdminPath && !isLoginPath && !req.auth) {
+    const loginUrl = new URL('/admin/login', req.url)
+    loginUrl.searchParams.set('callbackUrl', pathname)
     return NextResponse.redirect(loginUrl)
   }
 
-  if (isLoginPath && token) {
-    return NextResponse.redirect(new URL('/admin', request.url))
+  if (isLoginPath && req.auth) {
+    return NextResponse.redirect(new URL('/admin', req.url))
   }
 
   const response = NextResponse.next()
-  response.headers.set('x-pathname', request.nextUrl.pathname)
+  response.headers.set('x-pathname', pathname)
   return response
-}
+})
 
 export const config = {
   matcher: ['/admin/:path*'],
