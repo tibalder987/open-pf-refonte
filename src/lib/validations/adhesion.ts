@@ -10,13 +10,14 @@ export const stepEntrepriseSchema = z.object({
     .or(z.literal('')),
   websiteUrl: z.string().url('URL invalide').optional().or(z.literal('')),
   description: z.string().max(500, '500 caractères max.').optional().or(z.literal('')),
-  yearFounded: z
-    .number({ error: 'Année invalide' })
-    .int()
-    .min(1900)
-    .max(new Date().getFullYear())
-    .optional(),
-  employeeCount: z.number({ error: 'Nombre invalide' }).int().min(0).optional(),
+  yearFounded: z.preprocess(
+    (v) => (typeof v === 'number' && isNaN(v)) || v === '' ? undefined : v,
+    z.number().int().min(1900, 'Année invalide').max(new Date().getFullYear(), 'Année invalide').optional(),
+  ),
+  employeeCount: z.preprocess(
+    (v) => (typeof v === 'number' && isNaN(v)) || v === '' ? undefined : v,
+    z.number().int().min(0, 'Nombre invalide').optional(),
+  ),
   isMedefMember: z.boolean(),
 })
 

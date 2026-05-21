@@ -92,6 +92,10 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
     if (valid) setStep((s) => s + 1)
   }
 
+  function handleInvalid() {
+    setServerError('Certains champs sont invalides. Vérifiez les étapes précédentes.')
+  }
+
   async function handleSubmit(data: FormData) {
     // Step 3 validation before submit
     const step3 = stepContactsSchema.safeParse({
@@ -161,7 +165,7 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
     <div className="adhesion-shell">
       <Stepper steps={STEPS} currentStep={step} />
 
-      <form onSubmit={form.handleSubmit(handleSubmit)} noValidate>
+      <form onSubmit={form.handleSubmit(handleSubmit, handleInvalid)} noValidate>
         {step === 1 && (
           <fieldset className="form-step">
             <legend className="form-step-legend">Informations entreprise</legend>
