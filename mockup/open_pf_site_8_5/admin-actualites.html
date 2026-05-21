@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Actualités — Back-office OPEN</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<body>
+<main class="admin-layout">
+  <aside class="admin-sidebar">
+    <a class="brand" href="index.html" aria-label="OPEN Polynésie française, accueil">
+      <span class="open-logo-mark" aria-hidden="true"></span>
+      <span><span class="brand-word">OPEN</span><span class="brand-sub">Organisation des Professionnels<br>de l'Économie Numérique</span></span>
+    </a>
+    <nav aria-label="Administration"><ul class="admin-menu">
+      <li><a href="admin.html">Vue d'ensemble</a></li>
+      <li><a href="admin-demandes.html">Demandes d'adhésion <span class="badge">12</span></a></li>
+      <li><a href="admin-adherents.html">Adhérents</a></li>
+      <li><a href="admin-relances.html">Relances</a></li>
+      <li><a class="active" href="admin-actualites.html">Actualités</a></li>
+      <li><a href="#">Offres d'emploi</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a href="admin-parametres.html">Paramètres</a></li>
+    </ul></nav>
+  </aside>
+  <section class="admin-main">
+    <div class="admin-top">
+      <div><h1>Actualités</h1><p>34 articles publiés · 3 brouillons en cours.</p></div>
+      <div style="display:flex;gap:10px"><a class="btn" href="admin-actualite-edit.html">+ Nouvelle actualité</a></div>
+    </div>
+
+    <div class="admin-toolbar">
+      <div class="search-input">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a8 8 0 1 1 5.3-14L21 9.7l-1.4 1.4-5.7-5.7A6 6 0 1 0 16 10h2a8 8 0 0 1-8 8z"/></svg>
+        <input type="search" placeholder="Rechercher un article…" aria-label="Recherche">
+      </div>
+      <div class="filters">
+        <button class="filter-chip active" type="button">Tous</button>
+        <button class="filter-chip" type="button">Publiés (34)</button>
+        <button class="filter-chip" type="button">Brouillons (3)</button>
+        <button class="filter-chip" type="button">Archivés (8)</button>
+      </div>
+      <select class="select-pill" aria-label="Catégorie"><option>Toutes catégories</option><option>Filière</option><option>Évènements</option><option>Communiqué</option><option>Partenariat</option></select>
+    </div>
+
+    <section class="card" style="padding:0;overflow:hidden">
+      <table class="table">
+        <thead><tr><th>Titre</th><th>Catégorie</th><th>Publication</th><th>Statut</th><th>Vues 30j</th><th style="text-align:right">Actions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>OPEN lance les Tremplins 2026</strong><br><span style="color:var(--muted);font-size:12px">Par Marie · /actualites/tremplins-2026</span></td><td><span class="filter-chip light">Évènements</span></td><td>18 mai 2026</td><td><span class="status success">Publié</span></td><td>1 247</td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-actualite-edit.html">Éditer</a></td></tr>
+          <tr><td><strong>Bilan filière numérique 2025</strong><br><span style="color:var(--muted);font-size:12px">Par Marie · brouillon</span></td><td><span class="filter-chip light">Filière</span></td><td>—</td><td><span class="status muted">Brouillon</span></td><td>—</td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-actualite-edit.html">Reprendre</a></td></tr>
+          <tr><td><strong>Nouveau partenariat avec la CCISM</strong></td><td><span class="filter-chip light">Partenariat</span></td><td>10 mai 2026</td><td><span class="status success">Publié</span></td><td>823</td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-actualite-edit.html">Éditer</a></td></tr>
+          <tr><td><strong>Cybersécurité : nouvelle veille</strong></td><td><span class="filter-chip light">Communiqué</span></td><td>2 mai 2026</td><td><span class="status success">Publié</span></td><td>456</td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-actualite-edit.html">Éditer</a></td></tr>
+          <tr><td><strong>Petit-déj' OPEN du 12 avril</strong></td><td><span class="filter-chip light">Évènements</span></td><td>15 avril 2026</td><td><span class="status muted">Archivé</span></td><td>312</td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-actualite-edit.html">Voir</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <nav class="pagination" aria-label="Pagination">
+      <span class="disabled">‹</span>
+      <a class="active" href="#">1</a><a href="#">2</a><a href="#">3</a>
+      <a href="#">›</a>
+    </nav>
+
+    <div class="card" style="margin-top:32px;background:var(--soft);border:1px dashed var(--line)">
+      <p style="font-size:13px;color:var(--muted);margin:0"><strong style="color:var(--ink)">Note :</strong> les pages <em>Offres d'emploi</em> et <em>Événements / Tremplins</em> suivent exactement le même pattern (liste + CRUD + filtre par statut). À dupliquer en remplaçant titres, catégories et colonnes spécifiques (date d'expiration pour les offres, date d'événement et lieu pour les Tremplins).</p>
+    </div>
+  </section>
+</main>
+<script src="assets/js/app.js" defer></script>
+</body></html>

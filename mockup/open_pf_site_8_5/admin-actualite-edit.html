@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Édition — Back-office OPEN</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<body>
+<main class="admin-layout">
+  <aside class="admin-sidebar">
+    <a class="brand" href="index.html" aria-label="OPEN Polynésie française, accueil">
+      <span class="open-logo-mark" aria-hidden="true"></span>
+      <span><span class="brand-word">OPEN</span><span class="brand-sub">Organisation des Professionnels<br>de l'Économie Numérique</span></span>
+    </a>
+    <nav aria-label="Administration"><ul class="admin-menu">
+      <li><a href="admin.html">Vue d'ensemble</a></li>
+      <li><a href="admin-demandes.html">Demandes d'adhésion <span class="badge">12</span></a></li>
+      <li><a href="admin-adherents.html">Adhérents</a></li>
+      <li><a href="admin-relances.html">Relances</a></li>
+      <li><a class="active" href="admin-actualites.html">Actualités</a></li>
+      <li><a href="#">Offres d'emploi</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a href="admin-parametres.html">Paramètres</a></li>
+    </ul></nav>
+  </aside>
+  <section class="admin-main">
+    <div class="admin-top">
+      <div>
+        <nav class="breadcrumb" style="color:var(--muted)"><a href="admin-actualites.html">Actualités</a> › OPEN lance les Tremplins 2026</nav>
+        <h1 style="margin-top:8px">Édition de l'article</h1>
+        <p>Auto-enregistré il y a 2 minutes · <span class="status success">Publié</span></p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <a class="btn btn-secondary btn-small" href="admin-actualites.html">← Retour</a>
+        <a class="btn btn-secondary btn-small" target="_blank" href="actualites.html">Aperçu →</a>
+      </div>
+    </div>
+
+    <form aria-label="Édition de l'article">
+      <div class="grid-2">
+        <div>
+          <section class="form-shell">
+            <div class="form-field">
+              <label for="title">Titre de l'article <span class="required">*</span></label>
+              <input id="title" value="OPEN lance les Tremplins 2026">
+            </div>
+            <div class="form-field" style="margin-top:18px">
+              <label for="slug">Slug (URL)</label>
+              <input id="slug" value="open-lance-les-tremplins-2026">
+              <span style="font-size:12px;color:var(--muted);margin-top:6px;display:block">URL finale : open.pf/actualites/open-lance-les-tremplins-2026</span>
+            </div>
+            <div class="form-field" style="margin-top:18px">
+              <label for="excerpt">Chapô (extrait d'aperçu)</label>
+              <textarea id="excerpt" maxlength="280" style="min-height:80px">Une nouvelle édition des Tremplins du Numérique débute en juin. Rencontres mensuelles, ateliers thématiques, networking : tout ce qu'il faut savoir.</textarea>
+              <span style="font-size:12px;color:var(--muted);margin-top:6px;display:block">187 / 280 caractères</span>
+            </div>
+          </section>
+
+          <section class="form-shell" style="margin-top:24px">
+            <h2>Image de couverture</h2>
+            <div class="card card-muted" style="margin-top:16px;padding:24px;text-align:center;border:2px dashed var(--line)">
+              <p style="margin-bottom:14px">Glissez une image ici ou parcourez (JPG/PNG/WebP, max 2 Mo)</p>
+              <button class="btn btn-secondary btn-small" type="button">Parcourir</button>
+            </div>
+          </section>
+
+          <section class="form-shell" style="margin-top:24px">
+            <h2>Contenu</h2>
+            <div style="display:flex;gap:4px;padding:8px;border:1px solid var(--line);border-bottom:0;border-radius:14px 14px 0 0;background:var(--soft);margin-top:16px">
+              <button class="action-btn" type="button" aria-label="Gras"><strong>B</strong></button>
+              <button class="action-btn" type="button" aria-label="Italique"><em>I</em></button>
+              <button class="action-btn" type="button" aria-label="Titre H2">H2</button>
+              <button class="action-btn" type="button" aria-label="Titre H3">H3</button>
+              <button class="action-btn" type="button" aria-label="Lien">🔗</button>
+              <button class="action-btn" type="button" aria-label="Liste">≡</button>
+              <button class="action-btn" type="button" aria-label="Image">🖼</button>
+            </div>
+            <textarea aria-label="Contenu de l'article" style="width:100%;min-height:320px;padding:18px;border:1px solid var(--line);border-radius:0 0 14px 14px;font:inherit;border-top:0">## Une nouvelle édition
+
+Les Tremplins du Numérique reprennent en juin 2026 avec un programme renforcé : 12 rencontres mensuelles, 6 ateliers thématiques, et la première édition du « hackathon adhérents » prévue en septembre.
+
+## Programme prévisionnel
+
+- **Juin** — IA générative : usages concrets pour les TPE/PME
+- **Juillet** — Cybersécurité : la nouvelle veille OPEN
+- **Septembre** — Hackathon adhérents (3 jours)
+
+## Inscriptions
+
+Les inscriptions ouvrent le 1er juin. Réservé aux adhérents OPEN PF.
+</textarea>
+          </section>
+        </div>
+
+        <aside>
+          <section class="card">
+            <h2>Publication</h2>
+            <div class="form-field" style="margin-top:16px">
+              <label for="status">Statut</label>
+              <select id="status"><option>Brouillon</option><option selected>Publié</option><option>Archivé</option></select>
+            </div>
+            <div class="form-field" style="margin-top:16px">
+              <label for="pub-date">Date de publication</label>
+              <input type="datetime-local" id="pub-date" value="2026-05-18T09:00">
+            </div>
+            <div class="form-field" style="margin-top:16px">
+              <label for="cat">Catégorie</label>
+              <select id="cat"><option>Filière</option><option selected>Évènements</option><option>Communiqué</option><option>Partenariat</option></select>
+            </div>
+            <div style="display:grid;gap:10px;margin-top:20px">
+              <button class="btn" type="submit">Enregistrer</button>
+              <button class="btn btn-secondary" type="button">Enregistrer en brouillon</button>
+            </div>
+          </section>
+
+          <section class="card" style="margin-top:20px">
+            <h2>SEO</h2>
+            <div class="form-field" style="margin-top:16px">
+              <label for="meta-title">Titre SEO</label>
+              <input id="meta-title" value="Tremplins du Numérique 2026 : programme et inscriptions">
+            </div>
+            <div class="form-field" style="margin-top:16px">
+              <label for="meta-desc">Description SEO</label>
+              <textarea id="meta-desc" maxlength="160" style="min-height:80px">Découvrez le programme 2026 des Tremplins du Numérique organisés par OPEN PF : rencontres, ateliers et hackathon adhérents.</textarea>
+            </div>
+          </section>
+
+          <section class="card" style="margin-top:20px">
+            <h2>Réseaux sociaux</h2>
+            <p style="margin-top:6px;font-size:13px">Image de partage et résumé pour Facebook, LinkedIn, Twitter.</p>
+            <div style="display:flex;gap:10px;margin-top:14px">
+              <label style="display:flex;align-items:center;gap:8px;font-size:14px"><input type="checkbox" checked> Auto-publier sur LinkedIn</label>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </form>
+  </section>
+</main>
+<script src="assets/js/app.js" defer></script>
+</body></html>

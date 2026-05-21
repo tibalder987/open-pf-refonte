@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Demandes d'adhésion — Back-office OPEN</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<body>
+<main class="admin-layout">
+  <aside class="admin-sidebar">
+    <a class="brand" href="index.html" aria-label="OPEN Polynésie française, accueil">
+      <span class="open-logo-mark" aria-hidden="true"></span>
+      <span><span class="brand-word">OPEN</span><span class="brand-sub">Organisation des Professionnels<br>de l'Économie Numérique</span></span>
+    </a>
+    <nav aria-label="Administration"><ul class="admin-menu">
+      <li><a href="admin.html">Vue d'ensemble</a></li>
+      <li><a class="active" href="admin-demandes.html">Demandes d'adhésion <span class="badge">12</span></a></li>
+      <li><a href="admin-adherents.html">Adhérents</a></li>
+      <li><a href="admin-relances.html">Relances</a></li>
+      <li><a href="admin-actualites.html">Actualités</a></li>
+      <li><a href="#">Offres d'emploi</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a href="admin-parametres.html">Paramètres</a></li>
+    </ul></nav>
+  </aside>
+  <section class="admin-main">
+    <div class="admin-top">
+      <div><h1>Demandes d'adhésion</h1><p>12 demandes en attente de traitement, 47 demandes traitées sur 30 derniers jours.</p></div>
+      <div style="display:flex;gap:10px"><a class="btn btn-secondary btn-small" href="#">Exporter (CSV)</a></div>
+    </div>
+
+    <div class="admin-toolbar">
+      <div class="search-input">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a8 8 0 1 1 5.3-14L21 9.7l-1.4 1.4-5.7-5.7A6 6 0 1 0 16 10h2a8 8 0 0 1-8 8z"/></svg>
+        <input type="search" placeholder="Rechercher par entreprise, contact, n° TAHITI…" aria-label="Recherche">
+      </div>
+      <div class="filters">
+        <button class="filter-chip active" type="button">Tous (59)</button>
+        <button class="filter-chip" type="button">Nouvelles (12)</button>
+        <button class="filter-chip" type="button">En cours (4)</button>
+        <button class="filter-chip" type="button">Validées (38)</button>
+        <button class="filter-chip" type="button">Refusées (5)</button>
+      </div>
+      <select class="select-pill" aria-label="Trier"><option>Plus récentes</option><option>Plus anciennes</option><option>A → Z</option></select>
+    </div>
+
+    <section class="card" style="padding:0;overflow:hidden">
+      <table class="table">
+        <thead><tr><th>Entreprise</th><th>Contact</th><th>Date</th><th>Statut</th><th style="text-align:right">Actions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Moana Digital</strong><br><span style="color:var(--muted);font-size:12px">SARL · TAHITI 123 456</span></td><td>marie.t@moanadigital.pf</td><td>20 mai 2026<br><span style="color:var(--muted);font-size:12px">il y a 2 j</span></td><td><span class="status info">Nouveau</span></td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-demande-detail.html">Examiner →</a></td></tr>
+          <tr><td><strong>Fenua Data</strong><br><span style="color:var(--muted);font-size:12px">EURL · TAHITI 654 321</span></td><td>contact@fenuadata.pf</td><td>18 mai 2026</td><td><span class="status warning">En cours</span></td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-demande-detail.html">Reprendre →</a></td></tr>
+          <tr><td><strong>Pacific Code</strong><br><span style="color:var(--muted);font-size:12px">SAS · TAHITI 998 877</span></td><td>j.tehei@pacificcode.pf</td><td>15 mai 2026</td><td><span class="status info">Nouveau</span></td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-demande-detail.html">Examiner →</a></td></tr>
+          <tr><td><strong>Taarii Web</strong><br><span style="color:var(--muted);font-size:12px">SARL · TAHITI 445 566</span></td><td>hello@taarii.pf</td><td>12 mai 2026</td><td><span class="status info">Nouveau</span></td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-demande-detail.html">Examiner →</a></td></tr>
+          <tr><td><strong>Polyhost</strong><br><span style="color:var(--muted);font-size:12px">SARL · TAHITI 778 899</span></td><td>admin@polyhost.pf</td><td>11 mai 2026</td><td><span class="status success">Validée</span></td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-demande-detail.html">Voir →</a></td></tr>
+          <tr><td><strong>Mata Studio</strong><br><span style="color:var(--muted);font-size:12px">EI · TAHITI 112 233</span></td><td>contact@matastudio.pf</td><td>9 mai 2026</td><td><span class="status danger">Refusée</span></td><td style="text-align:right"><a class="btn btn-secondary btn-small" href="admin-demande-detail.html">Voir →</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <nav class="pagination" aria-label="Pagination">
+      <span class="disabled">‹</span>
+      <a class="active" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a>
+      <a href="#">›</a>
+    </nav>
+  </section>
+</main>
+<script src="assets/js/app.js" defer></script>
+</body></html>

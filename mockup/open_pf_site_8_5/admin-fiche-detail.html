@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fiche ONATi — Back-office OPEN</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<body>
+<main class="admin-layout">
+  <aside class="admin-sidebar">
+    <a class="brand" href="index.html" aria-label="OPEN Polynésie française, accueil">
+      <span class="open-logo-mark" aria-hidden="true"></span>
+      <span><span class="brand-word">OPEN</span><span class="brand-sub">Organisation des Professionnels<br>de l'Économie Numérique</span></span>
+    </a>
+    <nav aria-label="Administration"><ul class="admin-menu">
+      <li><a href="admin.html">Vue d'ensemble</a></li>
+      <li><a href="admin-demandes.html">Demandes d'adhésion <span class="badge">12</span></a></li>
+      <li><a class="active" href="admin-adherents.html">Adhérents</a></li>
+      <li><a href="admin-relances.html">Relances</a></li>
+      <li><a href="admin-actualites.html">Actualités</a></li>
+      <li><a href="#">Offres d'emploi</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a href="admin-parametres.html">Paramètres</a></li>
+    </ul></nav>
+  </aside>
+  <section class="admin-main">
+    <div class="admin-top">
+      <div>
+        <nav class="breadcrumb" style="color:var(--muted)"><a href="admin-adherents.html">Adhérents</a> › ONATi</nav>
+        <h1 style="margin-top:8px">ONATi</h1>
+        <p>Fiche soumise le 20 mai 2026 par marie.t@onati.pf · <span class="status warning">À valider</span></p>
+      </div>
+      <div style="display:flex;gap:10px"><a class="btn btn-secondary btn-small" href="admin-adherents.html">← Retour</a><a class="btn btn-secondary btn-small" target="_blank" href="fiche-onati.html">Aperçu public →</a></div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <section class="card">
+          <h2>Aperçu public</h2>
+          <p style="margin-top:6px;font-size:13px;color:var(--muted)">Voici comment la fiche apparaîtra dans l'annuaire après validation.</p>
+          <div class="card card-muted" style="margin-top:20px;padding:24px">
+            <div class="logo-card" style="height:120px;margin-bottom:18px"><span class="logo-onati">ONATi</span></div>
+            <h3 style="font-size:24px;margin-bottom:8px">ONATi</h3>
+            <p style="color:var(--muted);margin-bottom:14px">ONATi, opérateur public du numérique en Polynésie française, accompagne les institutions, les entreprises et les citoyens.</p>
+            <div class="filters" style="margin-bottom:16px"><span class="filter-chip light">Infrastructures télécoms</span><span class="filter-chip light">Cloud souverain</span><span class="filter-chip light">Cybersécurité</span></div>
+            <dl class="kv-list">
+              <div class="kv"><dt>Site web</dt><dd><a href="#" style="color:var(--blue)">www.onati.pf</a></dd></div>
+              <div class="kv"><dt>Contact</dt><dd>contact@onati.pf</dd></div>
+              <div class="kv"><dt>Effectif</dt><dd>50 – 99 salariés</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:20px">
+          <h2>Champs modifiés depuis la dernière validation</h2>
+          <ul style="margin-top:12px;padding-left:18px">
+            <li style="margin-bottom:6px"><strong>Description</strong> — texte mis à jour le 20/05</li>
+            <li style="margin-bottom:6px"><strong>Logo</strong> — nouveau fichier téléversé le 19/05</li>
+            <li style="margin-bottom:6px"><strong>Domaines</strong> — ajout de « Cybersécurité »</li>
+          </ul>
+        </section>
+      </div>
+
+      <aside>
+        <section class="card">
+          <h2>Actions</h2>
+          <div style="display:grid;gap:10px;margin-top:18px">
+            <button class="btn" type="button">Valider et publier <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></button>
+            <button class="btn btn-secondary" type="button">Demander des modifications</button>
+            <button class="btn btn-secondary" type="button">Renvoyer le lien magique</button>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:20px">
+          <h2>Cycle de vie</h2>
+          <dl class="kv-list" style="margin-top:14px">
+            <div class="kv"><dt>Statut</dt><dd><span class="status warning">Soumise</span></dd></div>
+            <div class="kv"><dt>Adhérent depuis</dt><dd>14 mars 2014</dd></div>
+            <div class="kv"><dt>Dernière publication</dt><dd>3 sept. 2025</dd></div>
+            <div class="kv"><dt>Magic link</dt><dd>Actif · expire le 19 juin 2026</dd></div>
+            <div class="kv"><dt>Relances envoyées</dt><dd>0 sur ce cycle</dd></div>
+          </dl>
+        </section>
+
+        <section class="danger-zone">
+          <h3>Zone sensible</h3>
+          <p style="font-size:13px;margin-bottom:14px">Désactiver une fiche la retire de l'annuaire public mais conserve l'historique.</p>
+          <button class="btn btn-secondary" type="button" style="color:var(--danger);border-color:var(--danger);width:100%">Désactiver la fiche</button>
+        </section>
+      </aside>
+    </div>
+  </section>
+</main>
+<script src="assets/js/app.js" defer></script>
+</body></html>

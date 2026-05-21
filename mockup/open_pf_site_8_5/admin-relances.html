@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Relances — Back-office OPEN</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<body>
+<main class="admin-layout">
+  <aside class="admin-sidebar">
+    <a class="brand" href="index.html" aria-label="OPEN Polynésie française, accueil">
+      <span class="open-logo-mark" aria-hidden="true"></span>
+      <span><span class="brand-word">OPEN</span><span class="brand-sub">Organisation des Professionnels<br>de l'Économie Numérique</span></span>
+    </a>
+    <nav aria-label="Administration"><ul class="admin-menu">
+      <li><a href="admin.html">Vue d'ensemble</a></li>
+      <li><a href="admin-demandes.html">Demandes d'adhésion <span class="badge">12</span></a></li>
+      <li><a href="admin-adherents.html">Adhérents</a></li>
+      <li><a class="active" href="admin-relances.html">Relances</a></li>
+      <li><a href="admin-actualites.html">Actualités</a></li>
+      <li><a href="#">Offres d'emploi</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a href="admin-parametres.html">Paramètres</a></li>
+    </ul></nav>
+  </aside>
+  <section class="admin-main">
+    <div class="admin-top">
+      <div><h1>Pilotage des relances</h1><p>Suivi des e-mails de relance automatiques pour les fiches non complétées.</p></div>
+    </div>
+
+    <div class="kpi-grid">
+      <article class="card kpi"><p>Fiches en cours de complétion</p><b>2</b><p style="color:var(--muted);font-size:13px;margin-top:4px">Moana Nūmera, Pacific Code</p></article>
+      <article class="card kpi"><p>Relances envoyées (30j)</p><b>14</b><p style="color:var(--success);font-size:13px;margin-top:4px">14 délivrées · 0 bounce</p></article>
+      <article class="card kpi"><p>Relances programmées</p><b>3</b><p style="color:var(--muted);font-size:13px;margin-top:4px">Prochaine : demain 8h</p></article>
+      <article class="card kpi"><p>Taux de conversion</p><b>78 %</b><p style="color:var(--success);font-size:13px;margin-top:4px">+5 % vs mois dernier</p></article>
+    </div>
+
+    <div class="admin-toolbar">
+      <div class="search-input">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a8 8 0 1 1 5.3-14L21 9.7l-1.4 1.4-5.7-5.7A6 6 0 1 0 16 10h2a8 8 0 0 1-8 8z"/></svg>
+        <input type="search" placeholder="Rechercher par adhérent…" aria-label="Recherche">
+      </div>
+      <div class="filters">
+        <button class="filter-chip active" type="button">Tous</button>
+        <button class="filter-chip" type="button">J+3</button>
+        <button class="filter-chip" type="button">+7 j</button>
+        <button class="filter-chip" type="button">Programmées</button>
+        <button class="filter-chip" type="button">Échouées</button>
+      </div>
+      <select class="select-pill" aria-label="Période"><option>30 derniers jours</option><option>90 derniers jours</option><option>Tout</option></select>
+    </div>
+
+    <section class="card" style="padding:0;overflow:hidden">
+      <table class="table">
+        <thead><tr><th>Adhérent</th><th>Type</th><th>Date</th><th>Destinataire</th><th>Statut</th><th style="text-align:right">Actions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Moana Nūmera</strong></td><td><span class="status info">+7 j (relance 4)</span></td><td>20 mai 2026, 08h00</td><td>contact@moananumera.pf</td><td><span class="status success">Délivrée</span></td><td style="text-align:right"><button class="btn btn-secondary btn-small" type="button">Stopper les relances</button></td></tr>
+          <tr><td><strong>Pacific Code</strong></td><td><span class="status warning">J+3</span></td><td>18 mai 2026, 08h00</td><td>j.tehei@pacificcode.pf</td><td><span class="status success">Délivrée</span></td><td style="text-align:right"><button class="btn btn-secondary btn-small" type="button">Stopper</button></td></tr>
+          <tr><td><strong>Taarii Web</strong></td><td><span class="status warning">J+3</span></td><td>15 mai 2026, 08h00</td><td>hello@taarii.pf</td><td><span class="status success">Délivrée</span></td><td style="text-align:right"><button class="btn btn-secondary btn-small" type="button">Stopper</button></td></tr>
+          <tr><td><strong>Moana Nūmera</strong></td><td><span class="status info">+7 j (relance 3)</span></td><td>13 mai 2026, 08h00</td><td>contact@moananumera.pf</td><td><span class="status success">Délivrée</span></td><td style="text-align:right;color:var(--muted);font-size:12px">—</td></tr>
+          <tr><td><strong>Polyhost</strong></td><td><span class="status warning">J+3</span></td><td>14 mai 2026, 08h00</td><td>admin@polyhost.pf</td><td><span class="status success">Fiche complétée 🎉</span></td><td style="text-align:right;color:var(--muted);font-size:12px">Cycle terminé</td></tr>
+          <tr><td><strong>Tahiti Cloud</strong></td><td><span class="status info">+7 j (relance 2)</span></td><td>10 mai 2026, 08h00</td><td>contact@tahiti-cloud.pf</td><td><span class="status danger">Bounce</span></td><td style="text-align:right"><button class="btn btn-secondary btn-small" type="button">Corriger l'e-mail</button></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top:24px">
+      <h2>Relance manuelle</h2>
+      <p style="margin:8px 0 18px">Envoyer immédiatement un e-mail à un adhérent qui n'a pas encore complété sa fiche, en complément des relances automatiques.</p>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <select class="select-pill" style="flex:1;min-width:280px"><option>Sélectionnez un adhérent en cours de complétion…</option><option>Moana Nūmera</option><option>Pacific Code</option></select>
+        <button class="btn" type="button">Envoyer maintenant</button>
+      </div>
+    </section>
+  </section>
+</main>
+<script src="assets/js/app.js" defer></script>
+</body></html>

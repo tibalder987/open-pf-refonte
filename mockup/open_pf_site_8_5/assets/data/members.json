@@ -1,0 +1,68 @@
+{
+  "members": [
+    {
+      "name": "ONATi",
+      "category": "Télécom",
+      "description": "Opérateur public du numérique en Polynésie française.",
+      "logoClass": "logo-onati",
+      "logo": "ONATi",
+      "url": "fiche-onati.html"
+    },
+    {
+      "name": "SOCREDO",
+      "category": "Conseil",
+      "description": "Banque et partenaire de l’écosystème économique local.",
+      "logoClass": "logo-socredo",
+      "logo": "SOCREDO",
+      "url": "adherents.html"
+    },
+    {
+      "name": "SysNux",
+      "category": "Cloud",
+      "description": "Intégrateur de solutions numériques et expert cloud.",
+      "logoClass": "logo-sysnux",
+      "logo": "SysNux",
+      "url": "adherents.html"
+    },
+    {
+      "name": "Green/Tech/Lab",
+      "category": "Innovation",
+      "description": "Cluster de l’innovation verte et numérique en Polynésie française.",
+      "logoClass": "logo-green",
+      "logo": "green/tech/lab",
+      "url": "adherents.html"
+    },
+    {
+      "name": "Moana Nūmera",
+      "category": "Conseil",
+      "description": "Accélérateur de projets numériques au service du territoire.",
+      "logoClass": "logo-moana",
+      "logo": "Moana Nūmera",
+      "url": "adherents.html"
+    },
+    {
+      "name": "VINI",
+      "category": "Télécom",
+      "description": "Connectivité, data et services numériques à fort impact.",
+      "logoClass": "logo-vini",
+      "logo": "VINI",
+      "url": "adherents.html"
+    },
+    {
+      "name": "Foodease",
+      "category": "Développement",
+      "description": "Solutions digitales pour la restauration et le commerce alimentaire.",
+      "logoClass": "logo-foodease",
+      "logo": "Foodease",
+      "url": "adherents.html"
+    },
+    {
+      "name": "Le Cnam Polynésie",
+      "category": "Formation",
+      "description": "Formations supérieures et professionnelles dans les domaines du numérique.",
+      "logoClass": "logo-cnam",
+      "logo": "le cnam",
+      "url": "adherents.html"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Paramètres — Back-office OPEN</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<body>
+<main class="admin-layout">
+  <aside class="admin-sidebar">
+    <a class="brand" href="index.html" aria-label="OPEN Polynésie française, accueil">
+      <span class="open-logo-mark" aria-hidden="true"></span>
+      <span><span class="brand-word">OPEN</span><span class="brand-sub">Organisation des Professionnels<br>de l'Économie Numérique</span></span>
+    </a>
+    <nav aria-label="Administration"><ul class="admin-menu">
+      <li><a href="admin.html">Vue d'ensemble</a></li>
+      <li><a href="admin-demandes.html">Demandes d'adhésion <span class="badge">12</span></a></li>
+      <li><a href="admin-adherents.html">Adhérents</a></li>
+      <li><a href="admin-relances.html">Relances</a></li>
+      <li><a href="admin-actualites.html">Actualités</a></li>
+      <li><a href="#">Offres d'emploi</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a class="active" href="admin-parametres.html">Paramètres</a></li>
+    </ul></nav>
+  </aside>
+  <section class="admin-main">
+    <div class="admin-top">
+      <div><h1>Paramètres du site</h1><p>Contenus institutionnels et configuration générale.</p></div>
+    </div>
+
+    <nav class="tabs" aria-label="Sections de paramètres">
+      <a class="active" href="#chiffres">Chiffres clés</a>
+      <a href="#bureau">Bureau</a>
+      <a href="#frise">Frise chronologique</a>
+      <a href="#partenaires">Partenaires</a>
+      <a href="#coords">Coordonnées</a>
+      <a href="#compte">Mon compte</a>
+    </nav>
+
+    <section id="chiffres" class="card">
+      <h2>Chiffres clés <span class="status info" style="margin-left:8px">Source de vérité</span></h2>
+      <p style="margin-top:6px">Ces chiffres alimentent l'accueil, la page « Qui sommes-nous » et les communiqués. Le nombre d'adhérents est calculé automatiquement à partir des fiches actives — pas de saisie manuelle pour éviter les incohérences.</p>
+      <div class="form-grid" style="margin-top:24px;grid-template-columns:repeat(3,1fr)">
+        <div class="form-field">
+          <label>Nombre d'adhérents <span class="status info" style="margin-left:6px;font-size:10px">AUTO</span></label>
+          <div style="padding:13px 16px;background:var(--soft);border:1px solid var(--line);border-radius:14px;font-weight:800;font-size:18px;color:var(--ink)">52</div>
+          <span style="font-size:12px;color:var(--muted);margin-top:6px;display:block">Calculé en temps réel à partir des fiches au statut « actif »</span>
+        </div>
+        <div class="form-field">
+          <label for="nb-sal">Salariés représentés (≈)</label>
+          <input id="nb-sal" type="number" value="3200">
+          <span style="font-size:12px;color:var(--muted);margin-top:6px;display:block">Saisie manuelle, à mettre à jour périodiquement</span>
+        </div>
+        <div class="form-field">
+          <label>Domaines de compétences <span class="status info" style="margin-left:6px;font-size:10px">AUTO</span></label>
+          <div style="padding:13px 16px;background:var(--soft);border:1px solid var(--line);border-radius:14px;font-weight:800;font-size:18px;color:var(--ink)">18</div>
+          <span style="font-size:12px;color:var(--muted);margin-top:6px;display:block">Nombre de domaines uniques couverts par les adhérents actifs</span>
+        </div>
+      </div>
+      <div class="form-field" style="margin-top:18px">
+        <label for="kpi-note">Légende ou contexte (affiché en petit sous les chiffres)</label>
+        <input id="kpi-note" value="Données mises à jour le 1er juin 2026">
+      </div>
+      <button class="btn" type="button" style="margin-top:20px">Enregistrer (salariés + légende)</button>
+    </section>
+
+    <section id="bureau" class="card" style="margin-top:24px">
+      <h2>Membres du bureau</h2>
+      <p style="margin-top:6px">Photos, noms et fonctions des membres affichés sur la page « Gouvernance ».</p>
+      <div class="grid-3" style="margin-top:20px">
+        <article class="card card-muted" style="text-align:center">
+          <div style="width:96px;height:96px;border-radius:50%;background:var(--soft-pink);margin:0 auto 14px"></div>
+          <strong>Heimana Tehei</strong>
+          <p style="font-size:13px;margin-top:4px">Président</p>
+          <div style="display:flex;gap:6px;justify-content:center;margin-top:14px"><button class="btn btn-secondary btn-small">Éditer</button><button class="action-btn danger" aria-label="Supprimer"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M6 6h12v2H6zm2 4h8v10H8z"/></svg></button></div>
+        </article>
+        <article class="card card-muted" style="text-align:center">
+          <div style="width:96px;height:96px;border-radius:50%;background:var(--soft-pink);margin:0 auto 14px"></div>
+          <strong>Marie Faaite</strong>
+          <p style="font-size:13px;margin-top:4px">Vice-présidente</p>
+          <div style="display:flex;gap:6px;justify-content:center;margin-top:14px"><button class="btn btn-secondary btn-small">Éditer</button><button class="action-btn danger" aria-label="Supprimer"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M6 6h12v2H6zm2 4h8v10H8z"/></svg></button></div>
+        </article>
+        <article class="card card-muted" style="text-align:center;border-style:dashed">
+          <div style="height:96px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:32px">+</div>
+          <strong>Ajouter un membre</strong>
+          <p style="font-size:13px;margin-top:4px;color:var(--muted)">Photo, nom, rôle</p>
+          <button class="btn btn-secondary btn-small" style="margin-top:14px">Nouveau</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="frise" class="card" style="margin-top:24px">
+      <h2>Frise chronologique « Nos origines »</h2>
+      <p style="margin-top:6px">Événements marquants de l'histoire de l'association.</p>
+      <table class="table" style="margin-top:18px">
+        <thead><tr><th>Année</th><th>Événement</th><th style="text-align:right">Actions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>2011</strong></td><td>Création d'OPEN sous l'impulsion de dirigeants du numérique polynésien</td><td style="text-align:right"><button class="btn btn-secondary btn-small">Éditer</button></td></tr>
+          <tr><td><strong>2014</strong></td><td>Affiliation au MEDEF Polynésie française</td><td style="text-align:right"><button class="btn btn-secondary btn-small">Éditer</button></td></tr>
+          <tr><td><strong>2019</strong></td><td>Lancement des Tremplins du Numérique</td><td style="text-align:right"><button class="btn btn-secondary btn-small">Éditer</button></td></tr>
+          <tr><td><strong>2024</strong></td><td>Cap symbolique : 50 adhérents</td><td style="text-align:right"><button class="btn btn-secondary btn-small">Éditer</button></td></tr>
+        </tbody>
+      </table>
+      <button class="btn btn-secondary" type="button" style="margin-top:16px">+ Ajouter une date</button>
+    </section>
+
+    <section id="partenaires" class="card" style="margin-top:24px">
+      <h2>Partenaires institutionnels</h2>
+      <p style="margin-top:6px">Logos affichés sur la page d'accueil.</p>
+      <div class="grid-3" style="margin-top:20px">
+        <article class="card card-muted" style="text-align:center;padding:20px"><div class="logo-card" style="height:80px;margin-bottom:12px"><span>MEDEF PF</span></div><button class="btn btn-secondary btn-small">Éditer</button></article>
+        <article class="card card-muted" style="text-align:center;padding:20px"><div class="logo-card" style="height:80px;margin-bottom:12px"><span>CCISM</span></div><button class="btn btn-secondary btn-small">Éditer</button></article>
+        <article class="card card-muted" style="text-align:center;border-style:dashed;padding:20px"><div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:24px">+</div><strong>Nouveau partenaire</strong></article>
+      </div>
+    </section>
+
+    <section id="coords" class="card" style="margin-top:24px">
+      <h2>Coordonnées du site</h2>
+      <div class="form-grid" style="margin-top:18px">
+        <div class="form-field"><label for="phone">Téléphone</label><input id="phone" value="+689 40 50 00 10"></div>
+        <div class="form-field"><label for="email">E-mail public</label><input id="email" type="email" value="contact@open.pf"></div>
+        <div class="form-field"><label for="addr">Adresse</label><input id="addr" value="Papeete, Tahiti, Polynésie française"></div>
+        <div class="form-field"><label for="maps">URL Google Maps</label><input id="maps" placeholder="https://maps.google.com/…"></div>
+      </div>
+      <button class="btn" type="button" style="margin-top:20px">Enregistrer</button>
+    </section>
+
+    <section id="compte" class="card" style="margin-top:24px">
+      <h2>Mon compte administrateur</h2>
+      <div class="form-grid" style="margin-top:18px">
+        <div class="form-field"><label for="admin-email">E-mail</label><input id="admin-email" type="email" value="marie@open.pf" readonly></div>
+        <div class="form-field"><label for="admin-name">Nom affiché</label><input id="admin-name" value="Marie Faaite"></div>
+      </div>
+      <button class="btn btn-secondary" type="button" style="margin-top:20px">Changer le mot de passe</button>
+    </section>
+  </section>
+</main>
+<script src="assets/js/app.js" defer></script>
+</body></html>
