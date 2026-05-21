@@ -3,6 +3,8 @@ export interface MemberStub {
   name: string
   logoUrl: string | null
   description: string | null
+  websiteUrl?: string | null
+  activityDomains?: string[]
 }
 
 export const MEMBERS: MemberStub[] = [
@@ -12,6 +14,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2025/09/BBS-Logo-Simple-2BTrame-1200x1200.jpg',
     description:
       'Accompagnement entreprises et institutions du fenua sur la gestion complète de SI : ingénierie systèmes et réseaux, assistance utilisateurs, cybersécurité et conseil stratégique.',
+    activityDomains: ['Admin / Réseaux / Système', 'Normes / Cybersécurité', 'Conseil / Expertise'],
   },
   {
     slug: 'clusir-tahiti',
@@ -20,6 +23,7 @@ export const MEMBERS: MemberStub[] = [
       'https://open.pf/wp-content/uploads/2025/07/326535350_711841490478657_2673823807400474931_n-1200x661.png',
     description:
       "Club de la Sécurité de l'Information Région Tahiti — association de professionnels pour l'entraide, le partage d'expériences et les bonnes pratiques de la sécurité de l'information.",
+    activityDomains: ['Normes / Cybersécurité', 'Audit'],
   },
   {
     slug: 'oraclia-sas',
@@ -27,6 +31,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2025/07/Design-sans-titre.png',
     description:
       "Transforme l'intelligence artificielle en levier stratégique aussi naturel et indispensable que l'utilisation quotidienne des outils de travail.",
+    activityDomains: ['Conseil / Expertise', 'Développement logiciels'],
   },
   {
     slug: 'fenua-online',
@@ -34,6 +39,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2025/07/google-business-720x720-1.png',
     description:
       "Sites internet, solutions en ligne et ingénierie informatique sur Tahiti. Produits clés-en-main personnalisables par le service d'ingénierie logicielle.",
+    activityDomains: ['Sites et applis web', 'Développement logiciels'],
   },
   {
     slug: 'galatea',
@@ -41,6 +47,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2025/05/Galatea-Io-Logo-2.png',
     description:
       "Spécialisée dans la mesure, la collecte de données et le pilotage d'équipements à distance.",
+    activityDomains: ['IoT', 'Admin / Réseaux / Système'],
   },
   {
     slug: 'rbcs-it-advisory',
@@ -48,6 +55,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2025/04/Signature-1.png',
     description:
       'Accompagnement en transformation numérique et optimisation du SI. Approche pragmatique orientée résultats.',
+    activityDomains: ['Conseil / Expertise', 'AMO / AMI'],
   },
   {
     slug: 'foxit',
@@ -55,6 +63,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2025/04/TRANSPA_LOGO_FOXIT_2020-1200x1234.png',
     description:
       'Entreprise polynésienne spécialiste en Cybersécurité et Sécurité des SI, intervient APAC, France Métropolitaine et DOM-TOM.',
+    activityDomains: ['Normes / Cybersécurité', 'Audit', 'Conseil / Expertise'],
   },
   {
     slug: 'delta-consulting',
@@ -62,6 +71,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2025/04/DELTA_2.3.png',
     description:
       "Partenaire de confiance pour la transformation digitale. De la conception à la mise en œuvre, optimisation de la performance et accompagnement de l'évolution.",
+    activityDomains: ['Conseil / Expertise', 'AMO / AMI'],
   },
   {
     slug: 'socredo',
@@ -76,6 +86,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/12/FullLogo-1200x960.png',
     description:
       "Spécialisée dans l'audit, le conseil et l'accompagnement en cybersécurité, gestion des risques numériques, et conformité RGPD en Polynésie.",
+    activityDomains: ['Normes / Cybersécurité', 'Audit', 'Conseil / Expertise'],
   },
   {
     slug: 'numeri',
@@ -83,6 +94,11 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/12/logo.png',
     description:
       "Fruit de l'association des compétences d'IDT (Innovative Digital Technologies) et du Groupe SF2i.",
+    activityDomains: [
+      'Admin / Réseaux / Système',
+      'Hébergement / Stockage / Cloud',
+      'Développement logiciels',
+    ],
   },
   {
     slug: 'cnam-polynesie',
@@ -90,6 +106,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/12/logo_fb.jpg',
     description:
       "Présent depuis 1978 en Polynésie pour permettre aux habitants de suivre des formations de l'enseignement supérieur en présentiel, distanciel ou hybride.",
+    activityDomains: ['Organisme de formation / Formateur'],
   },
   {
     slug: 'fortitude-services',
@@ -97,6 +114,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/10/Logo_Facebook-1200x1200.png',
     description:
       'Cabinet de conseil en gestion des risques et protection des entreprises : audit de risques, sensibilisation, gestion de crise, assurance cyber.',
+    activityDomains: ['Normes / Cybersécurité', 'Audit', 'Conseil / Expertise'],
   },
   {
     slug: 'soram-pacifique',
@@ -104,6 +122,11 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/10/LOGO-Soram-Pacifique-VERT.jpg',
     description:
       "Leader vente/location de systèmes d'impression et numérisation, solutions SIRH, cybersécurité, écrans multimédia et supports de diffusion.",
+    activityDomains: [
+      'Vente de matériels informatique et audiovisuel',
+      'Normes / Cybersécurité',
+      'SAV',
+    ],
   },
   {
     slug: 'havae-consulting',
@@ -112,6 +135,7 @@ export const MEMBERS: MemberStub[] = [
       'https://open.pf/wp-content/uploads/2024/10/Black20White20Minimalist20SImple20Monogram20Typography20Logo-1200x1200.png',
     description:
       "Cabinet de conseil basé en Polynésie française, spécialisé dans la transformation numérique, la stratégie d'entreprise et l'optimisation des processus.",
+    activityDomains: ['Conseil / Expertise', 'AMO / AMI'],
   },
   {
     slug: 'invest-in-pacific',
@@ -126,6 +150,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/09/Logo-DinoVox-v2-1-1200x450.png',
     description:
       '1ère entreprise nativement Web3 de Polynésie. NFT, cryptomonnaies, blockchain, tokenisation, métavers, FenuaVerse.',
+    activityDomains: ['Développement logiciels', 'Commerce et service en ligne'],
   },
   {
     slug: 'spilog',
@@ -140,6 +165,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl:
       'https://open.pf/wp-content/uploads/2024/05/logo-cercle-ad_blanc-et-bleu_fond-gris_1182x1182px.png',
     description: null,
+    activityDomains: ['Normes / Cybersécurité'],
   },
   {
     slug: 'maraamu',
@@ -159,12 +185,14 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/04/android-chrome-256x256-1.png',
     description:
       'Mesure, amélioration et valorisation des impacts environnementaux des infrastructures et services IT.',
+    activityDomains: ['Conseil / Expertise', 'Audit'],
   },
   {
     slug: 'foodease',
     name: 'Foodease',
     logoUrl: 'https://open.pf/wp-content/uploads/2024/04/sans-bordure-ni-ecriture.png',
     description: '1ère plateforme de livraison de restaurant et commerce du Fenua.',
+    activityDomains: ['Commerce et service en ligne', 'Application mobile'],
   },
   {
     slug: 'taiara-sarl',
@@ -177,6 +205,7 @@ export const MEMBERS: MemberStub[] = [
     name: 'Community Tahiti',
     logoUrl: 'https://open.pf/wp-content/uploads/2024/04/FullColor_1024x1024_72dpi.png',
     description: null,
+    activityDomains: ['Communication digitale'],
   },
   {
     slug: 'moana-numera',
@@ -184,6 +213,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2024/04/logo-black-1200x261.png',
     description:
       "Forme, accompagne et outille les organisations qui désirent transformer leur approche du numérique en respectant l'environnement, plaçant l'humain au cœur et améliorant l'efficience.",
+    activityDomains: ['Organisme de formation / Formateur', 'Conseil / Expertise'],
   },
   {
     slug: 'innovative-digital-technologies',
@@ -191,15 +221,29 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: null,
     description:
       'Conseil / Expertise, Distribution et intégration, Hébergement / Stockage / Cloud.',
+    activityDomains: ['Hébergement / Stockage / Cloud', 'Conseil / Expertise'],
   },
   {
     slug: 'digital-tahiti',
     name: 'Digital Tahiti',
     logoUrl: 'https://open.pf/wp-content/uploads/2023/06/Digital-Tahiti-logo-DFT2019.png',
     description: null,
+    activityDomains: ['Communication digitale'],
   },
-  { slug: 'sysnux', name: 'SysNux', logoUrl: null, description: null },
-  { slug: 'vittoria-io', name: 'Vittoria.io', logoUrl: null, description: null },
+  {
+    slug: 'sysnux',
+    name: 'SysNux',
+    logoUrl: null,
+    description: null,
+    activityDomains: ['Admin / Réseaux / Système'],
+  },
+  {
+    slug: 'vittoria-io',
+    name: 'Vittoria.io',
+    logoUrl: null,
+    description: null,
+    activityDomains: ['Développement logiciels'],
+  },
   { slug: 'banque-de-tahiti', name: 'Banque de Tahiti', logoUrl: null, description: null },
   { slug: 'bull-sas-atos', name: 'Bull SAS, an Atos company', logoUrl: null, description: null },
   { slug: 'tehera', name: 'Tehera', logoUrl: null, description: null },
@@ -209,12 +253,14 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: null,
     description:
       "Agence d'ingénierie logicielle depuis 2018 : conseil en transformation digitale, développement applications web/mobile, intégration SaaS.",
+    activityDomains: ['Développement logiciels', 'Sites et applis web', 'AMO / AMI'],
   },
   {
     slug: 'iaora-systems',
     name: 'Iaora systems',
     logoUrl: 'https://open.pf/wp-content/uploads/2022/07/iaora_systems-logo-rvb_2018_796x224.jpeg',
     description: 'Spécialisée en services numériques : développement de logiciels et conseil RGPD.',
+    activityDomains: ['Développement logiciels', 'Droit spécialisé'],
   },
   {
     slug: 'tahiti-video-production',
@@ -235,6 +281,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: null,
     description:
       'Regroupe 5 enseignes : Ivea Apple Premium Reseller / Centre de Services / Bose Store / Smart Store / iStore. Papeete - Centre Vaima.',
+    activityDomains: ['Vente de matériels informatique et audiovisuel', 'SAV'],
   },
   {
     slug: 'te-rama',
@@ -250,13 +297,14 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: null,
     description:
       "De la gestion de projet à l'assistance MOA, du développement à l'ingénierie inversée, de l'intégration à l'éditique : large panoplie de services.",
+    activityDomains: ['Développement logiciels', 'AMO / AMI'],
   },
   {
     slug: 'actecil-polynesie-francaise',
     name: 'Actecil Polynésie française',
     logoUrl: null,
-    description:
-      'Audit, Communication digitale, Conseil / Expertise. Immeuble Laux, Rue Émile Martin, Quartier du Commerce, PAPEETE.',
+    description: 'Audit, Communication digitale, Conseil / Expertise.',
+    activityDomains: ['Audit', 'Communication digitale', 'Conseil / Expertise'],
   },
   {
     slug: 'la-french-tech-polynesie',
@@ -264,6 +312,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: null,
     description:
       "Mouvement français des startups en Polynésie. Promotion de l'innovation numérique, transformation digitale, ses acteurs et porteurs de projets.",
+    activityDomains: ['Conseil / Expertise'],
   },
   {
     slug: 'tep',
@@ -277,6 +326,7 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: null,
     description:
       "Amélioration des processus et déroulement des projets. Le digital et les logiciels comme leviers d'efficience opérationnelle.",
+    activityDomains: ['Conseil / Expertise', 'AMO / AMI'],
   },
   { slug: 'digital-techno', name: 'Digital Techno', logoUrl: null, description: null },
   { slug: 'b-edition', name: 'B Edition', logoUrl: null, description: null },
@@ -293,13 +343,26 @@ export const MEMBERS: MemberStub[] = [
     logoUrl: 'https://open.pf/wp-content/uploads/2023/12/OPEN-Pf_PROXI.png',
     description: null,
   },
-  { slug: 'sas-onati', name: 'SAS ONATi', logoUrl: null, description: null },
+  {
+    slug: 'sas-onati',
+    name: 'SAS ONATi',
+    logoUrl: null,
+    description:
+      'Opérateur public numérique de la Polynésie française. Accompagne les institutions, entreprises et citoyens dans la transformation numérique du territoire.',
+    websiteUrl: 'https://www.onati.pf',
+    activityDomains: [
+      'Télécom et voix sur IP',
+      'Hébergement / Stockage / Cloud',
+      'Admin / Réseaux / Système',
+    ],
+  },
   {
     slug: 'sf2i',
     name: 'SF2I',
     logoUrl: null,
     description:
-      'Admin / Réseaux / Système, AMO / AMI, Audit, Conseil / Expertise, Développement logiciels. Immeuble Le Bihan 1er étage, I1 et H1 - 98716 Pirae.',
+      'Admin / Réseaux / Système, AMO / AMI, Audit, Conseil / Expertise, Développement logiciels.',
+    activityDomains: ['Admin / Réseaux / Système', 'AMO / AMI', 'Développement logiciels'],
   },
 ]
 
