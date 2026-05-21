@@ -1,0 +1,50 @@
+import { z } from 'zod'
+
+const envSchema = z.object({
+  // Database
+  DATABASE_URL: z.string().url(),
+
+  // Auth.js
+  AUTH_SECRET: z.string().min(32),
+  AUTH_URL: z.string().url(),
+
+  // Magic links
+  MAGIC_LINK_SECRET: z.string().min(32),
+
+  // Brevo
+  BREVO_API_KEY: z.string().min(1),
+  BREVO_SENDER_EMAIL: z.string().email(),
+  BREVO_SENDER_NAME: z.string().min(1),
+
+  // Cron
+  CRON_SECRET: z.string().min(16),
+
+  // Storage
+  BLOB_READ_WRITE_TOKEN: z.string().min(1),
+
+  // Analytics & monitoring (optional in dev)
+  NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().optional(),
+  SENTRY_DSN: z.string().url().optional(),
+  NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
+
+  // Admin
+  ADMIN_NOTIFICATION_EMAIL: z.string().email(),
+
+  // Node env
+  NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+})
+
+// Skip validation in test environment so Vitest/Playwright don't need real secrets
+const isTest = process.env['NODE_ENV'] === 'test'
+
+const parsed = isTest
+  ? envSchema.partial().safeParse(process.env)
+  : envSchema.safeParse(process.env)
+
+if (!parsed.success && !isTest) {
+  console.error('❌ Invalid environment variables:')
+  console.error(parsed.error.flatten().fieldErrors)
+  throw new Error('Invalid environment variables — check your .env.local file')
+}
+
+export const env = (parsed.success ? parsed.data : {}) as z.infer<typeof envSchema>
