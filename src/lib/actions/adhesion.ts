@@ -1,9 +1,26 @@
 'use server'
 
+import { eq } from 'drizzle-orm'
 import { getDb } from '@/lib/db'
-import { members, memberContacts, memberActivities } from '@/lib/db/schema'
+import { members, memberContacts, memberActivities, memberCertifications } from '@/lib/db/schema'
 import { adhesionSchema } from '@/lib/validations/adhesion'
 import { toSlug } from '@/lib/utils'
+
+async function generateUniqueSlug(db: ReturnType<typeof getDb>, base: string): Promise<string> {
+  let slug = base
+  let attempt = 0
+  while (attempt < 20) {
+    const existing = await db
+      .select({ id: members.id })
+      .from(members)
+      .where(eq(members.slug, slug))
+      .limit(1)
+    if (existing.length === 0) return slug
+    attempt++
+    slug = `${base}-${attempt}`
+  }
+  return `${base}-${Date.now()}`
+}
 
 type SubmitResult =
   | { success: true; slug: string }
@@ -20,9 +37,9 @@ export async function submitAdhesion(raw: unknown): Promise<SubmitResult> {
   }
 
   const data = parsed.data
-  const slug = toSlug(data.name)
-
   const db = getDb()
+  const baseSlug = toSlug(data.name)
+  const slug = await generateUniqueSlug(db, baseSlug)
 
   // neon-http driver does not support transactions — sequential inserts
   const [member] = await db
@@ -62,6 +79,16 @@ export async function submitAdhesion(raw: unknown): Promise<SubmitResult> {
       data.activityDomains.map((domainId) => ({
         memberId: member.id,
         domainId,
+      })),
+    )
+  }
+
+  if (data.certifications.length > 0) {
+    await db.insert(memberCertifications).values(
+      data.certifications.map((certificationId) => ({
+        memberId: member.id,
+        certificationId,
+        otherLabel: null,
       })),
     )
   }

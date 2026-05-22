@@ -1,9 +1,14 @@
 'use client'
 
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { AdhesionModal } from '@/components/adhesion/adhesion-modal'
+
+const AdhesionModal = dynamic(
+  () => import('@/components/adhesion/adhesion-modal').then((m) => m.AdhesionModal),
+  { ssr: false },
+)
 
 const NAV_LINKS = [
   { href: '/reseau', label: 'Le réseau' },

@@ -35,8 +35,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/adherents`, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE_URL}/actualites`, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/offres-emploi`, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${BASE_URL}/evenements`, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/reseau`, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/documents-utiles`, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/contact`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/mentions-legales`, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${BASE_URL}/confidentialite`, changeFrequency: 'yearly', priority: 0.2 },
   ]
 
   const memberPages: MetadataRoute.Sitemap = activeMembers.map((m) => ({

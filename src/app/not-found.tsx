@@ -1,11 +1,25 @@
 import Link from 'next/link'
+import { ArrowIcon } from '@/components/public/arrow-icon'
 
 export default function NotFound() {
   return (
-    <div>
-      <h2>Page introuvable</h2>
-      <p>La page demandée n&apos;existe pas.</p>
-      <Link href="/">Retour à l&apos;accueil</Link>
+    <div className="not-found-page">
+      <div className="not-found-inner">
+        <span className="eyebrow">Erreur 404</span>
+        <h1 style={{ marginTop: '16px' }}>Page introuvable.</h1>
+        <p style={{ marginTop: '20px', maxWidth: '480px' }}>
+          La page que vous cherchez n&apos;existe pas ou a été déplacée.
+          Vérifiez l&apos;adresse ou revenez à l&apos;accueil.
+        </p>
+        <div style={{ display: 'flex', gap: '14px', marginTop: '32px', flexWrap: 'wrap' }}>
+          <Link href="/" className="btn">
+            Retour à l&apos;accueil <ArrowIcon />
+          </Link>
+          <Link href="/adherents" className="btn btn-secondary">
+            Voir les adhérents <ArrowIcon />
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

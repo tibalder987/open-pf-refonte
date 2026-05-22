@@ -4,16 +4,20 @@ import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
 import { MemberLogo } from '@/components/public/member-logo'
-import { getDb } from '@/lib/db'
-import { members } from '@/lib/db/schema'
-import { and, asc, eq, isNotNull } from 'drizzle-orm'
+import { getFeaturedMembers } from '@/lib/db/queries/members'
+import { getSiteStats } from '@/lib/db/queries/stats'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique",
-  description: 'OPEN fédère les entreprises du numérique en Polynésie française.',
+  description:
+    'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
+  alternates: { canonical: '/' },
   openGraph: {
     title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique",
-    description: 'OPEN fédère les entreprises du numérique en Polynésie française.',
+    description:
+      'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
     type: 'website',
   },
 }
@@ -95,13 +99,10 @@ const NEWS_PREVIEW = [
 ]
 
 export default async function HomePage() {
-  const db = getDb()
-  const featuredMembers = await db
-    .select({ id: members.id, slug: members.slug, name: members.name, logoUrl: members.logoUrl })
-    .from(members)
-    .where(and(eq(members.status, 'active'), isNotNull(members.logoUrl)))
-    .orderBy(asc(members.name))
-    .limit(12)
+  const [featuredMembers, { memberCount, employeeCount, domainCount }] = await Promise.all([
+    getFeaturedMembers(12),
+    getSiteStats(),
+  ])
 
   return (
     <>
@@ -109,9 +110,7 @@ export default async function HomePage() {
         <div className="hero-inner container">
           <div>
             <span className="eyebrow">Cluster numérique de Polynésie française</span>
-            <h1 style={{ marginTop: '16px', color: 'white' }}>
-              La voix collective des entreprises du numérique polynésien.
-            </h1>
+            <h1>La voix collective des entreprises du numérique polynésien.</h1>
             <p className="lead" style={{ marginTop: '24px' }}>
               OPEN fédère les entreprises du secteur pour valoriser les compétences locales,
               représenter la filière et structurer un écosystème numérique durable et performant en
@@ -149,24 +148,26 @@ export default async function HomePage() {
             </svg>
           </div>
           <div>
-            <b>54</b>
+            <b>{memberCount}</b>
             <span>entreprises adhérentes</span>
           </div>
         </div>
-        <div className="stat">
-          <div className="stat-icon">
-            <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M7 11a4 4 0 1 1 .1 0H7zm10 0a3.5 3.5 0 1 1 .1 0H17zM2.5 20a6.5 6.5 0 0 1 13 0v1h-13v-1zm12.3-2.9A7.5 7.5 0 0 1 17.5 21h4v-1a5.5 5.5 0 0 0-6.7-5.4v2.5z"
-              />
-            </svg>
+        {employeeCount != null && (
+          <div className="stat">
+            <div className="stat-icon">
+              <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M7 11a4 4 0 1 1 .1 0H7zm10 0a3.5 3.5 0 1 1 .1 0H17zM2.5 20a6.5 6.5 0 0 1 13 0v1h-13v-1zm12.3-2.9A7.5 7.5 0 0 1 17.5 21h4v-1a5.5 5.5 0 0 0-6.7-5.4v2.5z"
+                />
+              </svg>
+            </div>
+            <div>
+              <b>{employeeCount}+</b>
+              <span>salariés représentés</span>
+            </div>
           </div>
-          <div>
-            <b>+500</b>
-            <span>salariés représentés</span>
-          </div>
-        </div>
+        )}
         <div className="stat">
           <div className="stat-icon">
             <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -177,7 +178,7 @@ export default async function HomePage() {
             </svg>
           </div>
           <div>
-            <b>19</b>
+            <b>{domainCount}</b>
             <span>domaines de compétences</span>
           </div>
         </div>
@@ -188,9 +189,7 @@ export default async function HomePage() {
           <div className="section-head">
             <div>
               <span className="eyebrow">Nos missions</span>
-              <h2 style={{ marginTop: '12px' }}>
-                Agir ensemble pour faire grandir le numérique polynésien
-              </h2>
+              <h2>Agir ensemble pour faire grandir le numérique polynésien</h2>
             </div>
             <p>
               OPEN agit comme un réseau professionnel, un espace de coordination et une voix
@@ -215,9 +214,7 @@ export default async function HomePage() {
           <div className="section-head">
             <div>
               <span className="eyebrow">Le réseau OPEN</span>
-              <h2 id="adherents-strip-title" style={{ marginTop: '12px' }}>
-                Les adhérents OPEN
-              </h2>
+              <h2 id="adherents-strip-title">Les adhérents OPEN</h2>
             </div>
             <Link href="/adherents" className="btn btn-secondary">
               Voir tous les adhérents <ArrowIcon />
@@ -245,18 +242,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section
-        className="section section-tight"
-        aria-labelledby="news-home-title"
-        style={{ background: 'var(--soft)' }}
-      >
+      <section className="section section-tight bg-soft" aria-labelledby="news-home-title">
         <div className="container">
           <div className="section-head">
             <div>
               <span className="eyebrow">Actualités</span>
-              <h2 id="news-home-title" style={{ marginTop: '12px' }}>
-                Actualités de la filière
-              </h2>
+              <h2 id="news-home-title">Actualités de la filière</h2>
             </div>
             <Link href="/actualites" className="btn btn-secondary">
               Toutes les actualités <ArrowIcon />

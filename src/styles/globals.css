@@ -1040,6 +1040,9 @@ p {
   display: grid;
   gap: 8px;
 }
+.form-field--full {
+  grid-column: 1 / -1;
+}
 .form-field label {
   font-weight: 800;
   color: var(--navy);
@@ -1366,6 +1369,73 @@ textarea {
 .btn-remove:hover {
   border-color: var(--color-danger);
   color: var(--color-danger);
+}
+
+/* Recap (step 5) */
+.recap-section {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.recap-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.recap-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.recap-dl {
+  display: grid;
+  gap: 8px;
+}
+.recap-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 8px;
+  align-items: baseline;
+}
+.recap-row dt {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.recap-row dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+.recap-row--full {
+  grid-template-columns: 1fr;
+}
+.recap-row--full dd {
+  margin-top: 4px;
+  white-space: pre-line;
+}
+.recap-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.recap-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #eff3ff;
+  color: #34408a;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.recap-rgpd {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
 }
 
 /* Success state */
@@ -1855,4 +1925,72 @@ textarea {
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* ─── 404 / Error pages ──────────────────────────────────────────────────── */
+.not-found-page {
+  min-height: 60dvh;
+  display: grid;
+  place-items: center;
+  padding: 80px 24px;
+  text-align: center;
+}
+.not-found-inner {
+  max-width: 600px;
+}
+.not-found-inner h1 {
+  color: var(--ink);
+}
+
+/* ─── Skeleton loading animation ────────────────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ─── Empty state ────────────────────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px;
+  gap: 12px;
+}
+.empty-state__icon {
+  width: 56px;
+  height: 56px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+.empty-state__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.empty-state__text {
+  color: var(--muted);
+  max-width: 420px;
+  margin: 0;
+}
+
+/* ─── Hero h1 color + breadcrumb spacing ─────────────────────────────────── */
+.hero h1 {
+  color: white;
+}
+.breadcrumb + h1 {
+  margin-top: 10px;
+}
+
+/* ─── Utility classes ────────────────────────────────────────────────────── */
+.bg-soft {
+  background: var(--soft);
+}
+.eyebrow + h1 {
+  margin-top: 16px;
+}
+.eyebrow + h2 {
+  margin-top: 12px;
 }

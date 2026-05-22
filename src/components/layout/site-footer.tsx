@@ -69,10 +69,10 @@ export function SiteFooter() {
               <Link href="/offres-emploi">Offres d&apos;emploi</Link>
             </li>
             <li>
-              <Link href="/actualites">Documents utiles</Link>
+              <Link href="/documents-utiles">Documents utiles</Link>
             </li>
             <li>
-              <Link href="/actualites">Événements</Link>
+              <Link href="/evenements">Événements</Link>
             </li>
           </ul>
         </div>

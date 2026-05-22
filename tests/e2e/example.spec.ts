@@ -24,7 +24,7 @@ test.describe('Annuaire des adhérents', () => {
   test('loads member cards', async ({ page }) => {
     await page.goto('/adherents')
     await expect(page.locator('h1')).toBeVisible()
-    const cards = page.locator('article.member-card')
+    const cards = page.locator('article.member-card-v')
     await expect(cards.first()).toBeVisible()
   })
 

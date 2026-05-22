@@ -98,14 +98,13 @@ describe('stepContactsSchema', () => {
   })
 
   it('rejects empty contacts array', () => {
-    const result = stepContactsSchema.safeParse({ contacts: [], rgpdConsent: true })
+    const result = stepContactsSchema.safeParse({ contacts: [] })
     expect(result.success).toBe(false)
   })
 
   it('rejects contacts with no primary', () => {
     const result = stepContactsSchema.safeParse({
       contacts: [{ name: 'Jean Martin', email: 'jean@example.com', isPrimary: false }],
-      rgpdConsent: true,
     })
     expect(result.success).toBe(false)
   })
@@ -113,15 +112,6 @@ describe('stepContactsSchema', () => {
   it('rejects invalid email', () => {
     const result = stepContactsSchema.safeParse({
       contacts: [{ name: 'Jean', email: 'not-an-email', isPrimary: false }],
-      rgpdConsent: true,
-    })
-    expect(result.success).toBe(false)
-  })
-
-  it('rejects rgpdConsent false', () => {
-    const result = stepContactsSchema.safeParse({
-      contacts: [{ name: 'Jean Martin', email: 'jean@example.com', isPrimary: true }],
-      rgpdConsent: false,
     })
     expect(result.success).toBe(false)
   })
@@ -134,6 +124,7 @@ describe('adhesionSchema (combined)', () => {
       legalStatus: 'Association',
       isMedefMember: false,
       activityDomains: ['audit', 'cloud'],
+      certifications: [],
       contacts: [{ name: 'Marie Dupont', email: 'marie@open.pf', isPrimary: true }],
       rgpdConsent: true,
     })
@@ -146,6 +137,7 @@ describe('adhesionSchema (combined)', () => {
       legalStatus: 'Association',
       isMedefMember: false,
       activityDomains: ['cloud'],
+      certifications: [],
       contacts: [{ name: 'Marie Dupont', email: 'marie@open.pf', isPrimary: true }],
       rgpdConsent: false,
     })

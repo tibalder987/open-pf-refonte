@@ -28,29 +28,31 @@ export function AdhesionModal({ isOpen, onClose }: AdhesionModalProps) {
       aria-label="Formulaire d'adhésion à OPEN PF"
       onClose={onClose}
     >
-      <div className="adhesion-dialog-inner">
-        <button
-          type="button"
-          className="adhesion-dialog-close"
-          aria-label="Fermer"
-          onClick={onClose}
-        >
-          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-            <path
-              fill="currentColor"
-              d="M18 6 6 18M6 6l12 12"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </button>
-        <div className="adhesion-dialog-header">
-          <h2>Rejoindre OPEN PF</h2>
-          <p>Remplissez ce formulaire pour soumettre votre demande d&apos;adhésion.</p>
+      {isOpen && (
+        <div className="adhesion-dialog-inner">
+          <button
+            type="button"
+            className="adhesion-dialog-close"
+            aria-label="Fermer"
+            onClick={onClose}
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M18 6 6 18M6 6l12 12"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+          <div className="adhesion-dialog-header">
+            <h2>Rejoindre OPEN PF</h2>
+            <p>Remplissez ce formulaire pour soumettre votre demande d&apos;adhésion.</p>
+          </div>
+          <AdhesionForm />
         </div>
-        <AdhesionForm />
-      </div>
+      )}
     </dialog>
   )
 }

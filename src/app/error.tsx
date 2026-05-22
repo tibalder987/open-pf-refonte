@@ -1,5 +1,7 @@
 'use client'
 
+import { ArrowIcon } from '@/components/public/arrow-icon'
+
 export default function Error({
   error: _error,
   reset,
@@ -8,9 +10,22 @@ export default function Error({
   reset: () => void
 }) {
   return (
-    <div>
-      <h2>Une erreur est survenue.</h2>
-      <button onClick={reset}>Réessayer</button>
+    <div className="not-found-page">
+      <div className="not-found-inner">
+        <span className="eyebrow">Une erreur est survenue</span>
+        <h1 style={{ marginTop: '16px' }}>Quelque chose s&apos;est mal passé.</h1>
+        <p style={{ marginTop: '20px', maxWidth: '480px' }}>
+          Une erreur inattendue s&apos;est produite. Essayez de recharger la page.
+        </p>
+        <div style={{ display: 'flex', gap: '14px', marginTop: '32px', flexWrap: 'wrap' }}>
+          <button type="button" className="btn" onClick={reset}>
+            Réessayer <ArrowIcon />
+          </button>
+          <a href="/" className="btn btn-secondary">
+            Retour à l&apos;accueil <ArrowIcon />
+          </a>
+        </div>
+      </div>
     </div>
   )
 }
