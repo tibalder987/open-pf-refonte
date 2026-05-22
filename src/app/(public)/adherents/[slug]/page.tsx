@@ -9,6 +9,7 @@ import {
   getMemberDomains,
   getOtherActiveMembers,
 } from '@/lib/db/queries/members'
+import { buildBreadcrumbJsonLd, buildMemberJsonLd } from '@/lib/seo'
 
 export const revalidate = 3600
 
@@ -53,31 +54,22 @@ export default async function MemberPage({ params }: Props) {
   const domains = await getMemberDomains(member.id)
   const websiteDisplay = member.websiteUrl?.replace(/^https?:\/\//, '')
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://open.pf' },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Adhérents',
-        item: 'https://open.pf/adherents',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: member.name,
-        item: `https://open.pf/adherents/${slug}`,
-      },
-    ],
-  }
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Accueil', href: '/' },
+    { name: 'Adhérents', href: '/adherents' },
+    { name: member.name, href: `/adherents/${slug}` },
+  ])
+  const memberJsonLd = buildMemberJsonLd(member)
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(memberJsonLd) }}
       />
 
       <section className="hero">

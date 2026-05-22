@@ -10,12 +10,14 @@ import { getSiteStats } from '@/lib/db/queries/stats'
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique",
+  title: {
+    absolute: "OPEN PF – Organisation des Professionnels de l'Économie Numérique de Polynésie française",
+  },
   description:
     'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique",
+    title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique de Polynésie française",
     description:
       'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
     type: 'website',

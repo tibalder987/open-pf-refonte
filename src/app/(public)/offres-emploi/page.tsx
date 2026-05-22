@@ -22,7 +22,7 @@ export default function OffresEmploiPage() {
             <nav className="breadcrumb" aria-label="Fil d'Ariane">
               <Link href="/">Accueil</Link> › Offres d&apos;emploi
             </nav>
-            <h1 style={{ color: 'white', marginTop: '8px' }}>Offres d&apos;emploi</h1>
+            <h1>Offres d&apos;emploi</h1>
             <p className="lead" style={{ marginTop: '20px' }}>
               Découvrez les opportunités de carrière au sein des entreprises du numérique en
               Polynésie française.
@@ -77,27 +77,19 @@ export default function OffresEmploiPage() {
             </button>
           </form>
 
-          <div className="card card-muted" style={{ textAlign: 'center', padding: '48px 24px' }}>
-            <h3 style={{ color: 'var(--ink)' }}>Aucune offre disponible pour le moment</h3>
-            <p style={{ marginTop: '8px' }}>
+          <div className="empty-state">
+            <svg className="empty-state__icon" viewBox="0 0 48 48" aria-hidden="true" fill="none">
+              <rect x="8" y="14" width="32" height="24" rx="4" stroke="currentColor" strokeWidth="3" />
+              <path d="M18 14V10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              <path d="M8 26h32" stroke="currentColor" strokeWidth="3" />
+            </svg>
+            <p className="empty-state__title">Aucune offre disponible</p>
+            <p className="empty-state__text">
               Les offres d&apos;emploi des entreprises adhérentes seront publiées ici.
             </p>
-            <p style={{ marginTop: '8px' }}>
-              Vous êtes adhérent ? Publiez vos offres depuis votre espace membre.
-            </p>
-            <div
-              style={{
-                display: 'flex',
-                gap: '12px',
-                justifyContent: 'center',
-                marginTop: '20px',
-                flexWrap: 'wrap',
-              }}
-            >
-              <Link href="/adhesion" className="btn">
-                Devenir adhérent <ArrowIcon />
-              </Link>
-            </div>
+            <Link href="/adhesion" className="btn" style={{ marginTop: '20px' }}>
+              Devenir adhérent <ArrowIcon />
+            </Link>
           </div>
         </div>
       </section>

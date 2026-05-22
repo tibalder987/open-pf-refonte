@@ -46,7 +46,6 @@ export function MemberLogo({ name, logoUrl, sizes, priority = false }: MemberLog
           sizes={sizes ?? '(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px'}
           style={{ objectFit: 'contain', padding: '12px' }}
           priority={priority}
-          unoptimized
         />
       </div>
     )

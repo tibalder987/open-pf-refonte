@@ -46,7 +46,7 @@ export default async function ActualitesPage() {
             <nav className="breadcrumb" aria-label="Fil d'Ariane">
               <Link href="/">Accueil</Link> › Actualités
             </nav>
-            <h1 style={{ color: 'white', marginTop: '8px' }}>Actualités.</h1>
+            <h1>Actualités.</h1>
             <p className="lead" style={{ marginTop: '20px' }}>
               Toute l&apos;actualité du numérique en Polynésie française.
             </p>
@@ -117,9 +117,14 @@ export default async function ActualitesPage() {
           )}
 
           {articles.length === 0 && (
-            <p style={{ color: 'var(--muted)', textAlign: 'center', padding: '48px 0' }}>
-              Aucune actualité pour le moment.
-            </p>
+            <div className="empty-state">
+              <svg className="empty-state__icon" viewBox="0 0 48 48" aria-hidden="true" fill="none">
+                <rect x="10" y="8" width="28" height="32" rx="4" stroke="currentColor" strokeWidth="3" />
+                <path d="M16 17h16M16 23h16M16 29h10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+              <p className="empty-state__title">Aucune actualité</p>
+              <p className="empty-state__text">Les actualités de la filière seront publiées ici.</p>
+            </div>
           )}
         </div>
       </section>

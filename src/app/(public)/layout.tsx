@@ -11,7 +11,7 @@ export default function PublicLayout({
   return (
     <>
       <SiteHeader />
-      <main id="contenu">{children}</main>
+      <main id="contenu" role="main">{children}</main>
       {modal}
       <SiteFooter />
     </>
