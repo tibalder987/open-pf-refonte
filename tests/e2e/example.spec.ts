@@ -23,6 +23,46 @@ test.describe('Homepage', () => {
     await page.goto('/')
     await expect(page.locator('.stats')).toBeVisible()
   })
+
+  test('members showcase is visible and contains logo cards', async ({ page }) => {
+    await page.goto('/')
+    const showcase = page.locator('.members-showcase')
+    await expect(showcase).toBeVisible()
+    const cards = showcase.locator('.showcase-link')
+    await expect(cards.first()).toBeVisible()
+  })
+
+  test('showcase links navigate to member fiches', async ({ page }) => {
+    await page.goto('/')
+    const firstShowcaseLink = page.locator('.members-showcase .showcase-link').first()
+    await firstShowcaseLink.click()
+    await expect(page).toHaveURL(/\/adherents\//)
+  })
+
+  test('skip link is present and targets #contenu', async ({ page }) => {
+    await page.goto('/')
+    const skipLink = page.locator('.skip-link')
+    await expect(skipLink).toHaveAttribute('href', '#contenu')
+  })
+
+  test('quickbar is rendered after footer in DOM order', async ({ page }) => {
+    await page.goto('/')
+    // The quickbar must appear AFTER the footer element in the DOM
+    const footerHandle = await page.locator('footer.site-footer').elementHandle()
+    const quickbarHandle = await page.locator('nav.quickbar').elementHandle()
+    if (footerHandle && quickbarHandle) {
+      const order = await page.evaluate(
+        ([footer, quickbar]) => {
+          if (!footer || !quickbar) return null
+          const pos = footer.compareDocumentPosition(quickbar)
+          // DOCUMENT_POSITION_FOLLOWING = 4 means quickbar is after footer
+          return (pos & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
+        },
+        [footerHandle, quickbarHandle],
+      )
+      expect(order).toBe(true)
+    }
+  })
 })
 
 test.describe('Annuaire des adhérents', () => {

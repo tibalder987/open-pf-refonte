@@ -221,27 +221,6 @@ export function SiteHeader() {
         </div>
       )}
 
-      {/* Quickbar mobile */}
-      <nav className="quickbar" aria-label="Actions rapides mobile">
-        <Link
-          href="/adherents"
-          aria-current={pathname.startsWith('/adherents') ? 'page' : undefined}
-        >
-          Annuaire
-        </Link>
-        <button
-          type="button"
-          className="quickbar__primary"
-          aria-haspopup="dialog"
-          onClick={openModal}
-        >
-          Adhérer
-        </button>
-        <Link href="/contact" aria-current={pathname === '/contact' ? 'page' : undefined}>
-          Contact
-        </Link>
-      </nav>
-
       <AdhesionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   )

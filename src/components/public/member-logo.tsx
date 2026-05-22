@@ -9,7 +9,7 @@ const PALETTE = [
   { bg: '#fff8f0', fg: '#b45309' },
 ]
 
-function colorFor(name: string): { bg: string; fg: string } {
+export function colorFor(name: string): { bg: string; fg: string } {
   let h = 0
   for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0
   const idx = h % PALETTE.length
@@ -18,7 +18,7 @@ function colorFor(name: string): { bg: string; fg: string } {
   return PALETTE[idx] ?? PALETTE[0]!
 }
 
-function getInitials(name: string): string {
+export function getInitials(name: string): string {
   const words = name.trim().split(/\s+/).filter(Boolean)
   if (words.length === 1) return (words[0] ?? '').slice(0, 3).toUpperCase()
   return words
@@ -38,7 +38,7 @@ interface MemberLogoProps {
 export function MemberLogo({ name, logoUrl, sizes, priority = false }: MemberLogoProps) {
   if (logoUrl) {
     return (
-      <div className="member-logo-wrap" aria-hidden="true">
+      <div className="member-logo-wrap">
         <Image
           src={logoUrl}
           alt={`Logo ${name}`}
@@ -57,9 +57,9 @@ export function MemberLogo({ name, logoUrl, sizes, priority = false }: MemberLog
       className="member-logo-wrap member-logo-fallback"
       style={{ background: bg }}
       role="img"
-      aria-label={`${name} (initiales)`}
+      aria-label={`${name} — logo non disponible`}
     >
-      <span style={{ color: fg }}>{getInitials(name)}</span>
+      <span style={{ color: fg }} aria-hidden="true">{getInitials(name)}</span>
     </div>
   )
 }

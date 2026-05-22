@@ -26,7 +26,7 @@ export function MemberCard({ slug, name, logoUrl, description, primaryDomain }: 
             {description.length > 110 ? `${description.slice(0, 110)}…` : description}
           </p>
         )}
-        <Link href={`/adherents/${slug}`} className="card-link">
+        <Link href={`/adherents/${slug}`} className="card-link" aria-label={`Voir la fiche de ${name}`}>
           Voir la fiche <ArrowIcon />
         </Link>
       </div>
