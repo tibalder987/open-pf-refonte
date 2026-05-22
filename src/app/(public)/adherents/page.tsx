@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
-import { MemberCard } from '@/components/annuaire/member-card'
+import { MemberSearch } from '@/components/annuaire/member-search'
+import { MemberFilters } from '@/components/annuaire/member-filters'
+import { MemberResultsSummary } from '@/components/annuaire/member-results-summary'
+import { MemberGrid } from '@/components/annuaire/member-grid'
 import { getActivityDomains, searchMembers } from '@/lib/db/queries/members'
 
 export const revalidate = 3600
@@ -23,12 +26,10 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       description:
         'Retrouvez les entreprises et organisations membres du réseau OPEN en Polynésie française.',
       type: 'website',
+      url: '/adherents',
       images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
     },
-    twitter: {
-      card: 'summary_large_image',
-      images: ['/logo-open.png'],
-    },
+    twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
   }
   if (isFiltered) {
     return { ...base, robots: { index: false, follow: false } }
@@ -46,10 +47,7 @@ export default async function AdherentsPage({ searchParams }: PageProps) {
     getActivityDomains(),
   ])
 
-  const count = list.length
   const activeLabel = domains.find((d) => d.id === domaine)?.label
-  const allHref = q ? `/adherents?q=${encodeURIComponent(q)}` : '/adherents'
-  const countLabel = `${count} entreprise${count !== 1 ? 's' : ''} adhérente${count !== 1 ? 's' : ''}`
 
   return (
     <>
@@ -64,125 +62,17 @@ export default async function AdherentsPage({ searchParams }: PageProps) {
               Découvrez les entreprises et organisations qui composent le réseau OPEN en Polynésie
               française.
             </p>
-            <form
-              className="search-box"
-              role="search"
-              aria-label="Recherche dans l'annuaire"
-              style={{ marginTop: '32px' }}
-              action="/adherents"
-              method="GET"
-            >
-              {domaine && <input type="hidden" name="domaine" value={domaine} />}
-              <label className="sr-only" htmlFor="search-member">
-                Rechercher une entreprise
-              </label>
-              <input
-                id="search-member"
-                name="q"
-                type="search"
-                placeholder="Rechercher une entreprise, un mot-clé…"
-                defaultValue={q?.trim() ?? ''}
-              />
-              <button className="btn" type="submit">
-                Rechercher{' '}
-                <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="m21 19.6-5.2-5.2a7 7 0 1 0-1.4 1.4l5.2 5.2 1.4-1.4zM5 10.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0z"
-                  />
-                </svg>
-              </button>
-            </form>
+            <MemberSearch q={q} domaine={domaine} />
           </div>
         </div>
       </section>
 
-      {domains.length > 0 && (
-        <div className="container" style={{ paddingTop: '28px', paddingBottom: '4px' }}>
-          <div className="filters" role="group" aria-label="Filtrer par domaine d'activité">
-            <Link
-              href={allHref}
-              className={`filter-chip light${!domaine ? ' active' : ''}`}
-              aria-pressed={!domaine}
-            >
-              Tous les domaines
-            </Link>
-            {domains.map((d) => {
-              const params = new URLSearchParams()
-              if (q) params.set('q', q)
-              params.set('domaine', d.id)
-              return (
-                <Link
-                  key={d.id}
-                  href={`/adherents?${params.toString()}`}
-                  className={`filter-chip light${domaine === d.id ? ' active' : ''}`}
-                  aria-pressed={domaine === d.id}
-                >
-                  {d.label}
-                </Link>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      <MemberFilters domains={domains} activeId={domaine} q={q} />
 
-      <section className="section">
+      <section className="section" aria-labelledby="members-count-title">
         <div className="container">
-          <div className="section-head">
-            <h2>
-              <span style={{ color: 'var(--open-magenta)' }}>{count}</span>{' '}
-              {count !== 1 ? 'entreprises adhérentes' : 'entreprise adhérente'}
-              {activeLabel && (
-                <>
-                  {' '}
-                  ·{' '}
-                  <span style={{ fontWeight: 400, fontSize: '0.7em' }}>{activeLabel}</span>
-                </>
-              )}
-            </h2>
-            <p aria-live="polite" aria-atomic="true" className="sr-only">
-              {countLabel}
-              {q && ` pour la recherche « ${q} »`}
-              {activeLabel && ` dans le domaine ${activeLabel}`}
-            </p>
-          </div>
-
-          {count === 0 ? (
-            <div className="empty-state">
-              <svg className="empty-state__icon" viewBox="0 0 48 48" aria-hidden="true" fill="none">
-                <circle cx="22" cy="22" r="14" stroke="currentColor" strokeWidth="3" />
-                <path d="m32 32 9 9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                <path
-                  d="M17 22h10M22 17v10"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <p className="empty-state__title">Aucun résultat</p>
-              <p className="empty-state__text">
-                {q
-                  ? `Aucune entreprise ne correspond à « ${q} »${activeLabel ? ` dans le domaine ${activeLabel}` : ''}.`
-                  : `Aucune entreprise dans ce domaine pour le moment.`}
-              </p>
-              <Link href="/adherents" className="btn btn-secondary" style={{ marginTop: '20px' }}>
-                Réinitialiser les filtres
-              </Link>
-            </div>
-          ) : (
-            <div className="members-grid">
-              {list.map((member) => (
-                <MemberCard
-                  key={member.slug}
-                  slug={member.slug}
-                  name={member.name}
-                  logoUrl={member.logoUrl}
-                  description={member.description}
-                  primaryDomain={member.primaryDomain}
-                />
-              ))}
-            </div>
-          )}
+          <MemberResultsSummary count={list.length} activeLabel={activeLabel} q={q} />
+          <MemberGrid list={list} q={q} activeLabel={activeLabel} />
         </div>
       </section>
 

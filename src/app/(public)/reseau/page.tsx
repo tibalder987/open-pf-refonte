@@ -2,15 +2,22 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
+import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Le réseau OPEN – OPEN PF',
-  description: "Découvrez les missions, la gouvernance et l'histoire d'OPEN Polynésie française.",
+  title: 'Le réseau OPEN',
+  description:
+    "OPEN fédère les entreprises du numérique en Polynésie française pour représenter la filière, animer le réseau et promouvoir les compétences locales depuis 2011.",
+  alternates: { canonical: '/reseau' },
   openGraph: {
     title: 'Le réseau OPEN – OPEN PF',
-    description: "Découvrez les missions, la gouvernance et l'histoire d'OPEN Polynésie française.",
+    description:
+      "Découvrez les missions, la gouvernance et l'histoire d'OPEN Polynésie française depuis 2011.",
     type: 'website',
+    url: '/reseau',
+    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
   },
+  twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }
 
 const MISSIONS = [
@@ -100,15 +107,25 @@ const TIMELINE = [
 ]
 
 export default function ReseauPage() {
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Accueil', href: '/' },
+    { name: 'Le réseau', href: '/reseau' },
+  ])
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <section className="hero hero-simple">
         <div className="hero-inner container">
           <div>
             <nav className="breadcrumb" aria-label="Fil d'Ariane">
               <Link href="/">Accueil</Link> › Le réseau OPEN
             </nav>
-            <h1 style={{ color: 'white', marginTop: '8px' }}>Le réseau OPEN</h1>
+            <h1>Le réseau OPEN</h1>
             <p className="lead" style={{ marginTop: '20px' }}>
               Fédérer, représenter et faire grandir l&apos;écosystème numérique en Polynésie
               française.
@@ -117,12 +134,12 @@ export default function ReseauPage() {
         </div>
       </section>
 
-      <section className="section" id="missions">
+      <section className="section" id="missions" aria-labelledby="missions-title">
         <div className="container">
           <div className="section-head">
             <div>
               <span className="eyebrow">Nos missions</span>
-              <h2 style={{ marginTop: '12px' }}>
+              <h2 id="missions-title">
                 Agir ensemble pour faire grandir le numérique polynésien
               </h2>
             </div>
@@ -144,12 +161,12 @@ export default function ReseauPage() {
         </div>
       </section>
 
-      <section className="section" id="gouvernance">
+      <section className="section" id="gouvernance" aria-labelledby="gouvernance-title">
         <div className="container">
           <div className="section-head">
             <div>
               <span className="eyebrow">Gouvernance</span>
-              <h2 style={{ marginTop: '12px' }}>Une gouvernance collégiale et engagée</h2>
+              <h2 id="gouvernance-title">Une gouvernance collégiale et engagée</h2>
             </div>
             <p>
               Le bureau d&apos;OPEN est composé de professionnels bénévoles issus de la filière.
@@ -169,15 +186,15 @@ export default function ReseauPage() {
       </section>
 
       <section
-        className="section section-tight"
+        className="section section-tight bg-soft"
         id="origines"
-        style={{ background: 'var(--soft)' }}
+        aria-labelledby="origines-title"
       >
         <div className="container">
           <div className="section-head">
             <div>
               <span className="eyebrow">Nos origines</span>
-              <h2 style={{ marginTop: '12px' }}>Une histoire au service du numérique polynésien</h2>
+              <h2 id="origines-title">Une histoire au service du numérique polynésien</h2>
             </div>
           </div>
           <div className="grid-4">
@@ -191,10 +208,10 @@ export default function ReseauPage() {
         </div>
       </section>
 
-      <section className="section" id="nous-rejoindre">
+      <section className="section" id="nous-rejoindre" aria-labelledby="apropos-title">
         <div className="container" style={{ maxWidth: '760px' }}>
           <span className="eyebrow">L&apos;association</span>
-          <h2 style={{ marginTop: '12px' }}>À propos d&apos;OPEN</h2>
+          <h2 id="apropos-title">À propos d&apos;OPEN</h2>
           <p style={{ marginTop: '24px', lineHeight: 1.75 }}>
             OPEN est née en mars 2011 sous l&apos;impulsion de dirigeants d&apos;entreprises
             passionnées par le numérique, qui ont décidé de se fédérer pour favoriser

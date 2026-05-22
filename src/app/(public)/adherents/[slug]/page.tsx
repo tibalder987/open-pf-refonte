@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     `${member.name} est membre actif du réseau OPEN en Polynésie française.`
   const ogImage = member.logoUrl ?? '/logo-open.png'
   return {
-    title: `${member.name} – Adhérent OPEN PF`,
+    title: { absolute: `${member.name} – Adhérent OPEN PF` },
     description: desc.slice(0, 160),
     alternates: { canonical: `/adherents/${slug}` },
     openGraph: {

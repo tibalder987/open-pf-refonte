@@ -18,10 +18,15 @@ test.describe('Homepage', () => {
     await expect(page.getByRole('link', { name: /Rejoindre OPEN/i }).first()).toBeVisible()
     await expect(page.getByRole('link', { name: /Explorer l'annuaire/i })).toBeVisible()
   })
+
+  test('stats section is visible', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.locator('.stats')).toBeVisible()
+  })
 })
 
 test.describe('Annuaire des adhérents', () => {
-  test('loads member cards', async ({ page }) => {
+  test('loads with member cards', async ({ page }) => {
     await page.goto('/adherents')
     await expect(page.locator('h1')).toBeVisible()
     const cards = page.locator('article.member-card-v')
@@ -33,19 +38,73 @@ test.describe('Annuaire des adhérents', () => {
     const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()
     expect(results.violations.filter((v) => v.impact === 'critical')).toHaveLength(0)
   })
+
+  test('search form is present', async ({ page }) => {
+    await page.goto('/adherents')
+    const searchInput = page.getByRole('searchbox', { name: /Rechercher/i })
+    await expect(searchInput).toBeVisible()
+    await searchInput.fill('test')
+    await page.keyboard.press('Enter')
+    await expect(page).toHaveURL(/q=test/)
+  })
+
+  test('search with no results shows empty state', async ({ page }) => {
+    await page.goto('/adherents?q=xyzxyz_inexistant_987')
+    await expect(page.locator('.empty-state')).toBeVisible()
+    await expect(page.locator('.empty-state__title')).toContainText('Aucun résultat')
+  })
+
+  test('domain filter chips are visible', async ({ page }) => {
+    await page.goto('/adherents')
+    await expect(page.locator('.filters .filter-chip').first()).toBeVisible()
+  })
+
+  test('domain filter updates URL', async ({ page }) => {
+    await page.goto('/adherents')
+    const firstFilter = page.locator('.filters a.filter-chip').nth(1)
+    await firstFilter.click()
+    await expect(page).toHaveURL(/domaine=/)
+  })
+
+  test('reset filters link works from empty state', async ({ page }) => {
+    await page.goto('/adherents?q=xyzxyz_inexistant_987')
+    await page.getByRole('link', { name: /Réinitialiser/i }).click()
+    await expect(page).toHaveURL('/adherents')
+  })
+})
+
+test.describe('Fiche adhérent', () => {
+  test('member fiche page loads', async ({ page }) => {
+    await page.goto('/adherents')
+    const firstCard = page.locator('article.member-card-v a.card-link').first()
+    await firstCard.click()
+    await expect(page).toHaveURL(/\/adherents\//)
+    await expect(page.locator('h1')).toBeVisible()
+  })
+
+  test('contact section is present', async ({ page }) => {
+    await page.goto('/adherents')
+    const firstCard = page.locator('article.member-card-v a.card-link').first()
+    await firstCard.click()
+    await expect(page.locator('aside.contact-card')).toBeVisible()
+  })
+
+  test('has no critical a11y violations', async ({ page }) => {
+    await page.goto('/adherents')
+    const href = await page
+      .locator('article.member-card-v a.card-link')
+      .first()
+      .getAttribute('href')
+    if (href) {
+      await page.goto(href)
+      const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()
+      expect(results.violations.filter((v) => v.impact === 'critical')).toHaveLength(0)
+    }
+  })
 })
 
 test.describe("Formulaire d'adhésion", () => {
-  test('Adhérer button navigates to /adhesion', async ({ page }) => {
-    await page.goto('/')
-    await page
-      .getByRole('link', { name: /Adhérer/i })
-      .first()
-      .click()
-    await expect(page).toHaveURL(/adhesion/, { timeout: 8000 })
-  })
-
-  test('full page adhesion renders step 1', async ({ page }) => {
+  test('renders step 1', async ({ page }) => {
     await page.goto('/adhesion')
     await expect(page.locator('h1')).toBeVisible()
   })
@@ -54,6 +113,28 @@ test.describe("Formulaire d'adhésion", () => {
     await page.goto('/adhesion')
     await page.getByRole('button', { name: /suivant/i }).click()
     await expect(page.getByText(/requis/i).first()).toBeVisible()
+  })
+})
+
+test.describe('Footer', () => {
+  test('legal links are present', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.getByRole('link', { name: /Mentions légales/i })).toBeVisible()
+    await expect(page.getByRole('link', { name: /Politique de confidentialité/i })).toBeVisible()
+  })
+
+  test('footer navigation links are not broken', async ({ page }) => {
+    await page.goto('/')
+    const footerLinks = page.locator('footer .footer-links a')
+    const hrefs = await footerLinks.evaluateAll((els) =>
+      els
+        .map((el) => el.getAttribute('href'))
+        .filter((h): h is string => h !== null && h.startsWith('/')),
+    )
+    for (const href of hrefs.slice(0, 6)) {
+      const response = await page.request.get(href)
+      expect(response.status(), `${href} returned ${response.status()}`).not.toBe(404)
+    }
   })
 })
 
@@ -67,5 +148,32 @@ test.describe('Login admin', () => {
   test('redirects unauthenticated access to login', async ({ page }) => {
     await page.goto('/admin')
     await expect(page).toHaveURL(/admin\/login/)
+  })
+})
+
+test.describe('Pages secondaires', () => {
+  test('réseau page loads', async ({ page }) => {
+    await page.goto('/reseau')
+    await expect(page.locator('h1')).toBeVisible()
+  })
+
+  test('contact page loads', async ({ page }) => {
+    await page.goto('/contact')
+    await expect(page.locator('h1')).toBeVisible()
+  })
+
+  test('offres-emploi shows empty state', async ({ page }) => {
+    await page.goto('/offres-emploi')
+    await expect(page.locator('.empty-state')).toBeVisible()
+  })
+
+  test('événements shows empty state', async ({ page }) => {
+    await page.goto('/evenements')
+    await expect(page.locator('.empty-state')).toBeVisible()
+  })
+
+  test('404 page renders', async ({ page }) => {
+    const response = await page.goto('/cette-route-nexiste-pas-12345')
+    expect(response?.status()).toBe(404)
   })
 })

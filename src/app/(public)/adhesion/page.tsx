@@ -2,16 +2,22 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowIcon } from '@/components/public/arrow-icon'
 import { AdhesionForm } from '@/components/adhesion/adhesion-form'
+import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Adhérer à OPEN PF',
+  title: 'Adhésion',
   description:
-    "Rejoignez le réseau des professionnels du numérique de Polynésie française. Formulaire d'adhésion OPEN PF.",
+    "Rejoignez le cluster numérique de Polynésie française. Intégrez le réseau OPEN PF, accédez aux ressources exclusives et représentez la filière numérique polynésienne.",
+  alternates: { canonical: '/adhesion' },
   openGraph: {
     title: 'Adhérer à OPEN PF',
-    description: 'Rejoignez le réseau des professionnels du numérique de Polynésie française.',
+    description:
+      'Rejoignez le réseau des professionnels du numérique de Polynésie française et développez votre activité au sein du cluster OPEN.',
     type: 'website',
+    url: '/adhesion',
+    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
   },
+  twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }
 
 const AVANTAGES = [
@@ -38,15 +44,25 @@ const AVANTAGES = [
 ]
 
 export default function AdhesionPage() {
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Accueil', href: '/' },
+    { name: 'Adhésion', href: '/adhesion' },
+  ])
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <section className="hero hero-simple">
         <div className="hero-inner container">
           <div>
             <nav className="breadcrumb" aria-label="Fil d'Ariane">
               <Link href="/">Accueil</Link> › Adhésion
             </nav>
-            <h1 style={{ color: 'white', marginTop: '8px' }}>Rejoignez OPEN.</h1>
+            <h1>Rejoignez OPEN.</h1>
             <p className="lead" style={{ marginTop: '20px' }}>
               Intégrez le cluster numérique de Polynésie française et développez votre activité au
               sein d&apos;un réseau de professionnels engagés.
@@ -63,12 +79,12 @@ export default function AdhesionPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--soft)' }}>
+      <section className="section bg-soft" aria-labelledby="avantages-title">
         <div className="container">
           <div className="section-head">
             <div>
               <span className="eyebrow">Pourquoi rejoindre OPEN</span>
-              <h2 style={{ marginTop: '12px' }}>Les avantages de l&apos;adhésion</h2>
+              <h2 id="avantages-title">Les avantages de l&apos;adhésion</h2>
             </div>
           </div>
           <div className="grid-4">
@@ -83,12 +99,12 @@ export default function AdhesionPage() {
         </div>
       </section>
 
-      <section className="section" id="formulaire">
+      <section className="section" id="formulaire" aria-labelledby="formulaire-title">
         <div className="container" style={{ maxWidth: '800px' }}>
           <div className="section-head">
             <div>
               <span className="eyebrow">Formulaire d&apos;adhésion</span>
-              <h2 style={{ marginTop: '12px' }}>Votre demande d&apos;adhésion</h2>
+              <h2 id="formulaire-title">Votre demande d&apos;adhésion</h2>
             </div>
           </div>
           <AdhesionForm />

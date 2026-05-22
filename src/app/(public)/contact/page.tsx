@@ -2,27 +2,44 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
+import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Contact OPEN PF',
-  description: 'Contactez OPEN Polynésie française.',
+  title: 'Contact',
+  description:
+    "Contactez OPEN PF, le cluster numérique de Polynésie française. Notre équipe répond à vos questions sur l'adhésion, les partenariats et les démarches institutionnelles.",
+  alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact OPEN PF',
-    description: 'Contactez OPEN Polynésie française.',
+    title: 'Contact – OPEN PF',
+    description:
+      "Notre équipe est à votre écoute pour vos questions d'adhésion, de partenariat et de presse.",
     type: 'website',
+    url: '/contact',
+    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
   },
+  twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }
 
 export default function ContactPage() {
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Accueil', href: '/' },
+    { name: 'Contact', href: '/contact' },
+  ])
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <section className="hero hero-simple">
         <div className="hero-inner container">
           <div>
             <nav className="breadcrumb" aria-label="Fil d'Ariane">
               <Link href="/">Accueil</Link> › Contact
             </nav>
-            <h1 style={{ color: 'white', marginTop: '8px' }}>Contactez OPEN.</h1>
+            <h1>Contactez OPEN.</h1>
             <p className="lead" style={{ marginTop: '20px' }}>
               Notre équipe est à votre écoute pour répondre à vos questions et vous accompagner dans
               vos démarches.
@@ -31,10 +48,10 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" aria-labelledby="contact-form-title">
         <div className="grid-2 container">
           <div className="form-shell">
-            <h2>Envoyez-nous un message</h2>
+            <h2 id="contact-form-title">Envoyez-nous un message</h2>
             <p style={{ margin: '10px 0 24px' }}>Nous vous répondrons dans les meilleurs délais.</p>
             <div className="form-grid">
               <div className="form-field">
@@ -80,8 +97,10 @@ export default function ContactPage() {
             </button>
           </div>
 
-          <aside className="card contact-card">
-            <h2 style={{ marginBottom: '24px' }}>Nos coordonnées</h2>
+          <aside className="card contact-card" aria-labelledby="contact-coords-title">
+            <h2 id="contact-coords-title" style={{ marginBottom: '24px' }}>
+              Nos coordonnées
+            </h2>
 
             <div className="contact-item">
               <span style={{ color: 'var(--open-magenta)', paddingTop: '2px' }}>

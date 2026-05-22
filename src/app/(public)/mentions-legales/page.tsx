@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Mentions légales – OPEN PF',
+  title: 'Mentions légales',
   description:
     "Mentions légales du site OPEN PF – Organisation des Professionnels de l'Économie Numérique de Polynésie française.",
   alternates: { canonical: '/mentions-legales' },

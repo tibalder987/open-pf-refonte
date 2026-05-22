@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Politique de confidentialité – OPEN PF',
+  title: 'Politique de confidentialité',
   description: 'Politique de confidentialité et traitement des données personnelles – OPEN PF.',
   alternates: { canonical: '/confidentialite' },
   robots: { index: false },

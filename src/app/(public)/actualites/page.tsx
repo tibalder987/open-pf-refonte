@@ -6,20 +6,30 @@ import { eq, desc } from 'drizzle-orm'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
 import { formatDate } from '@/lib/utils'
+import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: 'Actualités OPEN PF',
-  description: "Toute l'actualité du numérique en Polynésie française.",
+  title: 'Actualités',
+  description:
+    "Toute l'actualité du numérique en Polynésie française : événements, publications et initiatives du cluster OPEN PF.",
+  alternates: { canonical: '/actualites' },
   openGraph: {
-    title: 'Actualités OPEN PF',
+    title: 'Actualités – OPEN PF',
     description: "Toute l'actualité du numérique en Polynésie française.",
     type: 'website',
+    url: '/actualites',
+    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
   },
+  twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }
 
 export default async function ActualitesPage() {
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Accueil', href: '/' },
+    { name: 'Actualités', href: '/actualites' },
+  ])
   const db = getDb()
   const articles = await db
     .select({
@@ -40,6 +50,10 @@ export default async function ActualitesPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <section className="hero hero-simple">
         <div className="hero-inner container">
           <div>

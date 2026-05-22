@@ -2,27 +2,44 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
+import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: "Offres d'emploi OPEN PF",
-  description: "Offres d'emploi des entreprises du numérique en Polynésie française.",
+  title: "Offres d'emploi",
+  description:
+    "Découvrez les opportunités de carrière au sein des entreprises du numérique en Polynésie française. Offres d'emploi, stages et alternances.",
+  alternates: { canonical: '/offres-emploi' },
   openGraph: {
-    title: "Offres d'emploi OPEN PF",
-    description: "Offres d'emploi des entreprises du numérique en Polynésie française.",
+    title: "Offres d'emploi – OPEN PF",
+    description:
+      "Offres d'emploi des entreprises numériques adhérentes à OPEN PF en Polynésie française.",
     type: 'website',
+    url: '/offres-emploi',
+    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
   },
+  twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }
 
 export default function OffresEmploiPage() {
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Accueil', href: '/' },
+    { name: "Offres d'emploi", href: '/offres-emploi' },
+  ])
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <section className="hero hero-simple">
         <div className="hero-inner container">
           <div>
             <nav className="breadcrumb" aria-label="Fil d'Ariane">
               <Link href="/">Accueil</Link> › Offres d&apos;emploi
             </nav>
-            <h1>Offres d&apos;emploi</h1>
+            <h1>Offres d&apos;emploi.</h1>
             <p className="lead" style={{ marginTop: '20px' }}>
               Découvrez les opportunités de carrière au sein des entreprises du numérique en
               Polynésie française.
@@ -31,7 +48,7 @@ export default function OffresEmploiPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" aria-labelledby="offres-title">
         <div className="container">
           <form
             className="form-shell"
@@ -77,10 +94,18 @@ export default function OffresEmploiPage() {
             </button>
           </form>
 
+          <h2 id="offres-title" className="sr-only">
+            Liste des offres d&apos;emploi
+          </h2>
           <div className="empty-state">
             <svg className="empty-state__icon" viewBox="0 0 48 48" aria-hidden="true" fill="none">
               <rect x="8" y="14" width="32" height="24" rx="4" stroke="currentColor" strokeWidth="3" />
-              <path d="M18 14V10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              <path
+                d="M18 14V10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
               <path d="M8 26h32" stroke="currentColor" strokeWidth="3" />
             </svg>
             <p className="empty-state__title">Aucune offre disponible</p>
