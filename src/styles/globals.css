@@ -849,11 +849,10 @@ p {
 }
 .member-card-v .member-logo-wrap {
   height: 180px;
-  /* rounded top corners matching card border-radius, flat bottom to merge with body */
   border-radius: 20px 20px 0 0;
   border: none;
   border-bottom: 1px solid var(--line);
-  background: var(--soft);
+  background: #fff;
 }
 .member-card-v-body {
   padding: 22px;
@@ -861,6 +860,8 @@ p {
   flex-direction: column;
   flex: 1;
   gap: 8px;
+  background: var(--soft);
+  border-radius: 0 0 20px 20px;
 }
 .member-card-v-body h3 {
   font-size: 18px;
@@ -1489,6 +1490,8 @@ textarea {
   padding: 48px 24px;
 }
 .adhesion-success-icon {
+  display: flex;
+  justify-content: center;
   margin-bottom: 24px;
 }
 .adhesion-success h2 {

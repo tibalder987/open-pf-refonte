@@ -50,7 +50,7 @@ export function AdhesionModal({ isOpen, onClose }: AdhesionModalProps) {
             <h2>Rejoindre OPEN PF</h2>
             <p>Remplissez ce formulaire pour soumettre votre demande d&apos;adhésion.</p>
           </div>
-          <AdhesionForm />
+          <AdhesionForm onClose={onClose} />
         </div>
       )}
     </dialog>

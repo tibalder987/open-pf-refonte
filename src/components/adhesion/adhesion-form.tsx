@@ -31,9 +31,10 @@ const STEPS = [
 
 interface AdhesionFormProps {
   onSuccess?: (slug: string) => void
+  onClose?: () => void
 }
 
-export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
+export function AdhesionForm({ onSuccess, onClose }: AdhesionFormProps) {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -126,7 +127,13 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
   }
 
   function handleInvalid() {
-    setServerError('Certains champs sont invalides. Vérifiez les étapes précédentes.')
+    const errs = form.formState.errors
+    const keys = Object.keys(errs)
+    if (keys.length === 1 && keys[0] === 'rgpdConsent') {
+      setServerError('Veuillez accepter la politique de confidentialité ci-dessus.')
+    } else {
+      setServerError('Certains champs sont invalides. Vérifiez les étapes précédentes.')
+    }
   }
 
   if (submitted) {
@@ -149,7 +156,14 @@ export function AdhesionForm({ onSuccess }: AdhesionFormProps) {
           Votre demande d&apos;adhésion a été transmise au bureau d&apos;OPEN. Vous recevrez une
           confirmation par email sous 48 h.
         </p>
-        <button type="button" className="btn" onClick={() => router.push('/')}>
+        <button
+          type="button"
+          className="btn"
+          onClick={() => {
+            onClose?.()
+            router.push('/')
+          }}
+        >
           Retour à l&apos;accueil <ArrowIcon />
         </button>
       </div>
