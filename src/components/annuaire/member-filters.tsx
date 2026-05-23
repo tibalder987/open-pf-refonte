@@ -17,12 +17,13 @@ export function MemberFilters({ domains, activeId, q }: MemberFiltersProps) {
   const allHref = q ? `/adherents?q=${encodeURIComponent(q)}` : '/adherents'
 
   return (
-    <div className="container" style={{ paddingTop: '28px', paddingBottom: '4px' }}>
+    <div className="directory-filters-wrap">
       <div className="filters" role="group" aria-label="Filtrer par domaine d'activité">
         <Link
           href={allHref}
           className={`filter-chip light${!activeId ? ' active' : ''}`}
           aria-current={!activeId ? 'true' : undefined}
+          aria-pressed={!activeId ? 'true' : 'false'}
         >
           Tous les domaines
         </Link>
@@ -36,6 +37,7 @@ export function MemberFilters({ domains, activeId, q }: MemberFiltersProps) {
               href={`/adherents?${params.toString()}`}
               className={`filter-chip light${activeId === d.id ? ' active' : ''}`}
               aria-current={activeId === d.id ? 'true' : undefined}
+              aria-pressed={activeId === d.id ? 'true' : 'false'}
             >
               {d.label}
             </Link>

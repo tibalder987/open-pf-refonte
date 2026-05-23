@@ -6,10 +6,9 @@ interface MemberSearchProps {
 export function MemberSearch({ q, domaine }: MemberSearchProps) {
   return (
     <form
-      className="search-box"
+      className="search-box directory-search-form"
       role="search"
       aria-label="Recherche dans l'annuaire"
-      style={{ marginTop: '32px' }}
       action="/adherents"
       method="GET"
     >
@@ -23,6 +22,7 @@ export function MemberSearch({ q, domaine }: MemberSearchProps) {
         type="search"
         placeholder="Rechercher une entreprise, un mot-clé…"
         defaultValue={q ?? ''}
+        aria-label="Rechercher une entreprise"
       />
       <button className="btn" type="submit">
         Rechercher{' '}
