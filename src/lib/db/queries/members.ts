@@ -20,7 +20,7 @@ export async function getActiveMembers() {
 
 export async function getFeaturedMembers(limit = 12) {
   const db = getDb()
-  return db
+  const list = await db
     .select({
       id: members.id,
       slug: members.slug,
@@ -31,6 +31,22 @@ export async function getFeaturedMembers(limit = 12) {
     .where(and(eq(members.status, 'active'), isNotNull(members.logoUrl)))
     .orderBy(asc(members.name))
     .limit(limit)
+
+  if (list.length === 0) return []
+
+  const memberIds = list.map((m) => m.id)
+  const activities = await db
+    .select({ memberId: memberActivities.memberId, label: activityDomains.label })
+    .from(memberActivities)
+    .innerJoin(activityDomains, eq(memberActivities.domainId, activityDomains.id))
+    .where(inArray(memberActivities.memberId, memberIds))
+
+  const domainByMember = new Map<string, string>()
+  for (const a of activities) {
+    if (!domainByMember.has(a.memberId)) domainByMember.set(a.memberId, a.label)
+  }
+
+  return list.map((m) => ({ ...m, primaryDomain: domainByMember.get(m.id) ?? null }))
 }
 
 export async function getMemberBySlug(slug: string) {

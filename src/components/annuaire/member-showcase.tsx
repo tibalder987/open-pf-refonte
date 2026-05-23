@@ -5,6 +5,7 @@ interface ShowcaseMember {
   slug: string
   name: string
   logoUrl: string | null
+  primaryDomain: string | null
 }
 
 interface MemberShowcaseProps {
@@ -12,23 +13,30 @@ interface MemberShowcaseProps {
 }
 
 export function MemberShowcase({ members }: MemberShowcaseProps) {
+  if (members.length === 0) return null
   return (
-    <div className="members-showcase" aria-label="Vitrine des adhérents">
+    <div className="members-showcase" role="list" aria-label="Vitrine des adhérents">
       {members.map((member) => (
         <Link
           key={member.slug}
           href={`/adherents/${member.slug}`}
           className="showcase-link"
-          aria-label={`Voir la fiche de ${member.name}`}
+          role="listitem"
+          aria-label={`${member.name}${member.primaryDomain ? ` — ${member.primaryDomain}` : ''}`}
         >
-          <MemberLogo
-            name={member.name}
-            logoUrl={member.logoUrl}
-            sizes="(max-width: 640px) 75vw, (max-width: 980px) 45vw, 14vw"
-          />
-          <span className="showcase-name" aria-hidden="true">
-            {member.name}
-          </span>
+          <div className="showcase-logo-wrap">
+            <MemberLogo
+              name={member.name}
+              logoUrl={member.logoUrl}
+              sizes="(max-width: 640px) 60vw, (max-width: 980px) 30vw, 160px"
+            />
+          </div>
+          <div className="showcase-meta">
+            <span className="showcase-name">{member.name}</span>
+            {member.primaryDomain && (
+              <span className="showcase-domain">{member.primaryDomain}</span>
+            )}
+          </div>
         </Link>
       ))}
     </div>
