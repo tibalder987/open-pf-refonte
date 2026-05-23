@@ -22,8 +22,9 @@ export const metadata: Metadata = {
       'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
     type: 'website',
     url: '/',
+    images: [{ url: '/hero-illustration.png', width: 1200, height: 800, alt: 'OPEN PF – Cluster numérique de Polynésie française' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', images: ['/hero-illustration.png'] },
 }
 
 const MISSIONS = [

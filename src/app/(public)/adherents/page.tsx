@@ -30,8 +30,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         'Retrouvez les entreprises et organisations membres du réseau OPEN en Polynésie française.',
       type: 'website',
       url: '/adherents',
+      images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF – Annuaire des adhérents' }],
     },
-    twitter: { card: 'summary_large_image' },
+    twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
   }
   if (isFiltered) {
     return { ...base, robots: { index: false, follow: false } }

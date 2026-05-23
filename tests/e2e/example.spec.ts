@@ -85,6 +85,61 @@ test.describe('Homepage', () => {
   })
 })
 
+test.describe('DOM order & accessibilité — /adherents', () => {
+  test('main#contenu existe et contient le h1', async ({ page }) => {
+    await page.goto('/adherents')
+    await expect(page.locator('h1').first()).toBeVisible()
+
+    const h1InMain = await page.evaluate(() => {
+      const h1 = document.querySelector('h1')
+      const main = document.getElementById('contenu')
+      if (!h1 || !main) return false
+      return main.contains(h1)
+    })
+    expect(h1InMain).toBe(true)
+  })
+
+  test('le footer est après le main dans le DOM', async ({ page }) => {
+    await page.goto('/adherents')
+    await expect(page.locator('footer.site-footer')).toBeVisible()
+
+    const footerAfterMain = await page.evaluate(() => {
+      const main = document.getElementById('contenu')
+      const footer = document.querySelector('footer.site-footer')
+      if (!main || !footer) return null
+      const pos = main.compareDocumentPosition(footer)
+      // DOCUMENT_POSITION_FOLLOWING = 4 means footer comes after main
+      return (pos & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
+    })
+    expect(footerAfterMain).toBe(true)
+  })
+
+  test('le skip link pointe vers #contenu', async ({ page }) => {
+    await page.goto('/adherents')
+    await expect(page.locator('.skip-link')).toHaveAttribute('href', '#contenu')
+  })
+
+  test("l'ordre dans le HTML brut met main avant footer (SSR streaming)", async ({ page }) => {
+    const response = await page.request.get('/adherents')
+    const html = await response.text()
+    const mainIdx = html.indexOf('id="contenu"')
+    const footerIdx = html.indexOf('<footer')
+    expect(mainIdx).toBeGreaterThan(-1)
+    expect(footerIdx).toBeGreaterThan(-1)
+    expect(mainIdx).toBeLessThan(footerIdx)
+  })
+
+  test('le h1 est dans le HTML brut avant le footer (SSR streaming)', async ({ page }) => {
+    const response = await page.request.get('/adherents')
+    const html = await response.text()
+    const h1Idx = html.indexOf('<h1')
+    const footerIdx = html.indexOf('<footer')
+    expect(h1Idx).toBeGreaterThan(-1)
+    expect(footerIdx).toBeGreaterThan(-1)
+    expect(h1Idx).toBeLessThan(footerIdx)
+  })
+})
+
 test.describe('Annuaire des adhérents', () => {
   test('loads with member cards', async ({ page }) => {
     await page.goto('/adherents')

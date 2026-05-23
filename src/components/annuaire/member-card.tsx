@@ -11,8 +11,9 @@ interface MemberCardProps {
 }
 
 export function MemberCard({ slug, name, logoUrl, description, primaryDomain }: MemberCardProps) {
+  const headingId = `member-name-${slug}`
   return (
-    <article className="card member-card-v">
+    <article className="card member-card-v" aria-labelledby={headingId}>
       <MemberLogo
         name={name}
         logoUrl={logoUrl}
@@ -20,7 +21,7 @@ export function MemberCard({ slug, name, logoUrl, description, primaryDomain }: 
       />
       <div className="member-card-v-body">
         {primaryDomain && <span className="member-domain-tag">{primaryDomain}</span>}
-        <h3>{name}</h3>
+        <h3 id={headingId}>{name}</h3>
         {description && (
           <p>
             {description.length > 110 ? `${description.slice(0, 110)}…` : description}

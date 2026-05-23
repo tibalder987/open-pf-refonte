@@ -2,6 +2,12 @@ import { and, asc, eq, ilike, inArray, isNotNull, ne, or } from 'drizzle-orm'
 import { getDb } from '@/lib/db'
 import { activityDomains, memberActivities, members } from '@/lib/db/schema'
 
+// Publication governance: all public queries filter on status = 'active'.
+// The lifecycle is draft → submitted → active ↔ inactive (see schema.ts).
+// 'active' is the only status that reaches the public annuaire.
+// Content quality (description wording, logo presence, etc.) is NOT a filter criterion —
+// it is the responsibility of the admin workflow (demandes/adherents pages).
+
 export async function getActiveMembers() {
   const db = getDb()
   return db
