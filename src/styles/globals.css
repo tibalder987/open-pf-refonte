@@ -860,7 +860,7 @@ p {
   flex-direction: column;
   flex: 1;
   gap: 8px;
-  background: var(--soft);
+  background: var(--soft-pink);
   border-radius: 0 0 20px 20px;
 }
 .member-card-v-body h3 {

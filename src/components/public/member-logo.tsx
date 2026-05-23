@@ -51,11 +51,10 @@ export function MemberLogo({ name, logoUrl, sizes, priority = false }: MemberLog
     )
   }
 
-  const { bg, fg } = colorFor(name)
+  const { fg } = colorFor(name)
   return (
     <div
       className="member-logo-wrap member-logo-fallback"
-      style={{ background: bg }}
       role="img"
       aria-label={`${name} — logo non disponible`}
     >
