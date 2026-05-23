@@ -1,6 +1,6 @@
-import { and, asc, eq, ilike, inArray, isNotNull, ne, or } from 'drizzle-orm'
+import { and, asc, desc, eq, ilike, inArray, isNotNull, ne, or } from 'drizzle-orm'
 import { getDb } from '@/lib/db'
-import { activityDomains, memberActivities, members } from '@/lib/db/schema'
+import { activityDomains, memberActivities, memberContacts, members } from '@/lib/db/schema'
 
 // Publication governance: all public queries filter on status = 'active'.
 // The lifecycle is draft → submitted → active ↔ inactive (see schema.ts).
@@ -69,6 +69,8 @@ export async function getMemberBySlug(slug: string) {
       yearFounded: members.yearFounded,
       employeeCount: members.employeeCount,
       linkedinUrl: members.linkedinUrl,
+      isMedefMember: members.isMedefMember,
+      tahitiNumber: members.tahitiNumber,
     })
     .from(members)
     .where(and(eq(members.slug, slug), eq(members.status, 'active')))
@@ -147,6 +149,22 @@ export async function searchMembers(params: { q?: string | undefined; domainId?:
   }
 
   return list.map((m) => ({ ...m, primaryDomain: domainByMember.get(m.id) ?? null }))
+}
+
+export async function getMemberContacts(memberId: string) {
+  const db = getDb()
+  return db
+    .select({
+      id: memberContacts.id,
+      name: memberContacts.name,
+      role: memberContacts.role,
+      email: memberContacts.email,
+      phone: memberContacts.phone,
+      isPrimary: memberContacts.isPrimary,
+    })
+    .from(memberContacts)
+    .where(eq(memberContacts.memberId, memberId))
+    .orderBy(desc(memberContacts.isPrimary), asc(memberContacts.name))
 }
 
 export async function getOtherActiveMembers(excludeSlug: string, limit = 3) {

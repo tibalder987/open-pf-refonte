@@ -1062,6 +1062,105 @@ p {
   border-bottom: 0;
   padding-bottom: 0;
 }
+.contact-item a {
+  color: var(--ink);
+  word-break: break-all;
+}
+.contact-item a:hover {
+  color: var(--open-magenta);
+}
+.contact-person {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.contact-person svg {
+  margin-top: 2px;
+  color: var(--open-magenta);
+}
+.contact-person strong {
+  display: block;
+  font-size: 15px;
+}
+.contact-role {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.contact-socials {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.contact-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--soft);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.contact-social-btn:hover {
+  background: #eff3ff;
+  border-color: #b0c2f0;
+  color: #0057d8;
+}
+
+/* Member fiche — domains grid & facts */
+.member-domains-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 16px;
+}
+.member-domain-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.member-domain-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--open-magenta);
+  flex-shrink: 0;
+}
+.member-facts {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.member-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.member-fact-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+}
+.member-fact-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 
 /* ─── Forms (structure only — logic in P4) ────────────────────────────────── */
 .form-shell {
