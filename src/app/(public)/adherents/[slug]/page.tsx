@@ -12,10 +12,9 @@ import {
   getMemberDomains,
   getOtherActiveMembers,
 } from '@/lib/db/queries/members'
-import { getDailySeed } from '@/lib/random/seeded-shuffle'
 import { buildBreadcrumbJsonLd, buildMemberJsonLd } from '@/lib/seo'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -48,7 +47,7 @@ export default async function MemberPage({ params }: Props) {
   const { slug } = await params
   const [member, otherMembers] = await Promise.all([
     getMemberBySlug(slug),
-    getOtherActiveMembers(slug, 3, { seed: getDailySeed() }),
+    getOtherActiveMembers(slug, 3, { seed: Math.random().toString() }),
   ])
   if (!member) notFound()
 
