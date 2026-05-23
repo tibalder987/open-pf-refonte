@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
 import { MemberLogo } from '@/components/public/member-logo'
+import { MemberCard } from '@/components/annuaire/member-card'
 import {
   getMemberBySlug,
   getMemberContacts,
@@ -301,29 +302,14 @@ export default async function MemberPage({ params }: Props) {
             </div>
             <div className="grid-3">
               {otherMembers.map((m) => (
-                <Link
+                <MemberCard
                   key={m.slug}
-                  href={`/adherents/${m.slug}`}
-                  style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
-                >
-                  <article className="card member-card">
-                    <div className="logo-card">
-                      <MemberLogo
-                        name={m.name}
-                        logoUrl={m.logoUrl}
-                        sizes="(max-width: 980px) 50vw, 150px"
-                      />
-                    </div>
-                    <div>
-                      <h3>{m.name}</h3>
-                      {m.description && (
-                        <p style={{ marginTop: '8px', fontSize: '14px', color: 'var(--muted)' }}>
-                          {m.description.length > 80 ? m.description.slice(0, 80) + '…' : m.description}
-                        </p>
-                      )}
-                    </div>
-                  </article>
-                </Link>
+                  slug={m.slug}
+                  name={m.name}
+                  logoUrl={m.logoUrl}
+                  description={m.description}
+                  primaryDomain={m.primaryDomain}
+                />
               ))}
             </div>
           </div>
