@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
-import { MemberLogo } from '@/components/public/member-logo'
+import { MemberShowcase } from '@/components/annuaire/member-showcase'
 import { getFeaturedMembers } from '@/lib/db/queries/members'
 import { getSiteStats } from '@/lib/db/queries/stats'
 
@@ -222,25 +222,7 @@ export default async function HomePage() {
               Voir tous les adhérents <ArrowIcon />
             </Link>
           </div>
-          <div className="members-showcase" aria-label="Vitrine des adhérents">
-            {featuredMembers.map((member) => (
-              <Link
-                key={member.slug}
-                href={`/adherents/${member.slug}`}
-                className="showcase-link"
-                aria-label={`Voir la fiche de ${member.name}`}
-              >
-                <MemberLogo
-                  name={member.name}
-                  logoUrl={member.logoUrl}
-                  sizes="(max-width: 640px) 75vw, (max-width: 980px) 45vw, 14vw"
-                />
-                <span className="showcase-name" aria-hidden="true">
-                  {member.name}
-                </span>
-              </Link>
-            ))}
-          </div>
+          <MemberShowcase members={featuredMembers} />
         </div>
       </section>
 
