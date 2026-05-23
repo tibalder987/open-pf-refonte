@@ -203,6 +203,7 @@ body {
   border: 1px solid transparent;
   border-radius: 14px;
   padding: 13px 18px;
+  min-height: 48px;
   font-weight: 800;
   line-height: 1;
   color: white;
@@ -1199,13 +1200,20 @@ input,
 select,
 textarea {
   border: 1px solid #cfd6e4;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 14px 15px;
   background: white;
   color: var(--ink);
-  min-height: 50px;
+  min-height: 52px;
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 16px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--open-magenta);
+  box-shadow: 0 0 0 3px rgba(230, 0, 126, 0.1);
 }
 textarea {
   min-height: 140px;
@@ -2366,5 +2374,202 @@ textarea {
     padding: 16px;
     border-radius: 20px;
     margin-top: 32px;
+  }
+}
+
+/* ─── Light page header (PDF-aligned, used on /adhesion) ─────── */
+.page-header {
+  background: white;
+  border-bottom: 1px solid var(--line);
+  padding: 56px 0 48px;
+}
+.page-header .breadcrumb {
+  color: var(--muted);
+  margin-bottom: 14px;
+  position: static;
+}
+.page-header .breadcrumb a {
+  color: var(--muted);
+}
+.page-header h1 {
+  color: var(--navy);
+  font-size: clamp(36px, 4.5vw, 58px);
+  margin-top: 10px;
+}
+.page-header-lead {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 680px;
+  margin-top: 14px;
+  line-height: 1.65;
+}
+.page-header .eyebrow + h1 {
+  margin-top: 10px;
+}
+
+/* ─── Adhesion page 2-col layout (form + sidebar) ────────────── */
+.adhesion-page-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+.adhesion-progress-sidebar {
+  position: sticky;
+  top: 108px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.adhesion-progress-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: var(--shadow-soft);
+}
+.adhesion-progress-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.adhesion-step-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.adhesion-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+}
+.adhesion-step-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.adhesion-step-name {
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  display: block;
+}
+.adhesion-step-desc {
+  font-size: 12px;
+  color: var(--muted);
+  display: block;
+  margin-top: 1px;
+}
+.adhesion-advisory-card {
+  background: var(--navy);
+  border-radius: 20px;
+  padding: 24px;
+}
+.adhesion-advisory-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.adhesion-advisory-card p {
+  font-size: 13px;
+  color: #b8c7e8;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 980px) {
+  .adhesion-page-grid {
+    grid-template-columns: 1fr;
+  }
+  .adhesion-progress-sidebar {
+    position: static;
+    order: -1;
+  }
+}
+
+/* ─── Fiche sécurisée — hero badge + 2-col layout ────────────── */
+.fiche-session-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}
+.fiche-page-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  align-items: start;
+}
+.fiche-page-sidebar {
+  position: sticky;
+  top: 108px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.fiche-completeness-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fiche-completeness-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.fiche-completeness-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-success);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.fiche-completeness-icon--empty {
+  background: var(--line);
+  color: var(--muted);
+}
+
+@media (max-width: 980px) {
+  .fiche-page-grid {
+    grid-template-columns: 1fr;
+  }
+  .fiche-page-sidebar {
+    position: static;
+    order: -1;
   }
 }
