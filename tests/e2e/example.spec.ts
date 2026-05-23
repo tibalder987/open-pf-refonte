@@ -32,6 +32,20 @@ test.describe('Homepage', () => {
     await expect(cards.first()).toBeVisible()
   })
 
+  test('members showcase is a scrollable horizontal carousel on mobile', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await page.goto('/')
+    const showcase = page.locator('.members-showcase')
+    await expect(showcase).toBeVisible()
+    // Must have more than one card
+    const cards = showcase.locator('.showcase-link')
+    const count = await cards.count()
+    expect(count).toBeGreaterThan(1)
+    // Must be scrollable (scrollWidth > clientWidth)
+    const isScrollable = await showcase.evaluate((el: HTMLElement) => el.scrollWidth > el.clientWidth)
+    expect(isScrollable).toBe(true)
+  })
+
   test('showcase links navigate to member fiches', async ({ page }) => {
     await page.goto('/')
     const firstShowcaseLink = page.locator('.members-showcase .showcase-link').first()

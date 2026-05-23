@@ -44,17 +44,18 @@ export function MemberLogo({ name, logoUrl, sizes, priority = false }: MemberLog
           alt={`Logo ${name}`}
           fill
           sizes={sizes ?? '(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px'}
-          style={{ objectFit: 'contain', padding: '12px' }}
+          style={{ objectFit: 'contain', padding: '20px' }}
           priority={priority}
         />
       </div>
     )
   }
 
-  const { fg } = colorFor(name)
+  const { bg, fg } = colorFor(name)
   return (
     <div
       className="member-logo-wrap member-logo-fallback"
+      style={{ background: bg }}
       role="img"
       aria-label={`${name} — logo non disponible`}
     >

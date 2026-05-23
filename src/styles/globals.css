@@ -759,7 +759,7 @@ p {
   flex-shrink: 0;
 }
 .member-logo-fallback span {
-  font-size: 22px;
+  font-size: 40px;
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -783,8 +783,8 @@ p {
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .showcase-link:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(5, 15, 46, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 18px 44px rgba(5, 15, 46, 0.16);
 }
 .showcase-link:focus-visible {
   outline: 3px solid rgba(0, 87, 216, 0.35);
@@ -799,34 +799,31 @@ p {
   border-radius: 0;
   border: none;
   border-bottom: 1px solid var(--line);
-  background: #fff;
-  transition: opacity 0.18s ease;
-}
-.showcase-link:hover .member-logo-wrap {
-  opacity: 0.9;
+  /* background intentionally unset — real logos inherit base white;
+     fallbacks use their inline palette color (inline > class) */
 }
 .showcase-meta {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 14px 16px;
-  background: var(--soft-pink);
+  gap: 3px;
+  padding: 12px 16px 14px;
+  background: var(--navy);
 }
 .showcase-name {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 .showcase-domain {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  color: var(--open-magenta);
+  color: rgba(255, 255, 255, 0.55);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1167,22 +1164,27 @@ textarea {
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
       gap: 14px;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      margin-inline: -4px;
-      padding-inline: 4px;
+      /* bleed past container to show next-card peek */
+      margin-inline: -16px;
+      padding-inline: 16px;
+      /* right fade to signal scrollability */
+      -webkit-mask-image: linear-gradient(to right, black calc(100% - 48px), transparent 100%);
+      mask-image: linear-gradient(to right, black calc(100% - 48px), transparent 100%);
     }
     .members-showcase::-webkit-scrollbar {
       display: none;
     }
     .showcase-link {
-      flex: 0 0 min(240px, 72vw);
+      flex: 0 0 min(200px, 62vw);
       scroll-snap-align: start;
     }
     .showcase-link .member-logo-wrap {
-      height: 160px;
+      height: 155px;
     }
   }
 
