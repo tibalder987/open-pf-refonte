@@ -22,7 +22,7 @@ export function MemberFilters({ domains, activeId, q }: MemberFiltersProps) {
         <Link
           href={allHref}
           className={`filter-chip light${!activeId ? ' active' : ''}`}
-          aria-pressed={!activeId}
+          aria-current={!activeId ? 'true' : undefined}
         >
           Tous les domaines
         </Link>
@@ -35,7 +35,7 @@ export function MemberFilters({ domains, activeId, q }: MemberFiltersProps) {
               key={d.id}
               href={`/adherents?${params.toString()}`}
               className={`filter-chip light${activeId === d.id ? ' active' : ''}`}
-              aria-pressed={activeId === d.id}
+              aria-current={activeId === d.id ? 'true' : undefined}
             >
               {d.label}
             </Link>

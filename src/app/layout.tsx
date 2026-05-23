@@ -26,7 +26,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/logo-open.png'],
   },
   robots: {
     index: true,

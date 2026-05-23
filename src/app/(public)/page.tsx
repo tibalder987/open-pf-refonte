@@ -21,7 +21,9 @@ export const metadata: Metadata = {
     description:
       'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
     type: 'website',
+    url: '/',
   },
+  twitter: { card: 'summary_large_image' },
 }
 
 const MISSIONS = [

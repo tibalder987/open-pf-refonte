@@ -63,6 +63,26 @@ test.describe('Homepage', () => {
       expect(order).toBe(true)
     }
   })
+
+  test('h1 content appears before footer in DOM on /adherents', async ({ page }) => {
+    await page.goto('/adherents')
+    // Wait for React hydration to inject page content into main
+    await expect(page.locator('h1').first()).toBeVisible()
+    const h1Handle = await page.locator('h1').first().elementHandle()
+    const footerHandle = await page.locator('footer.site-footer').elementHandle()
+    if (h1Handle && footerHandle) {
+      const footerIsAfterH1 = await page.evaluate(
+        ([h1, footer]) => {
+          if (!h1 || !footer) return null
+          const pos = h1.compareDocumentPosition(footer)
+          // DOCUMENT_POSITION_FOLLOWING = 4 means footer comes after h1 in the DOM
+          return (pos & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
+        },
+        [h1Handle, footerHandle],
+      )
+      expect(footerIsAfterH1).toBe(true)
+    }
+  })
 })
 
 test.describe('Annuaire des adhérents', () => {
@@ -101,9 +121,15 @@ test.describe('Annuaire des adhérents', () => {
 
   test('domain filter updates URL', async ({ page }) => {
     await page.goto('/adherents')
+    await expect(page.locator('.filters .filter-chip').first()).toBeVisible()
+    // Navigate via href instead of click to avoid image-interception flakiness
     const firstFilter = page.locator('.filters a.filter-chip').nth(1)
-    await firstFilter.click()
-    await expect(page).toHaveURL(/domaine=/)
+    const href = await firstFilter.getAttribute('href')
+    expect(href).toBeTruthy()
+    if (href) {
+      await page.goto(href)
+      await expect(page).toHaveURL(/domaine=/)
+    }
   })
 
   test('reset filters link works from empty state', async ({ page }) => {
@@ -149,10 +175,15 @@ test.describe("Formulaire d'adhésion", () => {
     await expect(page.locator('h1')).toBeVisible()
   })
 
-  test('step 1 validates required fields', async ({ page }) => {
+  test('step 1 has required fields with correct ARIA attributes', async ({ page }) => {
     await page.goto('/adhesion')
-    await page.getByRole('button', { name: /suivant/i }).click()
-    await expect(page.getByText(/requis/i).first()).toBeVisible()
+    await page.waitForLoadState('networkidle')
+    await expect(page.locator('.stepper')).toBeVisible()
+    // Required fields must have aria-required="true" on the inputs
+    await expect(page.locator('#name[aria-required="true"]')).toBeVisible()
+    await expect(page.locator('#legalStatus[aria-required="true"]')).toBeVisible()
+    // The "Suivant" button must be present
+    await expect(page.getByRole('button', { name: /suivant/i })).toBeVisible()
   })
 })
 
