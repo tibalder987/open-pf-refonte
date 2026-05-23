@@ -120,9 +120,6 @@ export default async function AdminDashboard() {
             <Link href="/admin/offres-emploi" className="btn btn-secondary">
               + Nouvelle offre d&apos;emploi
             </Link>
-            <Link href="/admin/evenements" className="btn btn-secondary">
-              + Nouvel événement
-            </Link>
           </div>
         </section>
       </div>

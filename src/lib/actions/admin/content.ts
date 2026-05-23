@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { getDb } from '@/lib/db'
-import { news, jobOffers, events } from '@/lib/db/schema'
+import { news, jobOffers } from '@/lib/db/schema'
 import { auth } from '@/lib/auth/session'
 import { toSlug } from '@/lib/utils'
 
@@ -153,62 +153,3 @@ export async function deleteJob(id: string): Promise<{ success: boolean }> {
   return { success: true }
 }
 
-// ─── Events ────────────────────────────────────────────────────────────────
-
-const eventSchema = z.object({
-  title: z.string().min(1, 'Titre requis'),
-  description: z.string().optional().or(z.literal('')),
-  startsAt: z.string().datetime(),
-  endsAt: z.string().datetime().optional().or(z.literal('')),
-  location: z.string().optional().or(z.literal('')),
-  imageUrl: z.string().url().optional().or(z.literal('')),
-  registrationUrl: z.string().url().optional().or(z.literal('')),
-  isPublished: z.boolean(),
-})
-
-export async function upsertEvent(
-  raw: unknown,
-  id?: string,
-): Promise<{ success: boolean; id?: string; error?: string }> {
-  await requireAdmin()
-  const parsed = eventSchema.safeParse(raw)
-  if (!parsed.success) return { success: false, error: 'Données invalides' }
-
-  const data = parsed.data
-  const db = getDb()
-
-  const values = {
-    title: data.title,
-    description: data.description ?? null,
-    startsAt: new Date(data.startsAt),
-    endsAt: data.endsAt ? new Date(data.endsAt) : null,
-    location: data.location ?? null,
-    imageUrl: data.imageUrl ?? null,
-    registrationUrl: data.registrationUrl ?? null,
-    isPublished: data.isPublished,
-    updatedAt: new Date(),
-  }
-
-  if (id) {
-    await db.update(events).set(values).where(eq(events.id, id))
-    revalidatePath('/admin/evenements')
-    return { success: true, id }
-  }
-
-  const slug = toSlug(data.title) + '-' + Date.now()
-  const [inserted] = await db
-    .insert(events)
-    .values({ ...values, slug })
-    .returning({ id: events.id })
-
-  revalidatePath('/admin/evenements')
-  return { success: true, ...(inserted?.id ? { id: inserted.id } : {}) }
-}
-
-export async function deleteEvent(id: string): Promise<{ success: boolean }> {
-  await requireAdmin()
-  const db = getDb()
-  await db.delete(events).where(eq(events.id, id))
-  revalidatePath('/admin/evenements')
-  return { success: true }
-}

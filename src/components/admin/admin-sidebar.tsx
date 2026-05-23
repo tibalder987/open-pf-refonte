@@ -26,7 +26,6 @@ export function AdminSidebar({ userName, pendingCount, pendingFichesCount }: Adm
     { href: '/admin/fiches', label: 'Fiches à valider', badge: pendingFichesCount },
     { href: '/admin/actualites', label: 'Actualités' },
     { href: '/admin/offres-emploi', label: "Offres d'emploi" },
-    { href: '/admin/evenements', label: 'Événements' },
     { href: '/admin/relances', label: 'Relances' },
     { href: '/admin/parametres', label: 'Paramètres' },
   ]

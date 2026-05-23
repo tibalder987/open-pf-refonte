@@ -307,11 +307,6 @@ test.describe('Pages secondaires', () => {
     await expect(page.locator('.empty-state')).toBeVisible()
   })
 
-  test('événements shows empty state', async ({ page }) => {
-    await page.goto('/evenements')
-    await expect(page.locator('.empty-state')).toBeVisible()
-  })
-
   test('404 page renders', async ({ page }) => {
     const response = await page.goto('/cette-route-nexiste-pas-12345')
     expect(response?.status()).toBe(404)

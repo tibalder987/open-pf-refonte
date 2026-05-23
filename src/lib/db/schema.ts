@@ -163,21 +163,6 @@ export const jobOffers = pgTable('job_offers', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
-export const events = pgTable('events', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  slug: varchar('slug', { length: 200 }).notNull().unique(),
-  title: varchar('title', { length: 300 }).notNull(),
-  description: text('description'),
-  startsAt: timestamp('starts_at', { withTimezone: true }).notNull(),
-  endsAt: timestamp('ends_at', { withTimezone: true }),
-  location: varchar('location', { length: 300 }),
-  imageUrl: text('image_url'),
-  registrationUrl: text('registration_url'),
-  isPublished: boolean('is_published').notNull().default(false),
-  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
-})
-
 // ─── Institutionnel ───────────────────────────────────────────────────────────
 
 export const partners = pgTable('partners', {

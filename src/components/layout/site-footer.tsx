@@ -71,9 +71,6 @@ export function SiteFooter() {
             <li>
               <Link href="/documents-utiles">Documents utiles</Link>
             </li>
-            <li>
-              <Link href="/evenements">Événements</Link>
-            </li>
           </ul>
         </nav>
 
