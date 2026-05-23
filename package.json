@@ -13,7 +13,11 @@
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
     "prepare": "husky",
-    "seed": "tsx src/lib/db/seed.ts"
+    "seed": "tsx src/lib/db/seed.ts",
+    "import:openpf:urls": "tsx scripts/import-openpf/extract-member-urls.ts",
+    "import:openpf:extract": "tsx scripts/import-openpf/extract-member-profiles.ts",
+    "import:openpf:compare": "tsx scripts/import-openpf/compare-members.ts",
+    "import:openpf:dry-run": "tsx scripts/import-openpf/dry-run.ts"
   },
   "dependencies": {
     "@auth/core": "^0.34.3",
