@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getDb } from '@/lib/db'
 import { news } from '@/lib/db/schema'
-import { desc } from 'drizzle-orm'
+import { desc, sql } from 'drizzle-orm'
 import { ArrowIcon } from '@/components/public/arrow-icon'
 
 export const metadata: Metadata = { title: 'Actualités — Admin OPEN PF' }
@@ -18,7 +18,9 @@ export default async function ActualitesAdminPage() {
       updatedAt: news.updatedAt,
     })
     .from(news)
-    .orderBy(desc(news.updatedAt))
+    // Chronologique depuis aujourd'hui : les plus récentes en haut, on remonte le
+    // temps en scrollant. NULLS LAST → les brouillons sans date de publication en bas.
+    .orderBy(sql`${news.publishedAt} desc nulls last`, desc(news.createdAt))
 
   return (
     <>
