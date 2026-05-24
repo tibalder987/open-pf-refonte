@@ -39,3 +39,33 @@ export function buildMemberJsonLd(member: {
     memberOf: { '@type': 'Organization', name: 'OPEN PF', url: BASE_URL },
   }
 }
+
+export function buildArticleJsonLd(article: {
+  title: string
+  slug: string
+  excerpt?: string | null
+  publishedAt?: Date | string | null
+  imageUrl?: string | null
+  authorName?: string | null
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.title,
+    url: `${BASE_URL}/actualites/${article.slug}`,
+    ...(article.excerpt && { description: article.excerpt }),
+    ...(article.publishedAt && { datePublished: new Date(article.publishedAt).toISOString() }),
+    ...(article.imageUrl && { image: article.imageUrl }),
+    author: {
+      '@type': 'Organization',
+      name: article.authorName ?? 'OPEN PF',
+      url: BASE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'OPEN PF',
+      url: BASE_URL,
+      logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo-open.png` },
+    },
+  }
+}

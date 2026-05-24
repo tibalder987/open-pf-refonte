@@ -6,6 +6,8 @@ import { ArrowIcon } from '@/components/public/arrow-icon'
 import { MemberShowcase } from '@/components/annuaire/member-showcase'
 import { getFeaturedMembers } from '@/lib/db/queries/members'
 import { getSiteStats } from '@/lib/db/queries/stats'
+import { getRecentNews } from '@/lib/db/queries/news'
+import { formatDate } from '@/lib/utils'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
@@ -81,32 +83,13 @@ const MISSIONS = [
   },
 ]
 
-const NEWS_PREVIEW = [
-  {
-    type: 'event',
-    tag: 'Événement',
-    title: 'Assemblée Générale Ordinaire du 04 juillet 2025 – Nouveau CA',
-    date: '4 juillet 2025',
-  },
-  {
-    type: 'cyber',
-    tag: 'Cybersécurité',
-    title: "« L'INFO-CYBER des partenaires » n°1 2025",
-    date: 'Janvier 2025',
-  },
-  {
-    type: 'lagoon',
-    tag: 'Filière numérique',
-    title: "Retour sur l'implication de l'OPEN PF au premier forum Les Horizons du Numérique 2025",
-    date: 'Juin 2025',
-  },
-]
-
 export default async function HomePage() {
-  const [featuredMembers, { memberCount, employeeCount, domainCount }] = await Promise.all([
-    getFeaturedMembers(12, { seed: Math.random().toString() }),
-    getSiteStats(),
-  ])
+  const [featuredMembers, { memberCount, employeeCount, domainCount }, recentNews] =
+    await Promise.all([
+      getFeaturedMembers(12, { seed: Math.random().toString() }),
+      getSiteStats(),
+      getRecentNews(3),
+    ])
 
   return (
     <>
@@ -228,31 +211,55 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section section-tight bg-soft" aria-labelledby="news-home-title">
-        <div className="container">
-          <div className="section-head">
-            <div>
-              <span className="eyebrow">Actualités</span>
-              <h2 id="news-home-title">Actualités de la filière</h2>
+      {recentNews.length > 0 && (
+        <section className="section section-tight bg-soft" aria-labelledby="news-home-title">
+          <div className="container">
+            <div className="section-head">
+              <div>
+                <span className="eyebrow">Actualités</span>
+                <h2 id="news-home-title">Actualités de la filière</h2>
+              </div>
+              <Link href="/actualites" className="btn btn-secondary">
+                Toutes les actualités <ArrowIcon />
+              </Link>
             </div>
-            <Link href="/actualites" className="btn btn-secondary">
-              Toutes les actualités <ArrowIcon />
-            </Link>
+            <div className="grid-3">
+              {recentNews.map((article) => (
+                <Link
+                  key={article.slug}
+                  href={`/actualites/${article.slug}`}
+                  className="card news-card news-card--link"
+                >
+                  {article.imageUrl ? (
+                    <div className="news-image news-image--photo" style={{ position: 'relative' }}>
+                      <img
+                        src={article.imageUrl}
+                        alt=""
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : (
+                    <div className="news-image event" />
+                  )}
+                  <div className="news-body">
+                    {article.categoryLabel && (
+                      <span className="tag">{article.categoryLabel}</span>
+                    )}
+                    <h3>{article.title}</h3>
+                    {article.publishedAt && (
+                      <p className="meta">{formatDate(article.publishedAt)}</p>
+                    )}
+                    <span className="card-link" aria-hidden="true">
+                      Lire l&apos;article <ArrowIcon />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-          <div className="grid-3">
-            {NEWS_PREVIEW.map((article) => (
-              <article key={article.title} className="card news-card">
-                <div className={`news-image ${article.type}`} />
-                <div className="news-body">
-                  <span className="tag">{article.tag}</span>
-                  <h3>{article.title}</h3>
-                  <p className="meta">{article.date}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <CtaBand />
     </>
