@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildBreadcrumbJsonLd, buildMemberJsonLd } from '@/lib/seo'
+import { buildBreadcrumbJsonLd, buildMemberJsonLd, buildJobPostingJsonLd } from '@/lib/seo'
 
 describe('buildBreadcrumbJsonLd', () => {
   it('produces correct @type and positions', () => {
@@ -17,6 +17,36 @@ describe('buildBreadcrumbJsonLd', () => {
   it('prefixes BASE_URL to each href', () => {
     const result = buildBreadcrumbJsonLd([{ name: 'Adhérents', href: '/adherents' }])
     expect(result.itemListElement[0]?.item).toBe('https://open.pf/adherents')
+  })
+})
+
+describe('buildJobPostingJsonLd', () => {
+  const base = { title: 'Développeur', slug: 'dev', memberName: 'Acme' }
+
+  it('produces a JobPosting with hiringOrganization and jobLocation', () => {
+    const r = buildJobPostingJsonLd(base)
+    expect(r['@type']).toBe('JobPosting')
+    expect(r.hiringOrganization).toMatchObject({ name: 'Acme' })
+    expect(r.jobLocation.address.addressCountry).toBe('PF')
+  })
+
+  it('maps known contract types to schema employmentType', () => {
+    expect(buildJobPostingJsonLd({ ...base, contractType: 'CDI' }).employmentType).toBe('FULL_TIME')
+    expect(buildJobPostingJsonLd({ ...base, contractType: 'Stage' }).employmentType).toBe('INTERN')
+  })
+
+  it('omits employmentType for unknown contract types', () => {
+    expect(buildJobPostingJsonLd({ ...base, contractType: 'Bénévolat' }).employmentType).toBeUndefined()
+  })
+
+  it('falls back to OPEN PF when no member is set', () => {
+    const r = buildJobPostingJsonLd({ title: 'Dev', slug: 'dev' })
+    expect(r.hiringOrganization.name).toBe('OPEN PF')
+  })
+
+  it('serialises dates to ISO when provided', () => {
+    const r = buildJobPostingJsonLd({ ...base, publishedAt: '2025-07-04' })
+    expect(r.datePosted).toMatch(/^2025-07-04T/)
   })
 })
 
