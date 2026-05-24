@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowIcon } from '@/components/public/arrow-icon'
 import { CtaBand } from '@/components/public/cta-band'
 import { getNewsBySlug } from '@/lib/db/queries/news'
 import { buildBreadcrumbJsonLd, buildArticleJsonLd } from '@/lib/seo'
