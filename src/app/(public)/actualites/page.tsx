@@ -8,7 +8,7 @@ import { ArrowIcon } from '@/components/public/arrow-icon'
 import { formatDate } from '@/lib/utils'
 import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Actualités',
@@ -71,8 +71,9 @@ export default async function ActualitesPage() {
       <section className="section">
         <div className="container">
           {featured && (
-            <article
-              className="card"
+            <Link
+              href={`/actualites/${featured.slug}`}
+              className="card news-card--link"
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1.2fr',
@@ -81,7 +82,17 @@ export default async function ActualitesPage() {
                 marginBottom: '36px',
               }}
             >
-              <div className="news-image event" style={{ height: '260px', borderRadius: '18px' }} />
+              {featured.imageUrl ? (
+                <div style={{ height: '260px', borderRadius: '18px', overflow: 'hidden', flexShrink: 0 }}>
+                  <img
+                    src={featured.imageUrl}
+                    alt=""
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
+              ) : (
+                <div className="news-image event" style={{ height: '260px', borderRadius: '18px' }} />
+              )}
               <div>
                 {featured.categoryLabel && (
                   <span className="tag">{featured.categoryLabel}</span>
@@ -95,22 +106,24 @@ export default async function ActualitesPage() {
                 {featured.excerpt && (
                   <p style={{ marginTop: '14px' }}>{featured.excerpt}</p>
                 )}
-                <Link
-                  href={`/actualites/${featured.slug}`}
-                  className="card-link"
-                  style={{ marginTop: '16px' }}
-                >
+                <span className="card-link" aria-hidden="true" style={{ marginTop: '16px' }}>
                   Lire l&apos;article <ArrowIcon />
-                </Link>
+                </span>
               </div>
-            </article>
+            </Link>
           )}
 
           {rest.length > 0 && (
             <div className="grid-3">
               {rest.map((article) => (
-                <article key={article.slug} className="card news-card">
-                  <div className="news-image lagoon" />
+                <Link key={article.slug} href={`/actualites/${article.slug}`} className="card news-card news-card--link">
+                  {article.imageUrl ? (
+                    <div className="news-image news-image--photo">
+                      <img src={article.imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                    </div>
+                  ) : (
+                    <div className="news-image lagoon" />
+                  )}
                   <div className="news-body">
                     {article.categoryLabel && (
                       <span className="tag">{article.categoryLabel}</span>
@@ -121,11 +134,11 @@ export default async function ActualitesPage() {
                         {formatDate(article.publishedAt)}
                       </p>
                     )}
-                    <Link href={`/actualites/${article.slug}`} className="card-link">
+                    <span className="card-link" aria-hidden="true">
                       Lire l&apos;article <ArrowIcon />
-                    </Link>
+                    </span>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           )}
