@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'Documents et ressources utiles pour les membres du réseau OPEN PF.',
     type: 'website',
     url: '/documents-utiles',
-    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
+    images: [{ url: '/logo-open.png', width: 1169, height: 533, alt: 'OPEN PF' }],
   },
   twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }

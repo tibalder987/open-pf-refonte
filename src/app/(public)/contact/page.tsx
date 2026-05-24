@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Notre équipe est à votre écoute pour vos questions d'adhésion, de partenariat et de presse.",
     type: 'website',
     url: '/contact',
-    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
+    images: [{ url: '/logo-open.png', width: 1169, height: 533, alt: 'OPEN PF' }],
   },
   twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }

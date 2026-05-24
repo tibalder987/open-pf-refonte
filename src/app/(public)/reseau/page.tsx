@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Découvrez les missions, la gouvernance et l'histoire d'OPEN Polynésie française depuis 2011.",
     type: 'website',
     url: '/reseau',
-    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
+    images: [{ url: '/logo-open.png', width: 1169, height: 533, alt: 'OPEN PF' }],
   },
   twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description: "Toute l'actualité du numérique en Polynésie française.",
     type: 'website',
     url: '/actualites',
-    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
+    images: [{ url: '/logo-open.png', width: 1169, height: 533, alt: 'OPEN PF' }],
   },
   twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: 'OPEN PF',
     locale: 'fr_PF',
     type: 'website',
-    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
+    images: [{ url: '/logo-open.png', width: 1169, height: 533, alt: 'OPEN PF' }],
   },
   twitter: {
     card: 'summary_large_image',

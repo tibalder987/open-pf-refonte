@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Offres d'emploi des entreprises numériques adhérentes à OPEN PF en Polynésie française.",
     type: 'website',
     url: '/offres-emploi',
-    images: [{ url: '/logo-open.png', width: 512, height: 512, alt: 'OPEN PF' }],
+    images: [{ url: '/logo-open.png', width: 1169, height: 533, alt: 'OPEN PF' }],
   },
   twitter: { card: 'summary_large_image', images: ['/logo-open.png'] },
 }

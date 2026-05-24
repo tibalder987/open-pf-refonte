@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function SiteFooter() {
   return (
@@ -6,16 +7,14 @@ export function SiteFooter() {
       <div className="footer-grid container">
         {/* Brand + description */}
         <div>
-          <Link href="/" className="brand" aria-label="OPEN Polynésie française, accueil">
-            <span className="open-logo-mark" aria-hidden="true" />
-            <span>
-              <span className="brand-word">OPEN</span>
-              <span className="brand-sub">
-                Organisation des Professionnels
-                <br />
-                de l&apos;Économie Numérique
-              </span>
-            </span>
+          <Link href="/" className="footer-brand" aria-label="OPEN Polynésie française, accueil">
+            <Image
+              src="/logo-open.png"
+              alt="OPEN – Organisation des Professionnels de l'Économie Numérique"
+              width={149}
+              height={68}
+              style={{ height: '60px', width: 'auto' }}
+            />
           </Link>
           <p style={{ marginTop: '18px' }}>
             OPEN fédère les entreprises du numérique en Polynésie française pour représenter,

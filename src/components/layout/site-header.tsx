@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -77,15 +78,14 @@ export function SiteHeader() {
       <header className="site-header" role="banner">
         <div className="header-inner container">
           <Link href="/" className="brand" aria-label="OPEN Polynésie française, accueil">
-            <span className="open-logo-mark" aria-hidden="true" />
-            <span>
-              <span className="brand-word">OPEN</span>
-              <span className="brand-sub">
-                Organisation des Professionnels
-                <br />
-                de l&apos;Économie Numérique
-              </span>
-            </span>
+            <Image
+              src="/logo-open.png"
+              alt="OPEN – Organisation des Professionnels de l'Économie Numérique"
+              width={149}
+              height={68}
+              style={{ height: '52px', width: 'auto' }}
+              priority
+            />
           </Link>
 
           <nav
@@ -163,14 +163,13 @@ export function SiteHeader() {
                 onClick={closeDrawer}
                 style={{ minWidth: 0 }}
               >
-                <span
-                  className="open-logo-mark"
-                  aria-hidden="true"
-                  style={{ width: '44px', height: '44px' }}
+                <Image
+                  src="/logo-open.png"
+                  alt="OPEN"
+                  width={120}
+                  height={55}
+                  style={{ height: '44px', width: 'auto' }}
                 />
-                <span className="brand-word" style={{ fontSize: '32px' }}>
-                  OPEN
-                </span>
               </Link>
               <button
                 className="mobile-nav__close"
