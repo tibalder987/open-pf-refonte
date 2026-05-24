@@ -1,5 +1,6 @@
 import { put } from '@vercel/blob'
 import { type NextRequest, NextResponse } from 'next/server'
+import sharp from 'sharp'
 import { getDb } from '@/lib/db'
 import { memberTokens } from '@/lib/db/schema'
 import { hashMagicToken, verifyMagicToken } from '@/lib/auth/magic-link'
@@ -49,11 +50,29 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: 'Fichier trop volumineux (max 2 Mo)' }, { status: 400 })
   }
 
-  const ext = file.name.split('.').pop() ?? 'bin'
-  const filename = `logos/${record.memberId}-${Date.now()}.${ext}`
+  const bytes = Buffer.from(await file.arrayBuffer())
 
-  const blob = await put(filename, file, {
+  let uploadBuffer: Buffer
+  let contentType: string
+  let finalExt: string
+
+  if (file.type === 'image/svg+xml') {
+    uploadBuffer = bytes
+    contentType = 'image/svg+xml'
+    finalExt = 'svg'
+  } else {
+    uploadBuffer = await sharp(bytes)
+      .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 85 })
+      .toBuffer()
+    contentType = 'image/webp'
+    finalExt = 'webp'
+  }
+
+  const filename = `logos/${record.memberId}-${Date.now()}.${finalExt}`
+  const blob = await put(filename, uploadBuffer, {
     access: 'public',
+    contentType,
     token: env.BLOB_READ_WRITE_TOKEN,
   })
 

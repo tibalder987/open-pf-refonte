@@ -75,15 +75,15 @@ const MISSIONS = [
   },
 ]
 
-const BUREAU = [
-  { name: 'DE REVIERE Thibault', role: 'Président' },
-  { name: 'LUCAS Tuarii', role: 'Vice-président' },
-  { name: 'LATIL Frédéric', role: 'Secrétaire' },
-  { name: 'PURAVET Sébastien', role: 'Trésorier' },
-  { name: 'AMPOURNALES Véronique', role: 'Assesseur' },
-  { name: 'CHABOT Florian', role: 'Assesseur' },
-  { name: 'LEGENDRE Patrick', role: 'Assesseur' },
-  { name: 'CHANE Alain', role: 'Assesseur' },
+const BUREAU: { name: string; role: string; company: string }[] = [
+  { name: 'DE REVIERE Thibault', role: 'Président',      company: '#Prox-i' },
+  { name: 'LEJEUNE Yann',        role: 'Administrateur', company: 'Banque de Tahiti' },
+  { name: 'CHAN Cédric',          role: 'Administrateur', company: 'Foodease' },
+  { name: 'KRESSMANN Olivier',   role: 'Administrateur', company: 'IDT' },
+  { name: 'PURAVET Sébastien',   role: 'Administrateur', company: 'OSB' },
+  { name: 'GINTER Anthony',      role: 'Administrateur', company: 'Oraclia' },
+  { name: 'CLAUDE Jean-Pierre',  role: 'Administrateur', company: 'Te Rama' },
+  { name: 'CHANE Alain',         role: 'Administrateur', company: 'TEP' },
 ]
 
 const TIMELINE = [
@@ -103,6 +103,7 @@ const TIMELINE = [
     description: "Vision, convictions, missions… Travaux autour de la raison d'être OPEN",
   },
   { year: 2022, description: 'Développement de partenariats clés — CLUSIR, French Tech' },
+  { year: 2025, description: 'AG ordinaire — Renouvellement du CA pour le mandat 2025-2027' },
   { year: 2026, description: 'Refonte du site et lancement de la plateforme numérique' },
 ]
 
@@ -178,6 +179,9 @@ export default function ReseauPage() {
                 <h3>{member.role}</h3>
                 <p style={{ marginTop: '8px', color: 'var(--ink)', fontWeight: 700 }}>
                   {member.name}
+                </p>
+                <p style={{ marginTop: '4px', fontSize: '0.8rem', color: 'var(--muted)' }}>
+                  {member.company}
                 </p>
               </article>
             ))}

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -25,6 +26,10 @@ interface NewsFormProps {
 
 export function NewsForm({ id, initialData }: NewsFormProps) {
   const router = useRouter()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -38,6 +43,27 @@ export function NewsForm({ id, initialData }: NewsFormProps) {
     },
   })
 
+  async function handleImageFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    setUploadError(null)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch('/api/upload/news-image', { method: 'POST', body: fd })
+      const json = await res.json() as { url?: string; error?: string }
+      if (!res.ok || !json.url) throw new Error(json.error ?? 'Erreur upload')
+      form.setValue('imageUrl', json.url, { shouldValidate: true })
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Erreur upload')
+    } finally {
+      setUploading(false)
+      // reset input so same file can be re-selected
+      e.target.value = ''
+    }
+  }
+
   async function handleSubmit(data: FormData) {
     const result = await upsertNews(data, id)
     if (result.success) {
@@ -45,6 +71,8 @@ export function NewsForm({ id, initialData }: NewsFormProps) {
       router.refresh()
     }
   }
+
+  const previewUrl = form.watch('imageUrl')
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)} noValidate>
@@ -72,13 +100,51 @@ export function NewsForm({ id, initialData }: NewsFormProps) {
             <label htmlFor="authorName">Auteur</label>
             <input id="authorName" type="text" {...form.register('authorName')} />
           </div>
+
           <div className="form-field">
-            <label htmlFor="imageUrl">URL image</label>
-            <input id="imageUrl" type="url" {...form.register('imageUrl')} />
+            <label>Image</label>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <input
+                id="imageUrl"
+                type="url"
+                placeholder="https://… ou choisissez un fichier →"
+                style={{ flex: 1, minWidth: 0 }}
+                {...form.register('imageUrl')}
+              />
+              <button
+                type="button"
+                className="btn btn-secondary"
+                style={{ whiteSpace: 'nowrap', flexShrink: 0 }}
+                disabled={uploading}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {uploading ? 'Conversion…' : 'Choisir'}
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                style={{ display: 'none' }}
+                onChange={handleImageFile}
+              />
+            </div>
+            {uploadError && <p className="field-error">{uploadError}</p>}
             {form.formState.errors.imageUrl && (
               <p className="field-error">{form.formState.errors.imageUrl.message}</p>
             )}
+            {previewUrl && (
+              <img
+                src={previewUrl}
+                alt=""
+                style={{ marginTop: '8px', maxHeight: '100px', borderRadius: '8px', objectFit: 'cover' }}
+                referrerPolicy="no-referrer"
+              />
+            )}
+            <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '4px' }}>
+              Fichier auto-converti en WebP (JPEG / PNG / WebP, max 5 Mo)
+            </p>
           </div>
+
           <div className="form-field">
             <label htmlFor="metaDescription">Meta description (160 car.)</label>
             <input
