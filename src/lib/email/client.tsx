@@ -1,6 +1,7 @@
 import { render } from '@react-email/components'
 import { MagicLinkEmail } from './templates/magic-link'
 import { ReminderEmail } from './templates/reminder'
+import { ContactEmail } from './templates/contact'
 import { env } from '@/lib/env'
 
 interface SendMagicLinkParams {
@@ -28,6 +29,48 @@ export async function sendMagicLinkEmail({
       to: [{ email: to }],
       replyTo: { email: 'contact@open.pf' },
       subject: `Complétez la fiche adhérent de ${memberName} — OPEN PF`,
+      htmlContent: html,
+      textContent: text,
+    }),
+  })
+
+  if (!res.ok) {
+    const body = await res.text()
+    throw new Error(`Brevo error ${res.status}: ${body}`)
+  }
+}
+
+interface SendContactParams {
+  to: string
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
+export async function sendContactEmail({
+  to,
+  name,
+  email,
+  subject,
+  message,
+}: SendContactParams): Promise<void> {
+  const html = await render(
+    <ContactEmail name={name} email={email} subject={subject} message={message} />,
+  )
+  const text = `Nouveau message via le formulaire de contact OPEN PF\n\nSujet : ${subject}\nDe : ${name} <${email}>\n\n${message}`
+
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': env.BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: { name: env.BREVO_SENDER_NAME, email: env.BREVO_SENDER_EMAIL },
+      to: [{ email: to }],
+      replyTo: { email, name },
+      subject: `[Contact OPEN PF] ${subject} — ${name}`,
       htmlContent: html,
       textContent: text,
     }),

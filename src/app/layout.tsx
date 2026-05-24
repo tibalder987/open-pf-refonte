@@ -40,7 +40,7 @@ const orgJsonLd = {
   name: 'OPEN PF',
   alternateName: "Organisation des Professionnels de l’Économie Numérique de Polynésie française",
   url: BASE_URL,
-  logo: `${BASE_URL}/open-logo.svg`,
+  logo: `${BASE_URL}/logo-open.png`,
   description:
     "Cluster des professionnels du numérique en Polynésie française, fédérant ~54 entreprises.",
   address: {

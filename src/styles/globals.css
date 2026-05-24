@@ -1554,6 +1554,87 @@ textarea {
   color: var(--color-danger);
   margin-top: 4px;
 }
+
+/* Honeypot — kept in the DOM (bots fill it) but invisible & untabbable for humans.
+   Not display:none, since some bots skip non-rendered fields. */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Contact form success state */
+.contact-success {
+  text-align: center;
+  padding: 16px 4px;
+}
+.contact-success__icon {
+  width: 64px;
+  height: 64px;
+  color: var(--open-magenta);
+}
+
+/* ─── Job offers ──────────────────────────────────────────────────────────── */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+.job-card {
+  display: flex;
+  flex-direction: column;
+}
+.job-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.job-card__org {
+  margin-top: 6px;
+  font-weight: 600;
+  color: var(--open-magenta);
+}
+.job-card__meta {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.job-card .card-link {
+  margin-top: auto;
+  padding-top: 18px;
+}
+.job-detail__facts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px;
+  background: var(--soft, #f8fafc);
+}
+.job-detail__facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.95rem;
+}
+.job-detail__facts strong {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-weight: 600;
+}
 .form-server-error {
   background: #fff1f0;
   border: 1px solid #fca5a5;

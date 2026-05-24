@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
-import { ArrowIcon } from '@/components/public/arrow-icon'
+import { ContactForm } from '@/components/public/contact-form'
 import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -50,52 +50,7 @@ export default function ContactPage() {
 
       <section className="section" aria-labelledby="contact-form-title">
         <div className="grid-2 container">
-          <div className="form-shell">
-            <h2 id="contact-form-title">Envoyez-nous un message</h2>
-            <p style={{ margin: '10px 0 24px' }}>Nous vous répondrons dans les meilleurs délais.</p>
-            <div className="form-grid">
-              <div className="form-field">
-                <label htmlFor="contact-name">
-                  Nom complet <span className="required">*</span>
-                </label>
-                <input id="contact-name" type="text" autoComplete="name" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="contact-email">
-                  Email <span className="required">*</span>
-                </label>
-                <input id="contact-email" type="email" autoComplete="email" required />
-              </div>
-            </div>
-            <div className="form-field" style={{ marginTop: '20px' }}>
-              <label htmlFor="contact-subject">
-                Sujet <span className="required">*</span>
-              </label>
-              <select id="contact-subject" required>
-                <option value="">Choisir un sujet</option>
-                <option>Information sur l&apos;adhésion</option>
-                <option>Partenariat</option>
-                <option>Presse et communication</option>
-                <option>Autre</option>
-              </select>
-            </div>
-            <div className="form-field" style={{ marginTop: '20px' }}>
-              <label htmlFor="contact-message">
-                Message <span className="required">*</span>
-              </label>
-              <textarea id="contact-message" required />
-            </div>
-            <p style={{ marginTop: '16px', fontSize: '13px', color: 'var(--muted)' }}>
-              Ce formulaire sera activé lors du lancement. En attendant, écrivez-nous directement à{' '}
-              <a href="mailto:contact@open.pf" style={{ color: 'var(--open-magenta)' }}>
-                contact@open.pf
-              </a>
-              .
-            </p>
-            <button className="btn" type="button" style={{ marginTop: '22px' }} disabled>
-              Envoyer le message <ArrowIcon />
-            </button>
-          </div>
+          <ContactForm />
 
           <aside className="card contact-card" aria-labelledby="contact-coords-title">
             <h2 id="contact-coords-title" style={{ marginBottom: '24px' }}>
