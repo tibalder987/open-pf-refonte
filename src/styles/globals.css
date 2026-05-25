@@ -718,6 +718,82 @@ p {
   min-height: 252px;
 }
 
+/* ─── Bureau OPEN (board members) ─────────────────────────────────────────── */
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.board-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 32px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.board-avatar {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+  /* subtle ring in brand navy */
+  box-shadow: 0 0 0 3px white, 0 0 0 5px var(--soft-pink);
+}
+.board-avatar-fallback {
+  display: grid;
+  place-items: center;
+}
+.board-avatar-fallback span {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.board-card-role {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--open-magenta);
+  margin: 0 0 6px;
+}
+.board-card-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+.board-card-job {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+}
+/* 4 cols desktop → 2 tablet → 1 mobile */
+@media (max-width: 1024px) {
+  .board-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .board-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .board-avatar {
+    width: 96px;
+    height: 96px;
+  }
+}
+
 /* ─── Profile hero ────────────────────────────────────────────────────────── */
 .profile-hero-card {
   display: grid;

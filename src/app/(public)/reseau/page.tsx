@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CtaBand } from '@/components/public/cta-band'
 import { ArrowIcon } from '@/components/public/arrow-icon'
+import { BoardMemberCard } from '@/components/public/board-member-card'
+import { BOARD_MEMBERS, BOARD_TERM } from '@/lib/data/board-members'
 import { buildBreadcrumbJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -73,17 +75,6 @@ const MISSIONS = [
       </svg>
     ),
   },
-]
-
-const BUREAU: { name: string; role: string; company: string }[] = [
-  { name: 'DE REVIERE Thibault', role: 'Président',      company: '#Prox-i' },
-  { name: 'LEJEUNE Yann',        role: 'Administrateur', company: 'Banque de Tahiti' },
-  { name: 'CHAN Cédric',          role: 'Administrateur', company: 'Foodease' },
-  { name: 'KRESSMANN Olivier',   role: 'Administrateur', company: 'IDT' },
-  { name: 'PURAVET Sébastien',   role: 'Administrateur', company: 'OSB' },
-  { name: 'GINTER Anthony',      role: 'Administrateur', company: 'Oraclia' },
-  { name: 'CLAUDE Jean-Pierre',  role: 'Administrateur', company: 'Te Rama' },
-  { name: 'CHANE Alain',         role: 'Administrateur', company: 'TEP' },
 ]
 
 const TIMELINE = [
@@ -167,23 +158,16 @@ export default function ReseauPage() {
           <div className="section-head">
             <div>
               <span className="eyebrow">Gouvernance</span>
-              <h2 id="gouvernance-title">Une gouvernance collégiale et engagée</h2>
+              <h2 id="gouvernance-title">Bureau OPEN {BOARD_TERM}</h2>
             </div>
             <p>
-              Le bureau d&apos;OPEN est composé de professionnels bénévoles issus de la filière.
+              Le bureau d&apos;OPEN est composé de professionnels bénévoles issus de la filière,
+              élus pour le mandat {BOARD_TERM}.
             </p>
           </div>
-          <div className="grid-4">
-            {BUREAU.map((member) => (
-              <article key={member.name} className="card">
-                <h3>{member.role}</h3>
-                <p style={{ marginTop: '8px', color: 'var(--ink)', fontWeight: 700 }}>
-                  {member.name}
-                </p>
-                <p style={{ marginTop: '4px', fontSize: '0.8rem', color: 'var(--muted)' }}>
-                  {member.company}
-                </p>
-              </article>
+          <div className="board-grid">
+            {BOARD_MEMBERS.map((member) => (
+              <BoardMemberCard key={member.name} member={member} />
             ))}
           </div>
         </div>
