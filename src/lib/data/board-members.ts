@@ -62,7 +62,7 @@ export const BOARD_MEMBERS: BoardMember[] = [
   {
     name: 'Thibault De Reviere',
     openRole: 'Assesseur',
-    professionalRole: 'Dirigeant de PROX-i',
+    professionalRole: 'Président de la SAS Proximity',
   },
   {
     name: 'Sébastien Puravet',
