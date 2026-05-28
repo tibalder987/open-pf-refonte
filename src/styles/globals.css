@@ -195,7 +195,8 @@ body {
 .primary-nav a[aria-current='page'],
 .primary-nav a:hover {
   background: var(--soft-pink);
-  color: var(--open-magenta);
+  /* -700 variant (#bd0068) → contrast 5.21 on the soft-pink background */
+  color: var(--open-magenta-700);
 }
 .header-actions {
   display: flex;
@@ -701,7 +702,8 @@ p {
   margin-top: 22px;
 }
 .card-link {
-  color: var(--open-magenta);
+  /* -700 variant for WCAG AA on white card backgrounds (contrast ≥ 4.5) */
+  color: var(--open-magenta-700);
   font-weight: 900;
   margin-top: 12px;
   display: inline-flex;
@@ -1004,7 +1006,8 @@ p {
   display: inline-flex;
   border-radius: 999px;
   background: var(--soft-pink);
-  color: var(--open-magenta);
+  /* -700 variant → AA on soft-pink (#fff1f8) */
+  color: var(--open-magenta-700);
   padding: 7px 11px;
   font-size: 12px;
   font-weight: 900;
@@ -2493,6 +2496,9 @@ textarea {
   max-width: 420px;
   margin: 0;
 }
+.empty-state__action {
+  margin-top: 8px;
+}
 
 /* ─── Hero h1 color + breadcrumb spacing ─────────────────────────────────── */
 .hero h1 {
@@ -2505,6 +2511,15 @@ textarea {
 /* ─── Utility classes ────────────────────────────────────────────────────── */
 .bg-soft {
   background: var(--soft);
+}
+/* Magenta brand on the soft-grey background fails WCAG AA at 4.24 — use the
+   slightly darker -700 variant (#bd0068 → ~5.2 on #f7f8fc) wherever a
+   soft-grey context is the parent. */
+.bg-soft .eyebrow {
+  color: var(--open-magenta-700);
+}
+.bg-soft .eyebrow::before {
+  background: var(--open-magenta-700);
 }
 .eyebrow + h1 {
   margin-top: 16px;

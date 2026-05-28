@@ -12,6 +12,7 @@ import {
   getMemberDomains,
   getOtherActiveMembers,
 } from '@/lib/db/queries/members'
+import { getDailySeed } from '@/lib/random/seeded-shuffle'
 import { buildBreadcrumbJsonLd, buildMemberJsonLd } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
@@ -47,7 +48,8 @@ export default async function MemberPage({ params }: Props) {
   const { slug } = await params
   const [member, otherMembers] = await Promise.all([
     getMemberBySlug(slug),
-    getOtherActiveMembers(slug, 3, { seed: Math.random().toString() }),
+    // Daily seed scoped per fiche → stable order over the day, distinct per member.
+    getOtherActiveMembers(slug, 3, { seed: `other:${slug}:${getDailySeed()}` }),
   ])
   if (!member) notFound()
 

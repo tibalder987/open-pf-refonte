@@ -16,14 +16,16 @@ export function MemberFilters({ domains, activeId, q }: MemberFiltersProps) {
 
   const allHref = q ? `/adherents?q=${encodeURIComponent(q)}` : '/adherents'
 
+  // Note: ces chips sont des <a>/<Link> (role=link), pas des boutons toggle.
+  // `aria-pressed` n'est PAS autorisé sur role=link (axe critical) — on utilise
+  // uniquement `aria-current="page"` pour indiquer le filtre actif, conforme WAI-ARIA.
   return (
     <div className="directory-filters-wrap">
       <div className="filters" role="group" aria-label="Filtrer par domaine d'activité">
         <Link
           href={allHref}
           className={`filter-chip light${!activeId ? ' active' : ''}`}
-          aria-current={!activeId ? 'true' : undefined}
-          aria-pressed={!activeId ? 'true' : 'false'}
+          {...(!activeId ? { 'aria-current': 'page' as const } : {})}
         >
           Tous les domaines
         </Link>
@@ -31,13 +33,13 @@ export function MemberFilters({ domains, activeId, q }: MemberFiltersProps) {
           const params = new URLSearchParams()
           if (q) params.set('q', q)
           params.set('domaine', d.id)
+          const isActive = activeId === d.id
           return (
             <Link
               key={d.id}
               href={`/adherents?${params.toString()}`}
-              className={`filter-chip light${activeId === d.id ? ' active' : ''}`}
-              aria-current={activeId === d.id ? 'true' : undefined}
-              aria-pressed={activeId === d.id ? 'true' : 'false'}
+              className={`filter-chip light${isActive ? ' active' : ''}`}
+              {...(isActive ? { 'aria-current': 'page' as const } : {})}
             >
               {d.label}
             </Link>

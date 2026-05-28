@@ -7,18 +7,21 @@ import { MemberShowcase } from '@/components/annuaire/member-showcase'
 import { getFeaturedMembers } from '@/lib/db/queries/members'
 import { getSiteStats } from '@/lib/db/queries/stats'
 import { getRecentNews } from '@/lib/db/queries/news'
+import { getDailySeed } from '@/lib/random/seeded-shuffle'
 import { formatDate } from '@/lib/utils'
-export const dynamic = 'force-dynamic'
+
+// Order is deterministic per day (seededShuffle + daily seed), so we can cache
+// the page with ISR instead of recomputing on every request — measurable TTFB win.
+export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: {
-    absolute: "OPEN PF – Organisation des Professionnels de l'Économie Numérique de Polynésie française",
-  },
+  // ≤ 60 chars target so Google doesn't truncate the snippet
+  title: { absolute: 'OPEN PF — Cluster numérique de Polynésie française' },
   description:
     'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique de Polynésie française",
+    title: "OPEN PF – Organisation des Professionnels de l'Économie Numérique",
     description:
       'OPEN réunit les entreprises du numérique de Polynésie française pour valoriser la filière, représenter les professionnels et structurer un écosystème numérique durable.',
     type: 'website',
@@ -86,7 +89,7 @@ const MISSIONS = [
 export default async function HomePage() {
   const [featuredMembers, { memberCount, employeeCount, domainCount }, recentNews] =
     await Promise.all([
-      getFeaturedMembers(12, { seed: Math.random().toString() }),
+      getFeaturedMembers(12, { seed: `home:${getDailySeed()}` }),
       getSiteStats(),
       getRecentNews(3),
     ])

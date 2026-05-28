@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { MemberCard } from './member-card'
 
 interface Member {
@@ -35,9 +34,14 @@ export function MemberGrid({ list, q, activeLabel }: MemberGridProps) {
             ? `Aucune entreprise ne correspond à « ${q} »${activeLabel ? ` dans le domaine ${activeLabel}` : ''}.`
             : `Aucune entreprise dans ce domaine pour le moment.`}
         </p>
-        <Link href="/adherents" className="btn btn-secondary" style={{ marginTop: '20px' }}>
+        {/* Plain <a> (not next/link) on purpose: a real reset of the
+            directory state benefits from a full page load — empties the search
+            input, clears RSC cache, and reliably drops the search params even
+            when current pathname === target pathname (which next/link can
+            otherwise soft-navigate without updating the URL bar). */}
+        <a href="/adherents" className="btn btn-secondary empty-state__action">
           Réinitialiser les filtres
-        </Link>
+        </a>
       </div>
     )
   }
